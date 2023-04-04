@@ -19,6 +19,27 @@ const categorydata =[
         name:'cat 4',
         image:'https://nurlightllc.com/image/product_image/FSTI-RDTYR48-tiya-48oz-round-container-angle-closed.jpeg'
     },
+    {
+        id:5,
+        name:'cat 4',
+        image:'https://nurlightllc.com/image/product_image/FSTI-RDTYR48-tiya-48oz-round-container-angle-closed.jpeg'
+    },
+    {
+        id:6,
+        name:'cat 4',
+        image:'https://nurlightllc.com/image/product_image/FSTI-RDTYR48-tiya-48oz-round-container-angle-closed.jpeg'
+    },
+    {
+        id:7,
+        name:'cat 4',
+        image:'https://nurlightllc.com/image/product_image/FSTI-RDTYR48-tiya-48oz-round-container-angle-closed.jpeg'
+    },
+    {
+        id:8,
+        name:'cat 4',
+        image:'https://nurlightllc.com/image/product_image/FSTI-RDTYR48-tiya-48oz-round-container-angle-closed.jpeg'
+    },
+    
     
 ]
 

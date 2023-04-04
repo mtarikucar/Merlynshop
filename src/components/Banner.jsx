@@ -5,9 +5,9 @@ import { TbTruckDelivery } from 'react-icons/tb';
 
 function Banner() {
     return (
-        <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 pt-8 lg:px-24  bg-slate-100'>
-            <div className=' p-4 m-4 flex flex-col lg:flex-row justify-center items-center gap-5  border border-[#008037]   rounded-xl shadow-lg'>
-                <p className='text-3xl text-[#008037]  text-center'><BsTelephoneOutboundFill /></p>
+        <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 pt-8 lg:px-24 '>
+            <div className=' p-4 m-4 flex flex-col lg:flex-row justify-center items-center gap-5 bg-white  border border-[#008037]   rounded-xl shadow-lg'>
+                <p className='text-3xl  text-[#008037]  text-center'><BsTelephoneOutboundFill /></p>
                 <div>
                     <p className='text-xl font-bold text-center'>
                         CALL US
@@ -17,7 +17,7 @@ function Banner() {
                     </p>
                 </div>
             </div>
-            <div className=' p-4 m-4 flex flex-col lg:flex-row justify-center items-center gap-5  border border-[#008037]   rounded-xl shadow-lg'>
+            <div className=' p-4 m-4 flex flex-col lg:flex-row justify-center items-center gap-5 bg-white   border border-[#008037]   rounded-xl shadow-lg'>
                 <p className='text-3xl text-[#008037] text-center'><BsPeopleFill /></p>
                 <div>
                     <p className='text-xl font-bold text-center'>
@@ -29,7 +29,7 @@ function Banner() {
                     </p>
                 </div>
             </div>
-            <div className=' p-4 m-4 flex flex-col lg:flex-row justify-center items-center gap-5  border border-[#008037]   rounded-xl shadow-lg'>
+            <div className=' p-4 m-4 flex flex-col lg:flex-row justify-center items-center gap-5  bg-white  border border-[#008037]   rounded-xl shadow-lg'>
                 <p className='text-3xl text-[#008037] text-center'><FaStore /></p>
                 <div>
                     <p className='text-xl font-bold text-center'>
@@ -42,7 +42,7 @@ function Banner() {
                     </p>
                 </div>
             </div>
-            <div className=' py-8 m-4 flex flex-col lg:flex-row justify-center items-center gap-5  border border-[#008037]   rounded-xl shadow-lg'>
+            <div className=' py-8 m-4 flex flex-col lg:flex-row justify-center items-center gap-5 bg-white   border border-[#008037]   rounded-xl shadow-lg'>
                 <p className='text-3xl text-[#008037] text-center '><TbTruckDelivery /></p>
                 <div>
                     <p className='text-xl font-bold text-center'>

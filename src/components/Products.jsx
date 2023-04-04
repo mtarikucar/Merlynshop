@@ -1,9 +1,22 @@
 import React from 'react'
-import product from './product'
+import Product from './product'
+
 function Products() {
   return (
-    <div>
+    <div className='grid grid-cols-4 m-12'>
         <Product/>
+        <Product/>
+        <Product/>
+        <Product/>
+        <Product/>
+        <Product/>
+        <Product/>
+        <Product/>
+        <Product/>
+        <Product/>
+        <Product/>
+        <Product/>
+
     </div>
   )
 }

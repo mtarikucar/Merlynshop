@@ -3,18 +3,7 @@ import React from 'react'
 function Category({ data }) {
   return (
     <>
-      <div class="mx-auto mt-11 w-80 transform overflow-hidden rounded-lg bg-white  shadow-md duration-300 hover:scale-105 hover:shadow-lg">
-        <img class="h-64  object-cover object-center" src={data.image} alt="Product Image" />
-        <div class="p-4">
-          <h2 class="mb-2 text-lg font-medium  text-gray-900">Product Name</h2>
-          <p class="mb-2 text-base text-gray-700">Product description goes here.</p>
-          <div class="flex items-center">
-            <p class="mr-2 text-lg font-semibold text-gray-900 ">$20.00</p>
-            <p class="text-base  font-medium text-gray-500 line-through dark:text-gray-300">$25.00</p>
-            <p class="ml-auto text-base font-medium text-green-500">20% off</p>
-          </div>
-        </div>
-      </div>
+
       {/*  <card  class="relative rounded-lg">
         <a href="/">
 
@@ -27,6 +16,21 @@ function Category({ data }) {
           </div>
         </a>
       </card> */}
+
+      <div class="">
+        <div className='bg-white rounded-lg' >
+          <a href="">
+
+            <img class=" md:w-60 md:h-60 h-40 w-40 lg:h-80 border border-b-0 rounded-b-none p-3 lg:w-80 rounded-lg" src={data.image} />
+          </a>
+          <a href="" className=''>
+
+            <p className=' text-black pb-4 text-center text-2xl'> {data.name} </p>
+          </a>
+        </div>
+
+      </div>
+
 
 
     </>

@@ -3,25 +3,60 @@ import { AiOutlineSearch } from 'react-icons/Ai';
 function HomeAbout() {
     return (
         <>
-
-            <section class="bg-[#daeadb]">
-                <div class="py-8 px-4 mx-auto max-w-screen text-center lg:py-10">
-                    <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none  text-[#008037] md:text-5xl lg:text-6xl">We invest in the world’s potential</h1>
-                    <p class="mb-8 text-lg font-normal text-gray-900 lg:text-xl sm:px-16 lg:px-48 ">Our company has been distributing environmentally friendly packaging products like
-                        food containers and other kitchen utensils in the DMV area.
-                        We offer low price but high-quality products to the customer.</p>
-                    <form class="w-full max-w-md mx-auto text-center ">
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 flex items-center justify-center  pl-3 pointer-events-none">
-                                <div>
-                                    <AiOutlineSearch className='text-xl' />
-                                </div>
+            <section class="  lg:my-16 bg-white shadow ">
+                <div class="items-center flex lg:flex-row flex-col  ">
+                    <div class=" md:w-1/2  ml-auto mr-auto ">
+                        <img alt="..." class="max-w-full rounded-lg shadow-lg" src="https://nurlightllc.com/image/blog4.jpeg"/>
+                    </div>
+                    <div class="w-full md:w-5/12 ml-auto mr-auto px-4">
+                        <div class="md:pr-12">
+                            <div class="text-gree-500 p-1 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-green-500 mt-8">
+                                <i class="fas fa-rocket text-xl"></i>
                             </div>
-                            <input type="email" id="default-email" class="block w-full p-4 pl-10 text-sm text-gray-900 rounded-lg bg-white  outline-none  " placeholder="Enter your email here..." required />
-                            <button type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-[#008037] hover:bg-white hover:text-[#008037] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 ">Search</button>
+                            <h3 class="text-3xl font-semibold">A growing company</h3>
+                            <p class="mt-4 text-lg leading-relaxed text-blueGray-500">
+                                The extension comes with three pre-built pages to help you get
+                                started faster. You can change the text and images and you're
+                                good to go.
+                            </p>
+                            <ul class="list-none mt-6">
+                                <li class="py-2">
+                                    <div class="flex items-center">
+                                        <div>
+                                            <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-pink-600 bg-green-300 mr-3"><i class="fas fa-fingerprint"></i></span>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-blueGray-500">
+                                                Carefully crafted components
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="py-2">
+                                    <div class="flex items-center">
+                                        <div>
+                                            <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-pink-600 bg-green-300 mr-3"><i class="fab fa-html5"></i></span>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-blueGray-500">Amazing page examples</h4>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="py-2">
+                                    <div class="flex items-center">
+                                        <div>
+                                            <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-pink-600 bg-green-300 mr-3"><i class="far fa-paper-plane"></i></span>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-blueGray-500">Dynamic components</h4>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
-                    </form>
+                    </div>
                 </div>
+               
             </section>
 
         </>
