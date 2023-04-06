@@ -6,16 +6,19 @@ import Carousel from '../components/Carousel'
 import LogoSlider from '../components/LogoSlider'
 import Footer from '../components/Footer'
 import Products from '../components/Products'
+import Review from '../components/Review'
 function Home() {
   return (
-    <div className='h-fit bg-slate-100'>
+    <div className='h-fit bg-slate-50'>
       <Banner/>
       <Products/>
         {/* <Carousel/> */}
         <HomeAbout/>
         {/* <Categories/> */}
+        
+        <Review/>
         <LogoSlider/>
-        <Footer/>
+        
     </div>
   )
 }

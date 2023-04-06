@@ -6,34 +6,34 @@ import { MdFax } from 'react-icons/Md'
 function Footer() {
     return (
 
-        <footer aria-label="Site Footer h-full" class="bg-white">
+        <footer aria-label="Site Footer h-full" className="bg-white">
             <div
-                class="max-w-screen-xl px-4 py-16 mx-auto space-y-8 sm:px-6  lg:px-8"
+                className="max-w-screen-xl px-4 py-16 mx-auto space-y-8 sm:px-6  lg:px-8"
             >
-                <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
+                <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
                     <div>
-                        <div class="text-teal-600">
+                        <div className="text-teal-600">
                             <img src="https://nurlightllc.com/image/logo2.png" className='h-12' alt="" />
                         </div>
 
-                        <p class="max-w-xs mt-4 text-gray-500">
+                        <p className="max-w-xs mt-4 text-gray-500">
                             Our company has been distributing environmentally friendly packaging products like food
                             containers and other kitchen utensils in the DMV area. We offer low price but high-quality
                             production to the customer.
                         </p>
 
-                        <ul class="flex gap-6 mt-8">
+                        <ul className="flex gap-6 mt-8">
                             <li>
                                 <a
                                     href="/"
                                     rel="noreferrer"
                                     target="_blank"
-                                    class="text-gray-700 transition hover:opacity-75"
+                                    className="text-gray-700 transition hover:opacity-75"
                                 >
-                                    <span class="sr-only">Facebook</span>
+                                    <span className="sr-only">Facebook</span>
 
                                     <svg
-                                        class="w-6 h-6"
+                                        className="w-6 h-6"
                                         fill="currentColor"
                                         viewBox="0 0 24 24"
                                         aria-hidden="true"
@@ -52,12 +52,12 @@ function Footer() {
                                     href="/"
                                     rel="noreferrer"
                                     target="_blank"
-                                    class="text-gray-700 transition hover:opacity-75"
+                                    className="text-gray-700 transition hover:opacity-75"
                                 >
-                                    <span class="sr-only">Instagram</span>
+                                    <span className="sr-only">Instagram</span>
 
                                     <svg
-                                        class="w-6 h-6"
+                                        className="w-6 h-6"
                                         fill="currentColor"
                                         viewBox="0 0 24 24"
                                         aria-hidden="true"
@@ -76,12 +76,12 @@ function Footer() {
                                     href="/"
                                     rel="noreferrer"
                                     target="_blank"
-                                    class="text-gray-700 transition hover:opacity-75"
+                                    className="text-gray-700 transition hover:opacity-75"
                                 >
-                                    <span class="sr-only">Twitter</span>
+                                    <span className="sr-only">Twitter</span>
 
                                     <svg
-                                        class="w-6 h-6"
+                                        className="w-6 h-6"
                                         fill="currentColor"
                                         viewBox="0 0 24 24"
                                         aria-hidden="true"
@@ -98,12 +98,12 @@ function Footer() {
                                     href="/"
                                     rel="noreferrer"
                                     target="_blank"
-                                    class="text-gray-700 transition hover:opacity-75"
+                                    className="text-gray-700 transition hover:opacity-75"
                                 >
-                                    <span class="sr-only">GitHub</span>
+                                    <span className="sr-only">GitHub</span>
 
                                     <svg
-                                        class="w-6 h-6"
+                                        className="w-6 h-6"
                                         fill="currentColor"
                                         viewBox="0 0 24 24"
                                         aria-hidden="true"
@@ -122,12 +122,12 @@ function Footer() {
                                     href="/"
                                     rel="noreferrer"
                                     target="_blank"
-                                    class="text-gray-700 transition hover:opacity-75"
+                                    className="text-gray-700 transition hover:opacity-75"
                                 >
-                                    <span class="sr-only">Dribbble</span>
+                                    <span className="sr-only">Dribbble</span>
 
                                     <svg
-                                        class="w-6 h-6"
+                                        className="w-6 h-6"
                                         fill="currentColor"
                                         viewBox="0 0 24 24"
                                         aria-hidden="true"
@@ -144,40 +144,40 @@ function Footer() {
                     </div>
 
                     <div
-                        class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:col-span-2 lg:grid-cols-2"
+                        className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:col-span-2 lg:grid-cols-2"
                     >
                         <div>
-                            <p class="font-medium text-gray-900">Useful links</p>
+                            <p className="font-medium text-gray-900">Useful links</p>
 
-                            <nav aria-label="Footer Navigation - Services" class="mt-6">
-                                <ul class="space-y-4 text-sm">
+                            <nav aria-label="Footer Navigation - Services" className="mt-6">
+                                <ul className="space-y-4 text-sm">
                                     <li >
 
-                                        <a href="#" class="text-gray-700 transition hover:opacity-75">
+                                        <a href="#" className="text-gray-700 transition hover:opacity-75">
                                             Home
                                         </a>
                                     </li>
 
                                     <li>
-                                        <a href="#" class="text-gray-700 transition hover:opacity-75">
+                                        <a href="#" className="text-gray-700 transition hover:opacity-75">
                                             Product
                                         </a>
                                     </li>
 
                                     <li>
-                                        <a href="#" class="text-gray-700 transition hover:opacity-75">
+                                        <a href="#" className="text-gray-700 transition hover:opacity-75">
                                             About
                                         </a>
                                     </li>
 
                                     <li>
-                                        <a href="#" class="text-gray-700 transition hover:opacity-75">
+                                        <a href="#" className="text-gray-700 transition hover:opacity-75">
                                             Contact
                                         </a>
                                     </li>
 
                                     <li>
-                                        <a href="#" class="text-gray-700 transition hover:opacity-75">
+                                        <a href="#" className="text-gray-700 transition hover:opacity-75">
                                             SEO Optimisation
                                         </a>
                                     </li>
@@ -190,13 +190,13 @@ function Footer() {
 
 
                         <div>
-                            <p class="font-medium text-gray-900">Contact</p>
+                            <p className="font-medium text-gray-900">Contact</p>
 
-                            <nav aria-label="Footer Navigation - Legal" class="mt-6">
-                                <ul class="space-y-4  text-sm">
+                            <nav aria-label="Footer Navigation - Legal" className="mt-6">
+                                <ul className="space-y-4  text-sm">
                                     <li className='flex gap-2 items-center'>
                                         <AiFillHome width={12} className='text-green-500  text-lg' />
-                                        <a href="#" class="text-gray-700 transition hover:opacity-75">
+                                        <a href="#" className="text-gray-700 transition hover:opacity-75">
                                             16200 Livingston Rd
                                             Accokeek, MD 20607
                                             United States
@@ -205,21 +205,21 @@ function Footer() {
 
                                     <li className='flex gap-2 items-center'>
                                         <MdMarkEmailUnread className=' text-green-500 text-lg ' />
-                                        <a href="#" class="text-gray-700 transition hover:opacity-75">
+                                        <a href="#" className="text-gray-700 transition hover:opacity-75">
                                             nurlightllc@gmail.com
                                         </a>
                                     </li>
 
                                     <li className='flex gap-2 items-center'>
                                         <BsTelephoneFill width={12} className='text-green-500 text-lg ' />
-                                        <a href="#" class="text-gray-700 transition hover:opacity-75">
+                                        <a href="#" className="text-gray-700 transition hover:opacity-75">
                                             + 01 2244210338
                                         </a>
                                     </li>
 
                                     <li className='flex gap-2 items-center'>
                                         <MdFax width={12} className='text-green-500  text-xl' />
-                                        <a href="#" class="text-gray-700 transition hover:opacity-75">
+                                        <a href="#" className="text-gray-700 transition hover:opacity-75">
                                             + 01 2244210338
                                         </a>
                                     </li>
@@ -230,7 +230,7 @@ function Footer() {
                 </div>
             </div>
             <div className='bg-green-500 h-fit py-4 text-center'>
-                <p class="text-xs text-gray-100">
+                <p className="text-xs text-gray-100">
                     &copy; 2022. Nurlight LLC. All rights reserved.
                 </p>
             </div>

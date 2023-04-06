@@ -30,7 +30,7 @@ function Carousel() {
                 </p>
             </div>
             <div id="content" className=" border-t-2 carousel p-4 gap-5 flex items-center justify-start overflow-x-hidden  scroll-smooth  scrollbar-hide ">
-                <div class="">
+                <div className="">
                     <Product text={'lorem3 CKjsdkvadk bvjakjvka sfvkasvkasf'} />
                 </div>
                 <div>

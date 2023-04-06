@@ -34,9 +34,9 @@ function LogoSlider() {
     return (
         <>
 
-            <div className=" flex items-center lg:p-24 py-12 justify-center">
+            <div className=" flex items-center lg:p-12  justify-center">
                 {/* 1. */}
-                <div className="lg:w-[200%] w-[50%] h-60  flex justify-center items-center  m-4 border-gray-600 overflow-hidden relative">
+                <div className="bg-white  rounded-lg lg:w-[200%] w-[50%] h-60  flex justify-center items-center  m-4 border-gray-600 overflow-hidden relative">
                     {/* 2. */}
                     <div className=" lg:w-[200%] w-[50%]  flex items-center p-5 h-20 justify-around absolute left-0 animate gap-20 animate">
                         {/* 3 */}
