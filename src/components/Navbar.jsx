@@ -2,10 +2,21 @@ import React from 'react'
 import { AiOutlineSearch } from 'react-icons/Ai';
 import { HiOutlineShoppingCart, HiUser } from 'react-icons/Hi';
 import { NavLink } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+
 
 function Navbar() {
+
+    let location = useLocation();
+
+    React.useEffect(() => {
+
+    }, [location]);
+
+    console.log(location.pathname);
+
     return (
-        <div className=' sticky w-full shadow-lg  z-50 top-0 left-0  '>
+        <div className=' sticky w-full shadow-lg  z-40 top-0 left-0  '>
             <nav className="bg-white  ">
                 <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4">
                     <a href="/" className="flex items-center">
@@ -22,42 +33,57 @@ function Navbar() {
             <nav className="bg-gray-100 ">
                 <div className="max-w-screen-xl px-4 py-3 mx-auto">
                     <div className="flex flex-row  lg:justify-between justify-center items-center">
-                        <ul className="flex flex-row font-medium mt-0 mr-6  lg:space-x-8 space-x-4 text-sm">
-                            <li>
-                           
+                        <ul className="flex flex-row font-medium mt-0 mr-6   lg:space-x-8 space-x-4 text-sm">
+                            <li >
+
                                 <NavLink
                                     to="/"
                                     className={({ isActive, isPending }) =>
                                         isPending ? "text-red-400" : isActive ? " text-green-500 " : "text-black"
                                     }
                                 >
-                                    Home
+                                    <span className='text-lg'>Home</span>
+
+                                    <hr class={`${location.pathname == '/' ? 'w-full h-1  bg-green-500 border-0 rounded ' : 'w-full h-1 hidden '}  `} />
                                 </NavLink>
                             </li>
                             <li>
-                              
+
                                 <NavLink
                                     to="/product"
                                     className={({ isActive, isPending }) =>
                                         isPending ? "text-red-400" : isActive ? " text-green-500 " : "text-black"
                                     }
                                 >
-                                    Product
+                                    <span className='text-lg'>Product</span>
+
+                                    <hr class={`${location.pathname == '/product' ? 'w-full h-1  bg-green-500 border-0 rounded ' : 'w-full h-1 hidden '}  `} />
                                 </NavLink>
                             </li>
 
                             <li>
-                            <NavLink
+                                <NavLink
                                     to="/about"
                                     className={({ isActive, isPending }) =>
                                         isPending ? "text-red-400" : isActive ? " text-green-500 " : "text-black"
                                     }
                                 >
-                                    about
+                                    <span className='text-lg'>About</span>
+
+                                    <hr class={`${location.pathname == '/about' ? 'w-full h-1  bg-green-500 border-0 rounded ' : 'w-full h-1 hidden '}  `} />
                                 </NavLink>
-                            </li>   
+                            </li>
                             <li>
-                                <a href="#" className="text-gray-900  hover:text-[#008037]  hover:underline">Contact</a>
+                                <NavLink
+                                    to="/contact"
+                                    className={({ isActive, isPending }) =>
+                                        isPending ? "text-red-400" : isActive ? " text-green-500 " : "text-black"
+                                    }
+                                >
+                                    <span className='text-lg'>Contact</span>
+
+                                    <hr class={`${location.pathname == '/contact' ? 'w-full h-1  bg-green-500 border-0 rounded ' : 'w-full h-1 hidden '}  `} />
+                                </NavLink>
                             </li>
                         </ul>
                         <ul className='flex flex-row font-medium mt-0 mr-6 space-x-8 justify-center items-center text-sm' >

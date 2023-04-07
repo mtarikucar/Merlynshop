@@ -61,11 +61,11 @@ function classNames(...classes) {
 function CategoryFilters() {
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
     return (
-        <div className="bg-white shadow-xl border-2 m-8  rounded-lg">
+        <div className="bg-white shadow-xl border-2 lg:m-8 xl:m-8  rounded-lg">
             <div>
                 {/* Mobile filter dialog */}
                 <Transition.Root show={mobileFiltersOpen} as={Fragment}>
-                    <Dialog as="div" className="relative z-40 lg:hidden" onClose={setMobileFiltersOpen}>
+                    <Dialog as="div" className="relative z-auto lg:hidden" onClose={setMobileFiltersOpen}>
                         <Transition.Child
                             as={Fragment}
                             enter="transition-opacity ease-linear duration-300"
