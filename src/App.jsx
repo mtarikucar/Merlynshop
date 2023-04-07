@@ -10,14 +10,15 @@ import Footer from './components/Footer'
 import ProductPage from './pages/ProductPage'
 import About from './pages/About'
 import Contact from './pages/Contact'
+import ShoppingCarts from './components/ShoppingCarts'
 function App() {
-  const [count, setCount] = useState(0)
 
+  const [open, setOpen]=useState(false)
   return (
     <div className="">
       <Hero />
-      <Navbar />
-
+      <Navbar setOpen={setOpen} open={open} />
+       {open && <ShoppingCarts open={open} setOpen={setOpen} /> } 
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/product" element={<ProductPage />}  />

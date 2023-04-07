@@ -4,8 +4,8 @@ import Data from './Data'
 function Products() {
   console.log(Data);
   return (
-    <div className='grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4 lg:px-12'>
-      <div className='col-span-2 mt-6 '>
+    <div className='grid grid-cols-2  md:grid-cols-3 lg:grid-cols-3  xl:grid-cols-4 lg:px-12'>
+      <div className='lg:grid md:grid hidden  col-span-2 mt-6 '>
         <a href="#" className="group relative block ">
           <div className="relative h-[350px] lg:h-[450px]  ">
             <img

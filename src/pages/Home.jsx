@@ -10,6 +10,7 @@ import Review from '../components/Review'
 function Home() {
   return (
     <div className='h-fit bg-slate-50'>
+      
       <Banner/>
       <Products/>
         {/* <Carousel/> */}

@@ -46,7 +46,7 @@ function Product({data}) {
 
           <form className="mt-2">
             <button
-              className="block w-full rounded text-white bg-green-500 p-4 text-sm font-medium transition hover:scale-105"
+              className="block w-full rounded p-2 text-white bg-green-500 lg:p-4  md:p-3 text-sm font-medium transition hover:scale-105"
             >
               Add to Cart
             </button>
