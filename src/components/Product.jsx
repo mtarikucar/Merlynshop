@@ -1,9 +1,9 @@
 import React from 'react'
 import { BsBasket } from 'react-icons/Bs';
-function Product({data}) {
+function Product({product}) {
   return (
     <>
-      <div key={`${data.id} `}className="mx-auto mt-6 max-h-[450px] w-44  md:w-72 lg:w-80 transform overflow-hidden rounded-lg bg-white  shadow-md duration-300 hover:scale-105 hover:shadow-lg">
+      <div key={`${product.id} `}className="mx-auto mt-6 max-h-[450px] w-44  md:w-72 lg:w-80 transform overflow-hidden rounded-lg bg-white  shadow-md duration-300 hover:scale-105 hover:shadow-lg">
         <button
           className="absolute right-4 top-4 z-10 rounded-full bg-white p-1.5 text-gray-900 transition hover:text-gray-900/75"
         >
@@ -17,8 +17,8 @@ function Product({data}) {
             className="h-4 w-4"
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
             />
           </svg>
@@ -27,7 +27,7 @@ function Product({data}) {
     
 
           <img
-            src={data.iamge}
+            src={product.thumbnail}
             alt=""
             className= " h-40 md:h-48 text-center p-3 object-cover w-full transition duration-500 group-hover:scale-105 lg:h-[270px]"
           />
@@ -36,8 +36,8 @@ function Product({data}) {
         <div className="relative gap-1  border-gray-100 bg-white p-3">
 
 
-          <h3 className=" text-lg font-medium text-gray-900">{data.name}</h3>
-          <p className="mb-2 text-base text-gray-700  truncate  ">{data.description}</p>
+          <h3 className=" text-lg font-medium text-gray-900">{product.brand}</h3>
+          <p className="mb-2 text-base text-gray-700  truncate  ">{product.description}</p>
           <div className='flex justify-start flex-row'>
           
             <p className="mr-2 text-lg font-semibold text-gray-900 ">$20.00</p>

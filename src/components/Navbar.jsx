@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
-import { AiOutlineHome ,AiOutlineExclamationCircle} from 'react-icons/Ai';
+import { AiOutlineHome, AiOutlineExclamationCircle } from 'react-icons/Ai';
 import { HiOutlineShoppingCart, HiUser } from 'react-icons/Hi';
 import { NavLink } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import ShoppingCarts from './ShoppingCarts';
 import { FcAbout } from 'react-icons/Fc';
 import { FaProductHunt } from 'react-icons/fa';
-import { MdProductionQuantityLimits } from 'react-icons/Md';
+import { MdProductionQuantityLimits, MdOutlineContacts } from 'react-icons/Md';
 import { GrContact } from 'react-icons/Gr';
 function Navbar({ open, setOpen }) {
 
@@ -29,17 +29,26 @@ function Navbar({ open, setOpen }) {
                     </a>
                     <div className="flex items-center ">
                         <a href="tel:5541251234" className="mr-6 text-sm  text-gray-500  hover:underline">(555) 412-1234</a>
-                        <button type="button" className="text-white bg-[#008037] hover:bg-white hover:text-[#008037] hover:border focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0">Login</button>
+                        
+                        <NavLink
+                            to="/login"
+                            className="text-white bg-[#008037] hover:bg-white hover:text-[#008037] hover:border focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0"
+                        >
+
+                            Login
+
+
+                        </NavLink>
 
                     </div>
                 </div>
             </nav>
             <nav className="bg-gray-100 ">
 
-                <div class=" lg:sticky  xl:sticky md:sticky fixed  lg:top-0  xl:top-0 md:top-0  bottom-0 z-50 w-full h-16  flex bg-white border-t border-gray-200 ">
+                <div className=" lg:sticky  xl:sticky md:sticky fixed  lg:top-0  xl:top-0 md:top-0  bottom-0 z-50 w-full h-16  flex bg-white border-t border-gray-200 ">
                     <div className=' container flex flex-row items-center w-full'>
 
-                        <ul class="flex justify-center h-full w-full  font-medium mx-2 p-2 lg:space-x-10" >
+                        <ul className="flex justify-center h-full w-full  font-medium mx-2 p-2 lg:space-x-10" >
                             <li className='inline-flex flex-col items-center justify-center  p-3  rounded-lg  hover:bg-gray-50  group'>
                                 <NavLink
                                     to="/"
@@ -50,11 +59,11 @@ function Navbar({ open, setOpen }) {
                                     <AiOutlineHome className='text-center w-full text-2xl' />
                                     <span className='text-sm mb-2'>Home</span>
 
-                                    <hr class={`${location.pathname == '/' ? 'w-full h-0.5  bg-green-500 border-0 rounded ' : 'w-full h-1 hidden '}  `} />
+                                    <hr className={`${location.pathname == '/' ? 'w-full h-0.5  bg-green-500 border-0 rounded ' : 'w-full h-1 hidden '}  `} />
                                 </NavLink>
                             </li>
 
-                            <li class="inline-flex flex-col items-center justify-center p-3 hover:bg-gray-50 ">
+                            <li className="inline-flex flex-col items-center justify-center p-3 hover:bg-gray-50 group  rounded-lg  ">
                                 <NavLink
                                     to="/product"
                                     className={({ isActive, isPending }) =>
@@ -64,10 +73,10 @@ function Navbar({ open, setOpen }) {
                                     <MdProductionQuantityLimits className='text-center w-full text-2xl' />
                                     <span className='text-sm mb-2'>Product</span>
 
-                                    <hr class={`${location.pathname == '/product' ? 'w-full h-0.5  bg-green-500 border-0 rounded ' : 'w-full h-1 hidden '}  `} />
+                                    <hr className={`${location.pathname == '/product' ? 'w-full h-0.5  bg-green-500 border-0 rounded ' : 'w-full h-1 hidden '}  `} />
                                 </NavLink>
                             </li>
-                            <li class="inline-flex flex-col items-center justify-center p-3 hover:bg-gray-50 group">
+                            <li className="inline-flex flex-col items-center justify-center p-3 hover:bg-gray-50 group  rounded-lg ">
                                 <NavLink
                                     to="/about"
                                     className={({ isActive, isPending }) =>
@@ -77,20 +86,20 @@ function Navbar({ open, setOpen }) {
                                     <AiOutlineExclamationCircle className='text-center w-full text-2xl' />
                                     <span className='text-sm mb-2'>About</span>
 
-                                    <hr class={`${location.pathname == '/about' ? 'w-full h-0.5  bg-green-500 border-0 rounded ' : 'w-full h-1 hidden '}  `} />
+                                    <hr className={`${location.pathname == '/about' ? 'w-full h-0.5  bg-green-500 border-0 rounded ' : 'w-full h-1 hidden '}  `} />
                                 </NavLink>
                             </li>
-                            <li class="inline-flex flex-col items-center justify-center p-3 hover:bg-gray-50 ">
+                            <li className="inline-flex flex-col items-center justify-center p-3 hover:bg-gray-50 group  rounded-lg  ">
                                 <NavLink
                                     to="/contact"
                                     className={({ isActive, isPending }) =>
                                         isPending ? "text-red-400" : isActive ? " text-green-500 " : "text-gray-800"
                                     }
                                 >
-                                    <GrContact className='text-center w-full text-2xl' />
+                                    <MdOutlineContacts className='text-center w-full text-2xl' />
                                     <span className='text-sm mb-2'>Contact</span>
 
-                                    <hr class={`${location.pathname == '/contact' ? 'w-full h-0.5  bg-green-500 border-0 rounded ' : 'w-full h-1 hidden '}  `} />
+                                    <hr className={`${location.pathname == '/contact' ? 'w-full h-0.5  bg-green-500 border-0 rounded ' : 'w-full h-1 hidden '}  `} />
                                 </NavLink>
                             </li>
                         </ul>
@@ -136,7 +145,7 @@ function Navbar({ open, setOpen }) {
                                 >
                                     <span className='text-lg'>Home</span>
 
-                                    <hr class={`${location.pathname == '/' ? 'w-full h-1  bg-green-500 border-0 rounded ' : 'w-full h-1 hidden '}  `} />
+                                    <hr className={`${location.pathname == '/' ? 'w-full h-1  bg-green-500 border-0 rounded ' : 'w-full h-1 hidden '}  `} />
                                 </NavLink>
                             </li>
                             <li>
@@ -149,7 +158,7 @@ function Navbar({ open, setOpen }) {
                                 >
                                     <span className='text-lg'>Product</span>
 
-                                    <hr class={`${location.pathname == '/product' ? 'w-full h-1  bg-green-500 border-0 rounded ' : 'w-full h-1 hidden '}  `} />
+                                    <hr className={`${location.pathname == '/product' ? 'w-full h-1  bg-green-500 border-0 rounded ' : 'w-full h-1 hidden '}  `} />
                                 </NavLink>
                             </li>
 
@@ -162,7 +171,7 @@ function Navbar({ open, setOpen }) {
                                 >
                                     <span className='text-lg'>About</span>
 
-                                    <hr class={`${location.pathname == '/about' ? 'w-full h-1  bg-green-500 border-0 rounded ' : 'w-full h-1 hidden '}  `} />
+                                    <hr className={`${location.pathname == '/about' ? 'w-full h-1  bg-green-500 border-0 rounded ' : 'w-full h-1 hidden '}  `} />
                                 </NavLink>
                             </li>
                             <li>
@@ -174,7 +183,7 @@ function Navbar({ open, setOpen }) {
                                 >
                                     <span className='text-lg'>Contact</span>
 
-                                    <hr class={`${location.pathname == '/contact' ? 'w-full h-1  bg-green-500 border-0 rounded ' : 'w-full h-1 hidden '}  `} />
+                                    <hr className={`${location.pathname == '/contact' ? 'w-full h-1  bg-green-500 border-0 rounded ' : 'w-full h-1 hidden '}  `} />
                                 </NavLink>
                             </li>
                         </ul>

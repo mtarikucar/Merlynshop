@@ -24,11 +24,45 @@ const products = [
         imageAlt:
             'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
     },
+    {
+        id: 2,
+        name: 'Medium Stuff Satchel',
+        href: '#',
+        color: 'Blue',
+        price: '$32.00',
+        quantity: 1,
+        imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
+        imageAlt:
+            'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
+    },
+    {
+        id: 2,
+        name: 'Medium Stuff Satchel',
+        href: '#',
+        color: 'Blue',
+        price: '$32.00',
+        quantity: 1,
+        imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
+        imageAlt:
+            'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
+    },
+    {
+        id: 2,
+        name: 'Medium Stuff Satchel',
+        href: '#',
+        color: 'Blue',
+        price: '$32.00',
+        quantity: 1,
+        imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
+        imageAlt:
+            'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
+    },
+
     // More products...
 ]
 
-function ShoppingCarts({open, setOpen}) {
-    
+function ShoppingCarts({ open, setOpen }) {
+
 
     return (
         <Transition.Root show={open} as={Fragment}>
@@ -59,20 +93,20 @@ function ShoppingCarts({open, setOpen}) {
                             >
                                 <Dialog.Panel className="pointer-events-auto w-screen max-w-md">
                                     <div className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
-                                        <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
-                                            <div className="flex items-start justify-between">
-                                                <Dialog.Title className="text-lg font-medium text-gray-900">Shopping cart</Dialog.Title>
-                                                <div className="ml-3 flex h-7 items-center">
-                                                    <button
-                                                        type="button"
-                                                        className="-m-2 p-2 text-gray-400 hover:text-gray-500"
-                                                        onClick={() => setOpen(false)}
-                                                    >
-                                                        <span className="sr-only">Close panel</span>
-                                                        <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-                                                    </button>
-                                                </div>
+                                        <div className="flex items-center p-5  justify-between">
+                                            <Dialog.Title className="text-lg font-medium text-gray-900">Shopping cart</Dialog.Title>
+                                            <div className="ml-3 flex h-7 items-center">
+                                                <button
+                                                    type="button"
+                                                    className="-m-2 p-2 text-gray-400 hover:text-gray-500"
+                                                    onClick={() => setOpen(false)}
+                                                >
+                                                    <span className="sr-only">Close panel</span>
+                                                    <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                                                </button>
                                             </div>
+                                        </div>
+                                        <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
 
                                             <div className="mt-8">
                                                 <div className="flow-root">
@@ -103,7 +137,7 @@ function ShoppingCarts({open, setOpen}) {
                                                                         <div className="flex">
                                                                             <button
                                                                                 type="button"
-                                                                                className="font-medium text-indigo-600 hover:text-indigo-500"
+                                                                                className="font-medium text-green-600 hover:text-green-500"
                                                                             >
                                                                                 Remove
                                                                             </button>
@@ -126,7 +160,7 @@ function ShoppingCarts({open, setOpen}) {
                                             <div className="mt-6">
                                                 <a
                                                     href="#"
-                                                    className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                                                    className="flex items-center justify-center rounded-md border border-transparent bg-green-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-green-700"
                                                 >
                                                     Checkout
                                                 </a>
@@ -136,7 +170,7 @@ function ShoppingCarts({open, setOpen}) {
                                                     or
                                                     <button
                                                         type="button"
-                                                        className="font-medium text-indigo-600 hover:text-indigo-500"
+                                                        className="font-medium text-green-600 hover:text-green-500"
                                                         onClick={() => setOpen(!open)}
                                                     >
                                                         Continue Shopping

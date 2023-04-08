@@ -2,6 +2,7 @@ import { Fragment, useState } from 'react'
 import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
+import Products from '../components/Products'
 
 const sortOptions = [
     { name: 'Most Popular', href: '#', current: true },
@@ -163,9 +164,9 @@ function CategoryFilters() {
                     </Dialog>
                 </Transition.Root>
 
-                <main className="mx-auto  px-4 sm:px-6 lg:px-8">
-                    <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
-                        <h1 className="text-4xl font-bold tracking-tight text-gray-900">New Arrivals</h1>
+                <main className="mx-auto  sm:px-6 lg:px-8">
+                    <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 px-4 pt-24">
+                        <h1 className="text-2xl font-bold tracking-tight text-gray-900">New Arrivals</h1>
 
                         <div className="flex items-center">
                             <Menu as="div" className="relative inline-block text-left">
@@ -288,8 +289,8 @@ function CategoryFilters() {
                             </form>
 
                             {/* Product grid */}
-                            <div className="lg:col-span-3">{/* Your content */}
-                            
+                            <div className="lg:col-span-3 ">{/* Your content */}
+                                                            <Products/>
                             </div>
                         </div>
                     </section>

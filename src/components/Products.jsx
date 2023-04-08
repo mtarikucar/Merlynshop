@@ -1,11 +1,41 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Product from './product'
 import Data from './Data'
+import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 function Products() {
-  console.log(Data);
+
+  let location = useLocation();
+
+  useEffect(() => {
+
+  }, [location]);
+
+  const [data, setData] = useState();
+
+  const getProducts = async () => {
+    try {
+      const response = await axios.get('https://dummyjson.com/products');
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getProducts();
+      setData(data.products);
+    };
+
+    fetchData();
+  }, []);
+
+
   return (
-    <div className='grid grid-cols-2  md:grid-cols-3 lg:grid-cols-3  xl:grid-cols-4 lg:px-12'>
-      <div className='lg:grid md:grid hidden  col-span-2 mt-6 '>
+    < div className={`${location.pathname=='/'? 'grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-4 lg:px-12' : 'grid grid-cols-2   md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-3 lg:px-4'} `} >
+      <div className={`${location.pathname=='/product'? ' hidden  ':' lg:grid md:grid hidden  col-span-2 mt-6'}`}>
         <a href="#" className="group relative block ">
           <div className="relative h-[350px] lg:h-[450px]  ">
             <img
@@ -39,13 +69,14 @@ function Products() {
 
       </div>
       {
-        Data.map((data,key) => (
-          <Product  data={data} />
+        data &&
+        data.map((product) => (
+          <Product product={product} />
         ))
       }
 
 
-    </div>
+    </div >
   )
 }
 

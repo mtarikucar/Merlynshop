@@ -5,7 +5,7 @@ function HomeAbout() {
         <>
             <section className="  lg:my-16 bg-white shadow ">
                 <div className="items-center flex lg:flex-row flex-col  ">
-                    <div className=" md:w-1/2  ml-auto mr-auto ">
+                    <div className=" md:w-1/3 py-16  ml-auto mr-auto ">
                         <img alt="..." className="max-w-full rounded-lg shadow-lg" src="https://nurlightllc.com/image/blog4.jpeg"/>
                     </div>
                     <div className="w-full md:w-5/12 ml-auto mr-auto px-4">
