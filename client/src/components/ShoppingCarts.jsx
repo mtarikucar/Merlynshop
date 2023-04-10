@@ -10,7 +10,7 @@ const products = [
         color: 'Salmon',
         price: '$90.00',
         quantity: 1,
-        imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg',
+        imageSrc: 'https://nurlightllc.com/image/product_image/8eae085c-68b0-4f34-a85b-234850fcf291.jpg_1180xaf%20(1).jpg',
         imageAlt: 'Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.',
     },
     {
@@ -20,7 +20,7 @@ const products = [
         color: 'Blue',
         price: '$32.00',
         quantity: 1,
-        imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
+        imageSrc: 'https://nurlightllc.com/image/product_image/8eae085c-68b0-4f34-a85b-234850fcf291.jpg_1180xaf%20(1).jpg',
         imageAlt:
             'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
     },
@@ -31,7 +31,7 @@ const products = [
         color: 'Blue',
         price: '$32.00',
         quantity: 1,
-        imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
+        imageSrc: 'https://nurlightllc.com/image/product_image/8eae085c-68b0-4f34-a85b-234850fcf291.jpg_1180xaf%20(1).jpg',
         imageAlt:
             'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
     },
@@ -42,7 +42,7 @@ const products = [
         color: 'Blue',
         price: '$32.00',
         quantity: 1,
-        imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
+        imageSrc: 'https://nurlightllc.com/image/product_image/8eae085c-68b0-4f34-a85b-234850fcf291.jpg_1180xaf%20(1).jpg',
         imageAlt:
             'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
     },
@@ -53,7 +53,7 @@ const products = [
         color: 'Blue',
         price: '$32.00',
         quantity: 1,
-        imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
+        imageSrc: 'https://nurlightllc.com/image/product_image/8eae085c-68b0-4f34-a85b-234850fcf291.jpg_1180xaf%20(1).jpg',
         imageAlt:
             'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
     },
@@ -114,10 +114,11 @@ function ShoppingCarts({ open, setOpen }) {
                                                         {products.map((product) => (
                                                             <li key={product.id} className="flex py-6">
                                                                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                                                    <img
+                                                                    <img 
+                                                                
                                                                         src={product.imageSrc}
                                                                         alt={product.imageAlt}
-                                                                        className="h-full w-full object-cover object-center"
+                                                                        className="h-full w-full p-1 object-cover object-center"
                                                                     />
                                                                 </div>
 

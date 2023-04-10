@@ -13,6 +13,7 @@ import Contact from './pages/Contact'
 import ShoppingCarts from './components/ShoppingCarts'
 import { HiOutlineShoppingCart } from 'react-icons/Hi';
 import Login from './pages/Login'
+import ProductDetail from './pages/ProductDetail'
 function App() {
 
   const [open, setOpen] = useState(false)
@@ -39,6 +40,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
 
+          <Route path="/products/:id" element={<ProductDetail />} />
           <Route path="/login" element={<Login />} />
 
 

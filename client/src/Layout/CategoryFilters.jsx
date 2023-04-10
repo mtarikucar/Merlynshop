@@ -54,7 +54,7 @@ const filters = [
             { value: '40l', label: '40L', checked: true },
         ],
     },
-]   
+]
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -290,7 +290,7 @@ function CategoryFilters() {
 
                             {/* Product grid */}
                             <div className="lg:col-span-3 ">{/* Your content */}
-                                                            <Products/>
+                                <Products />
                             </div>
                         </div>
                     </section>

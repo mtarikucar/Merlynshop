@@ -3,6 +3,11 @@ import Product from './product'
 import Data from './Data'
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
+import Carousel from './Carousel';
+import { useQuery } from 'react-query'
+
+import { getProducts } from '../api';
+
 function Products() {
 
   let location = useLocation();
@@ -11,56 +16,64 @@ function Products() {
 
   }, [location]);
 
-  const [data, setData] = useState();
-
-  const getProducts = async () => {
-    try {
-      const response = await axios.get('https://dummyjson.com/products');
-      return response.data;
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getProducts();
-      setData(data.products);
+  /*   
+  
+    const getProducts = async () => {
+      try {
+        const response = await axios.get('https://dummyjson.com/products');
+        return response.data;
+      } catch (error) {
+        console.error(error);
+      }
     };
+  
+  
+    useEffect(() => {
+      const fetchData = async () => {
+        const data = await getProducts();
+        setData(data.products);
+      };
+  
+      fetchData();
+    }, []); */
 
-    fetchData();
-  }, []);
+  const { isLoading, error, data } = useQuery('product', getProducts)
+  if (isLoading) return 'Loading...'
 
+  if (error) return 'An error has occurred: ' + error.message
+  
+console.log(data.products);
 
   return (
-    < div className={`${location.pathname=='/'? 'grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-4 lg:px-12' : 'grid grid-cols-2   md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-3 lg:px-4'} `} >
-      <div className={`${location.pathname=='/product'? ' hidden  ':' lg:grid md:grid hidden  col-span-2 mt-6'}`}>
+    < div className={`${location.pathname == '/' ? 'grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-4 lg:px-12' : 'grid grid-cols-2   md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-3 lg:px-4'} `} >
+      <div className={`${location.pathname == '/product' ? ' hidden  ' : ' lg:grid md:grid hidden  col-span-2 mt-6'}`}>
+
+
         <a href="#" className="group relative block ">
           <div className="relative h-[350px] lg:h-[450px]  ">
             <img
-              src="https://images.unsplash.com/photo-1593795899768-947c4929449d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2672&q=80"
+              src="https://nurlightllc.com/image/product_image/8eae085c-68b0-4f34-a85b-234850fcf291.jpg_1180xaf%20(1).jpg"
               alt=""
               className="absolute inset-0 h-full w-full rounded-lg object-cover opacity-100 group-hover:opacity-0"
             />
 
             <img
-              src="https://images.unsplash.com/photo-1593795899630-b6033c0fa58d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
               alt=""
+              src="https://nurlightllc.com/image/product_image/beanca-20-container-food-storage-set.webp"
               className="absolute inset-0 h-full w-full rounded-lg object-cover opacity-0 group-hover:opacity-100"
             />
           </div>
 
           <div className="absolute inset-0 flex flex-col items-start justify-end p-6 " >
-            <h3 className="text-xl font-medium text-white">Skinny Jeans Blue</h3>
+            <h3 className="text-xl font-medium text-gray-800">Skinny Jeans Blue</h3>
 
-            <p className="mt-1.5 max-w-[40ch] text-xs text-white">
+            <p className="mt-1.5 max-w-[40ch] text-xs text-gray-800">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos sequi
               dicta impedit aperiam ipsum!
             </p>
 
             <span
-              className="mt-3 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white"
+              className="mt-3 inline-block bg-green-500 hover:bg-green-700 px-5 py-3 text-xs font-medium uppercase tracking-wide text-white"
             >
               Shop Now
             </span>
@@ -69,8 +82,8 @@ function Products() {
 
       </div>
       {
-        data &&
-        data.map((product) => (
+        data.products &&
+        data.products?.map((product) => (
           <Product product={product} />
         ))
       }

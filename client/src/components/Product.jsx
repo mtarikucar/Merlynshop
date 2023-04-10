@@ -1,9 +1,10 @@
 import React from 'react'
 import { BsBasket } from 'react-icons/Bs';
-function Product({product}) {
+import { Link } from 'react-router-dom';
+function Product({ product }) {
   return (
     <>
-      <div key={`${product.id} `}className="mx-auto mt-6 max-h-[450px] w-44  md:w-72 lg:w-80 transform overflow-hidden rounded-lg bg-white  shadow-md duration-300 hover:scale-105 hover:shadow-lg">
+      <div key={`${product.id} `} className="mx-auto mt-6 max-h-[450px] w-44  md:w-72 lg:w-80 transform overflow-hidden rounded-lg bg-white  shadow-md duration-300 hover:scale-105 hover:shadow-lg">
         <button
           className="absolute right-4 top-4 z-10 rounded-full bg-white p-1.5 text-gray-900 transition hover:text-gray-900/75"
         >
@@ -24,13 +25,18 @@ function Product({product}) {
           </svg>
         </button>
 
-    
+
+
+        <Link to={`/products/${product.id}`}>
+
 
           <img
             src={product.thumbnail}
             alt=""
-            className= " h-40 md:h-48 text-center p-3 object-cover w-full transition duration-500 group-hover:scale-105 lg:h-[270px]"
+            className=" h-40 md:h-48 text-center p-3 object-cover w-full transition duration-500 group-hover:scale-105 lg:h-[270px]"
           />
+        </Link>
+
 
 
         <div className="relative gap-1  border-gray-100 bg-white p-3">
@@ -39,18 +45,19 @@ function Product({product}) {
           <h3 className=" text-lg font-medium text-gray-900">{product.brand}</h3>
           <p className="mb-2 text-base text-gray-700  truncate  ">{product.description}</p>
           <div className='flex justify-start flex-row'>
-          
+
             <p className="mr-2 text-lg font-semibold text-gray-900 ">$20.00</p>
             <p className="text-base  font-medium text-gray-500 line-through dark:text-gray-300">$25.00</p>
           </div>
 
-          <form className="mt-2">
-            <button
-              className="block w-full rounded p-2 text-white bg-green-500 lg:p-4  md:p-3 text-sm font-medium transition hover:scale-105"
-            >
-              Add to Cart
-            </button>
-          </form>
+
+          <a
+            href=''
+            className="block w-full rounded p-2 text-white bg-green-500 lg:p-4  md:p-3 text-sm font-medium transition hover:scale-105"
+          >
+            Add to Cart
+          </a>
+
         </div>
 
       </div>

@@ -31,48 +31,12 @@ function Carousel() {
             </div>
             <div id="content" className=" border-t-2 carousel p-4 gap-5 flex items-center justify-start overflow-x-hidden  scroll-smooth  scrollbar-hide ">
                 <div className="">
-                    <Product text={'lorem3 CKjsdkvadk bvjakjvka sfvkasvkasf'} />
+                    <img  src="https://nurlightllc.com/image/product_image/beanca-20-container-food-storage-set.webp" alt="" />
                 </div>
-                <div>
-                    <Product text={'lorem3C Kjsdkvadkbvjak jvkasfvkasvkasf sdzfgdhf ghlhdtyjsjm nskdsngbkjıfv kvkjbfgbukbkfdvbözmn bömdbgugyaubvnc vmvbdfguayv nc m bkuauhgryud'}  />
+                <div className="">
+                    <img  src="https://nurlightllc.com/image/product_image/beanca-20-container-food-storage-set.webp" alt="" />
                 </div>
-                <div>
-                    <Product text={'lorem3CK jsdkva dkbvjakjvka sfvkasv kasf dszgbgu erıuhvısd vuhdsfv fdufv ıdsfuıv fv'}  />
-                </div>
-                <div>
-                    <Product />
-                </div>
-                <div>
-                    <Product />
-                </div>
-
-                <div>
-                    <Product />
-                </div>
-                <div>
-                    <Product />
-                </div>
-                <div>
-                    <Product />
-                </div>
-                <div>
-                    <Product />
-                </div>
-                <div>
-                    <Product />
-                </div>
-                <div>
-                    <Product />
-                </div>
-                <div>
-                    <Product />
-                </div>
-                <div>
-                    <Product />
-                </div>
-                <div>
-                    <Product />
-                </div>
+                
             </div>
         </div>
     )

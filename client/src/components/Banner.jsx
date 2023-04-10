@@ -51,7 +51,7 @@ function Banner() {
 
                     </p>
                     <p className='text-lg font-normal text-center'>
-                        On orders over $75
+                        On orders over $100
                     </p>
                 </div>
             </div>
