@@ -7,9 +7,4 @@ export const getProducts =async()=>{
     return data;
 };
 
-export const getProductId =async(id)=>{
-
-    const {data} = await axios.get(`https://dummyjson.com/products/${id}`);
-    return data;
-};
 /* const { isLoading, error, data } = useQuery(['product', id],()=> getProductId(id)) */

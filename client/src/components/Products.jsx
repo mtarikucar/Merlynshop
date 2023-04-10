@@ -10,39 +10,16 @@ import { getProducts } from '../api';
 
 function Products() {
 
-  let location = useLocation();
 
-  useEffect(() => {
 
-  }, [location]);
 
-  /*   
-  
-    const getProducts = async () => {
-      try {
-        const response = await axios.get('https://dummyjson.com/products');
-        return response.data;
-      } catch (error) {
-        console.error(error);
-      }
-    };
-  
-  
-    useEffect(() => {
-      const fetchData = async () => {
-        const data = await getProducts();
-        setData(data.products);
-      };
-  
-      fetchData();
-    }, []); */
 
-  const { isLoading, error, data } = useQuery('product', getProducts)
+  const { isLoading, error, data } = useQuery('products', getProducts)
   if (isLoading) return 'Loading...'
 
   if (error) return 'An error has occurred: ' + error.message
   
-console.log(data.products);
+
 
   return (
     < div className={`${location.pathname == '/' ? 'grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-4 lg:px-12' : 'grid grid-cols-2   md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-3 lg:px-4'} `} >
