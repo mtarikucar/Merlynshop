@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 function Product({ product }) {
   return (
     <>
-      <div key={`${product.id} `} className="mx-auto mt-6 max-h-[450px] w-44  md:w-72 lg:w-80 transform overflow-hidden rounded-lg bg-white  shadow-md duration-300 hover:scale-105 hover:shadow-lg">
+      <div className="mx-auto mt-6 max-h-[450px] w-44  md:w-72 lg:w-80 transform overflow-hidden rounded-lg bg-white  shadow-md duration-300 hover:scale-105 hover:shadow-lg">
         <button
           className="absolute right-4 top-4 z-10 rounded-full bg-white p-1.5 text-gray-900 transition hover:text-gray-900/75"
         >

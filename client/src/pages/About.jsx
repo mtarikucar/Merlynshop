@@ -1,6 +1,6 @@
 import React from 'react'
-import AboutCard from '../components/AboutCard'
-import AboutImageGallery from '../components/AboutImageGallery'
+import AboutCard from '../components/about/AboutCard'
+import AboutImageGallery from '../components/about/AboutImageGallery'
 
 function About() {
   return (

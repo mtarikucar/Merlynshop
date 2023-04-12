@@ -1,26 +1,24 @@
 import React from 'react'
-import HomeAbout from '../components/HomeAbout'
-import Categories from '../components/Categories'
-import Banner from '../components/Banner'
-import Carousel from '../components/Carousel'
-import LogoSlider from '../components/LogoSlider'
-import Footer from '../components/Footer'
+import HomeAbout from '../components/home/HomeAbout'
+import Banner from '../components/home/Banner'
+
+import LogoSlider from '../Layout/LogoSlider'
+
 import Products from '../components/Products'
-import Review from '../components/Review'
-import ProductDetail from './ProductDetail'
+import Review from '../components/home/Review'
+
 function Home() {
   return (
     <div className='h-fit bg-[#eaeff6]'>
-      
-      <Banner/>
-      <Products/>
-        {/* <Carousel/> */}
-        <HomeAbout/>
-        {/* <Categories/> */}
-        <ProductDetail/>
-        <Review/>
-        <LogoSlider/>
-        
+
+      <Banner />
+      <Products />
+
+      <HomeAbout />
+
+      <Review />
+      <LogoSlider />
+
     </div>
   )
 }

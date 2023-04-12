@@ -3,7 +3,7 @@ import Product from './product'
 import Data from './Data'
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
-import Carousel from './Carousel';
+
 import { useQuery } from 'react-query'
 
 import { getProducts } from '../api';
@@ -18,11 +18,11 @@ function Products() {
   if (isLoading) return 'Loading...'
 
   if (error) return 'An error has occurred: ' + error.message
-  
+
 
 
   return (
-    < div className={`${location.pathname == '/' ? 'grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-4 lg:px-12' : 'grid grid-cols-2   md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-3 lg:px-4'} `} >
+    < div className={`${location.pathname == '/' ? 'grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-4 lg:px-12' : 'grid grid-cols-2   md:grid-cols-2 lg:grid-cols-2  xl:grid-cols-3 '} `} >
       <div className={`${location.pathname == '/product' ? ' hidden  ' : ' lg:grid md:grid hidden  col-span-2 mt-6'}`}>
 
 
@@ -60,8 +60,8 @@ function Products() {
       </div>
       {
         data.products &&
-        data.products?.map((product) => (
-          <Product product={product} />
+        data.products?.map((product, key) => (
+          <Product product={product} key={key} />
         ))
       }
 

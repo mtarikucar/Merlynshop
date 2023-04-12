@@ -1,10 +1,10 @@
 import React from 'react'
-import CategoryFilters from '../Layout/CategoryFilters'
+import CategoryFilters from '../components/products/productViewer'
 
 function ProductPage() {
   return (
     <div className='w-full'> 
-      <CategoryFilters/>
+      <productViewer/>
     </div>
   )
 }
