@@ -1,19 +1,23 @@
+const { Router } = require('express');
+const {verifyTokenAndAuthorization} = require('../middlewares/verifyToken');
+const { updateUser, deleteUser, getUser, deleteUserPermanent } = require('../controllers/user');
+const { register } = require('../controllers/auth');
+const router = Router()
 
-"use strict";
 
-const userRouter = require("express").Router();
+// PATCH => /api/user/:id
+router.patch('/:id', verifyTokenAndAuthorization, updateUser);
 
-// Middlewares
-const { authCheck } = require("../middlewares/auth");
+// DELETE => /api/user/:id
+router.delete('/:id', verifyTokenAndAuthorization, deleteUser);
 
-// Controllers
-const { login, register, info } = require("./../controllers/user");
+// DELETE => /api/user/admin/:id
+router.delete('/admin/:id', verifyTokenAndAuthorization, deleteUserPermanent);
 
-// Routes
-userRouter.post("/login", login);
+// POST => /api/user/admin/add
+router.post('/admin/add',verifyTokenAndAuthorization, register);
 
-userRouter.post("/register", register);
+// GET => /api/user/:id
+router.get('/:id',verifyTokenAndAuthorization, getUser);
 
-userRouter.get("/me", authCheck, info);
-
-module.exports = userRouter;
+module.exports =router

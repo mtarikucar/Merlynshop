@@ -1,18 +1,19 @@
-"use strict";
+const router = require("express").Router();
+const {createProduct,getAllProducts,getProductById,updateProductById,deleteProductById} = require("../controllers/product");
+const {verifyTokenAndAdmin} = require("../middlewares/verifyToken")
+// Create a new company
+router.post("/",verifyTokenAndAdmin, createProduct);
 
-const productRouter = require("express").Router();
+// Get a list of all companies
+router.get("/",verifyTokenAndAdmin, getAllProducts);
 
-// Controllers
-const {  get_allProduct, create_product, get_product, update_product, delete_product } = require("./../controllers/product");
+// Get a specific company by ID
+router.get("/:id",verifyTokenAndAdmin, getProductById);
 
-// Routes
-productRouter.get("/",get_allProduct);
-productRouter.get("/:id",get_product);
+// Update a company by ID
+router.put("/:id",verifyTokenAndAdmin, updateProductById);
 
-productRouter.post("/",create_product);
+// Delete a company by ID
+router.delete("/:id",verifyTokenAndAdmin, deleteProductById);
 
-productRouter.put("/:id",update_product)
-
-productRouter.delete("/:id",delete_product)
-
-module.exports = productRouter;
+module.exports = router;

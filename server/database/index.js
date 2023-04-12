@@ -9,7 +9,7 @@ const sequelize = new Sequelize(
       username: process.env.SERVERDB_USERNAME,
       password:process.env.SERVERDB_PASSWORD ,
        
-      database: process.env.SERVERDB_DATABEAS,
+      database: process.env.SERVERDB_DATABASE,
       port:process.env.SERVERDB_PORT ,
       host: process.env.SERVERDB_HOST,
       ssl: false,
@@ -25,8 +25,14 @@ const sequelize = new Sequelize(
 
 
 const modelDefiners = [
-  require("./models/user.model"),
+  require("./models/cart.model"),
+  require("./models/category.model"),
+  require("./models/location.model"),
+  require("./models/order.model"),
+  require("./models/payment.model"),
   require("./models/product.model"),
+  require("./models/user.model"),
+  require("./models/photo.model"),
 ];
 
 // We define all models according to their files.
@@ -35,8 +41,9 @@ for (const modelDefiner of modelDefiners) {
 }
 
 // We execute any extra setup after the models are defined, such as adding associations.
-/* applyRelationships(sequelize); */
-//sequelize.sync({ force: true });
+applyRelationships(sequelize);
+
+sequelize.sync({force:true}) //force: true
 
 // We export the sequelize connection instance to be used around our app.
 module.exports = sequelize;
