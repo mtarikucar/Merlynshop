@@ -1,4 +1,4 @@
-const { DataTypes } = require("sequelize");
+const { DataTypes, STRING } = require("sequelize");
 
 module.exports = (sequelize) => {
   sequelize.define(
@@ -10,37 +10,37 @@ module.exports = (sequelize) => {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
       },
-      isActive: {
+      name: {
+        type: DataTypes.STRING,
         allowNull: false,
-        type: DataTypes.BOOLEAN,
-        defaultValue: true,
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          isEmail: true,
+        },
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      role: {
+        type: DataTypes.ENUM("admin", "member"),
+        defaultValue: "member",
+        allowNull: false,
       },
       isDeleted: {
         allowNull: false,
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
-      name_surname: {
-        allowNull: false,
-        type: DataTypes.TEXT,
-      },
-      phone_number: {
-        allowNull: false,
-        type: DataTypes.STRING,
-      },
-      email: {
-        allowNull: false,
-        type: DataTypes.STRING,
-      },
-      password: {
-        allowNull: false,
-        type: DataTypes.STRING,
-      },
     },
     {
       tableName: "users",
       createaAt: true,
       updatedAt: true,
+      timestamps: true,
     }
   );
 };

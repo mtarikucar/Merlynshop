@@ -9,29 +9,27 @@ require("dotenv").config();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-var whitelist =
-  process.env.NODE_ENV === "development"
-    ? [`http://localhost:${process.env.PORT}`,`http://localhost:3002`]
-    : ["https://nurlightllc.com", "https://www.nurlightllc.com"];
-
-console.log(whitelist);
-
-var corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1 || !origin) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
+var allowlist = [
+  "http://localhost:5173",
+  "http://127.0.0.1:5173",
+  "https://nurlightllc.com",
+  "https://www.nurlightllc.com",
+];
+var corsOptionsDelegate = function (req, callback) {
+  var corsOptions;
+  if (allowlist.indexOf(req.header("Origin")) !== -1) {
+    corsOptions = { origin: true }; // reflect (enable) the requested origin in the CORS response
+  } else {
+    corsOptions = { origin: false }; // disable CORS for this request
   }
-}
+  callback(null, corsOptions); // callback expects two parameters: error and options
+};
 
-app.use(cors(corsOptions));
+app.use(cors(corsOptionsDelegate));
 
 app.get("/", (req, res) => {
   res.send("Hello!");
 });
-
 
 //database
 const sequelize = require("./database");
@@ -47,10 +45,10 @@ sequelize
 
 // Routes
 const productRouter = require("./routers/product");
-const userRouter = require("./routers/user");
+const authRouter = require("./routers/auth");
 
-app.use("/product", productRouter);
-app.use("/user", userRouter);
+app.use("/api/product", productRouter);
+app.use("/api/auth",authRouter)
 
 app.listen(process.env.PORT, () => {
   console.log(

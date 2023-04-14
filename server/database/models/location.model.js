@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
   sequelize.define(
-    "product",
+    "location",
     {
       id: {
         allowNull: false,
@@ -10,33 +10,24 @@ module.exports = (sequelize) => {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
       },
-      name: {
-        allowNull: false,
+      address: {
         type: DataTypes.STRING,
-      },
-      thumbnail: {
         allowNull: false,
-        type: DataTypes.STRING,
       },
-      
-      description: {
+      latitude: {
+        type: DataTypes.FLOAT,
         allowNull: false,
-        type: DataTypes.STRING,
       },
-      price: {
+      longitude: {
+        type: DataTypes.FLOAT,
         allowNull: false,
-        type: DataTypes.SMALLINT,
-      },
-      quantity: {
-        allowNull: false,
-        type: DataTypes.STRING,
       },
     },
     {
-      tableName: "products",
-      createdAt: true,
-      updatedAt: true
+      tableName: "location",
+      createaAt: true,
+      updatedAt: true,
+      timestamps: true,
     }
   );
-   //force: true
 };
