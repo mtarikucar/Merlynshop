@@ -17,16 +17,14 @@ function Signup() {
     )
     const formik = useFormik({
         initialValues: {
-            businessName: '',
+            name: '',
             email: '',
             password: '',
         },
 
         onSubmit: (values) => {
             try {
-                const registerResponse = 
-                
-                dispatch(register(values))
+                const registerResponse = dispatch(register(values))
                 console.log(registerResponse);
             } catch (e) {
                 console.log(e.message);
@@ -62,12 +60,12 @@ function Signup() {
                         <div className="relative mt-2 w-full">
                             <input
                                 type="text"
-                                id="businessName"
-                                name="businessName"
+                                id="name"
+                                name="name"
                                 onChange={formik.handleChange}
-                                value={formik.values.businessName}
+                                value={formik.values.name}
                                 className="border-1 peer block w-full appearance-none rounded-lg border  border-gray-300 bg-transparent px-2.5 pt-4 pb-2.5 text-sm text-gray-900 focus:border-green-600 focus:outline-none focus:ring-0" placeholder=" " />
-                            <label htmlhtmlFor="businessName" className="origin-[0] peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-green-600 absolute left-1 top-2 z-10 -translate-y-4 scale-75 transform cursor-text select-none bg-white px-2 text-sm text-gray-500 duration-300">
+                            <label htmlhtmlFor="name" className="origin-[0] peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-green-600 absolute left-1 top-2 z-10 -translate-y-4 scale-75 transform cursor-text select-none bg-white px-2 text-sm text-gray-500 duration-300">
                                 Enter Your Business Name
                             </label>
                         </div>

@@ -7,7 +7,9 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { store } from './app/store';
 import { Provider } from 'react-redux';
+import { getTotals } from './features/auth/cartSlice';
 const queryClient = new QueryClient()
+
 ReactDOM.createRoot(document.getElementById('root')).render(
 
   <QueryClientProvider client={queryClient}>

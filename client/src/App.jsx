@@ -17,7 +17,8 @@ import Navbar from './Layout/Navbar'
 import Footer from './Layout/Footer'
 import Hero from './Layout/Hero'
 
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import ShoppingCarts from './components/ShoppingCarts'
 
 function App() {
@@ -25,27 +26,27 @@ function App() {
   const [open, setOpen] = useState(false)
   return (
     <>
-      
-        <CartButton setOpen={setOpen} open={open}/>
-        <Hero />
-        <Navbar setOpen={setOpen} open={open} />
-        {open && <ShoppingCarts open={open} setOpen={setOpen} />}
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/product" element={<ProductPage />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
+      <ToastContainer />
+      <CartButton setOpen={setOpen} open={open} />
+      <Hero />
+      <Navbar setOpen={setOpen} open={open} />
+      {open && <ShoppingCarts open={open} setOpen={setOpen} />}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/product" element={<ProductPage />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
 
-          <Route path="/products/:id" element={<ProductDetail />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup/>} />
+        <Route path="/products/:id" element={<ProductDetail />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
 
 
-        </Routes>
+      </Routes>
 
-        <Footer />
-      </>
-  
+      <Footer />
+    </>
+
   )
 }
 

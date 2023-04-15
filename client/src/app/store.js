@@ -1,7 +1,7 @@
 
 import authSlice from '../features/auth/authSlice'
 import storage from 'redux-persist/lib/storage';
-
+import cartReducer from '../features/auth/cartSlice';
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 
 import {
@@ -18,6 +18,7 @@ import {
 // Combine the reducers first
 const rootReducer = combineReducers({
     auth: authSlice,
+    cart:cartReducer,
 
 });
 

@@ -7,9 +7,12 @@ import { useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
 import { MdProductionQuantityLimits, MdOutlineContacts } from 'react-icons/Md';
 import { logout, reset } from '../features/auth/authSlice'
+
+
 function Navbar({ open, setOpen }) {
 
 
+    const {cartTotalQuantity} = useSelector(state => state.cart)
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const { user } = useSelector((state) => state.auth)
@@ -128,7 +131,7 @@ function Navbar({ open, setOpen }) {
                                         <div className="  flex ">
                                             <div className="relative">
                                                 <div className=" -top-2 absolute left-5">
-                                                    <p className="flex h-2 w-2 items-center justify-center rounded-full bg-green-500 p-3 text-xs text-white">3</p>
+                                                    <p className="flex h-2 w-2 items-center justify-center rounded-full bg-green-500 p-3 text-xs text-white">{cartTotalQuantity}</p>
                                                 </div>
 
                                                 <HiOutlineShoppingCart className='h-8 w-8  ' />

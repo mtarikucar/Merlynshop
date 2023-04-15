@@ -1,69 +1,34 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
-
-const products = [
-    {
-        id: 1,
-        name: 'Throwback Hip Bag',
-        href: '#',
-        color: 'Salmon',
-        price: '$90.00',
-        quantity: 1,
-        imageSrc: 'https://nurlightllc.com/image/product_image/8eae085c-68b0-4f34-a85b-234850fcf291.jpg_1180xaf%20(1).jpg',
-        imageAlt: 'Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.',
-    },
-    {
-        id: 2,
-        name: 'Medium Stuff Satchel',
-        href: '#',
-        color: 'Blue',
-        price: '$32.00',
-        quantity: 1,
-        imageSrc: 'https://nurlightllc.com/image/product_image/8eae085c-68b0-4f34-a85b-234850fcf291.jpg_1180xaf%20(1).jpg',
-        imageAlt:
-            'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
-    },
-    {
-        id: 2,
-        name: 'Medium Stuff Satchel',
-        href: '#',
-        color: 'Blue',
-        price: '$32.00',
-        quantity: 1,
-        imageSrc: 'https://nurlightllc.com/image/product_image/8eae085c-68b0-4f34-a85b-234850fcf291.jpg_1180xaf%20(1).jpg',
-        imageAlt:
-            'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
-    },
-    {
-        id: 2,
-        name: 'Medium Stuff Satchel',
-        href: '#',
-        color: 'Blue',
-        price: '$32.00',
-        quantity: 1,
-        imageSrc: 'https://nurlightllc.com/image/product_image/8eae085c-68b0-4f34-a85b-234850fcf291.jpg_1180xaf%20(1).jpg',
-        imageAlt:
-            'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
-    },
-    {
-        id: 2,
-        name: 'Medium Stuff Satchel',
-        href: '#',
-        color: 'Blue',
-        price: '$32.00',
-        quantity: 1,
-        imageSrc: 'https://nurlightllc.com/image/product_image/8eae085c-68b0-4f34-a85b-234850fcf291.jpg_1180xaf%20(1).jpg',
-        imageAlt:
-            'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
-    },
-
-    // More products...
-]
+import { useSelector, useDispatch } from 'react-redux'
+import { removeFromCart, decreaseCart, addToCart, getTotals } from '../features/auth/cartSlice'
+import store from '../app/store'
 
 function ShoppingCarts({ open, setOpen }) {
 
+    
+    store.dispatch(getTotals())
 
+    const dispatch = useDispatch()
+    const cart = useSelector((state) => state.cart)
+    useEffect(() => {
+        dispatch(getTotals)
+    }, [cart])
+
+    
+    const hundleRemoveFromCart = (product) => {
+        dispatch(removeFromCart(product))
+    }
+
+    const hundleDecreaseCart = (product) => {
+        dispatch(decreaseCart(product))
+    }
+
+
+    const hundleIncreaseCart = (product) => {
+        dispatch(addToCart(product))
+    }
     return (
         <Transition.Root show={open} as={Fragment}>
             <Dialog as="div" className="relative z-50" onClose={setOpen}>
@@ -111,13 +76,13 @@ function ShoppingCarts({ open, setOpen }) {
                                             <div className="mt-8">
                                                 <div className="flow-root">
                                                     <ul role="list" className="-my-6 divide-y divide-gray-200">
-                                                        {products.map((product) => (
-                                                            <li key={product.id} className="flex py-6">
+                                                        {cart.cartItems.map((product, key) => (
+                                                            <li key={key} className="flex py-6">
                                                                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                                                    <img 
-                                                                
-                                                                        src={product.imageSrc}
-                                                                        alt={product.imageAlt}
+                                                                    <img
+
+                                                                        src={product.thumbnail}
+
                                                                         className="h-full w-full p-1 object-cover object-center"
                                                                     />
                                                                 </div>
@@ -126,23 +91,38 @@ function ShoppingCarts({ open, setOpen }) {
                                                                     <div>
                                                                         <div className="flex justify-between text-base font-medium text-gray-900">
                                                                             <h3>
-                                                                                <a href={product.href}>{product.name}</a>
+                                                                                <a href={`/products/${product.id}`}>{product.brand}</a>
                                                                             </h3>
-                                                                            <p className="ml-4">{product.price}</p>
-                                                                        </div>
-                                                                        <p className="mt-1 text-sm text-gray-500">{product.color}</p>
-                                                                    </div>
-                                                                    <div className="flex flex-1 items-end justify-between text-sm">
-                                                                        <p className="text-gray-500">Qty {product.quantity}</p>
+                                                                            <div className='flex flex-col justify-center items-center'>
 
+                                                                                <p className="ml-4">${product.price}</p>
+                                                                                <p className="font-light ml-4">{product.cartQuantity} x ${product.price * product.cartQuantity}</p>
+                                                                            </div>
+                                                                        </div>
+                                                                        {/*  <p className="mt-1 text-sm text-gray-500">{product.color}</p> */}
+                                                                    </div>
+                                                                    <div className="flex flex-1 items-center justify-between text-sm">
                                                                         <div className="flex">
                                                                             <button
+                                                                                onClick={() => hundleRemoveFromCart(product)}
                                                                                 type="button"
                                                                                 className="font-medium text-green-600 hover:text-green-500"
                                                                             >
                                                                                 Remove
                                                                             </button>
                                                                         </div>
+                                                                        <div className="sm:order-1 ">
+                                                                            <div className="flex h-8  text-gray-600">
+                                                                                <button
+                                                                                    onClick={() => hundleDecreaseCart(product)}
+                                                                                    className="flex items-center justify-center rounded-l-md bg-gray-200 px-4 transition hover:bg-green-500 hover:text-white">-</button>
+                                                                                <div className="flex  items-center justify-center bg-gray-100 px-4 text-xs uppercase transition">{product.cartQuantity}</div>
+                                                                                <button
+                                                                                    onClick={() => hundleIncreaseCart(product)}
+                                                                                    className="flex items-center justify-center rounded-r-md bg-gray-200 px-4 transition hover:bg-green-500 hover:text-white">+</button>
+                                                                            </div>
+                                                                        </div>
+
                                                                     </div>
                                                                 </div>
                                                             </li>
@@ -155,7 +135,7 @@ function ShoppingCarts({ open, setOpen }) {
                                         <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                                             <div className="flex justify-between text-base font-medium text-gray-900">
                                                 <p>Subtotal</p>
-                                                <p>$262.00</p>
+                                                <p>${cart.cartTotalAmount}</p>
                                             </div>
                                             <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                                             <div className="mt-6">
