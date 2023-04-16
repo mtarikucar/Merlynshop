@@ -1,10 +1,19 @@
-import React from 'react'
-import { BsBasket } from 'react-icons/Bs';
+import { React } from 'react'
+import { addToCart } from '../features/auth/cartSlice';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux'
 function Product({ product }) {
+
+  const dispatch = useDispatch()
+  const hundleAddToCart = (product) => {
+    dispatch(addToCart(product))
+  }
+
+
+
   return (
     <>
-      <div key={`${product.id} `} className="mx-auto mt-6 max-h-[450px] w-44  md:w-72 lg:w-80 transform overflow-hidden rounded-lg bg-white  shadow-md duration-300 hover:scale-105 hover:shadow-lg">
+      <div className="mx-auto mt-6 max-h-[450px] w-44  md:w-72 lg:w-80 transform overflow-hidden rounded-lg bg-white  shadow-md duration-300 hover:scale-105 hover:shadow-lg">
         <button
           className="absolute right-4 top-4 z-10 rounded-full bg-white p-1.5 text-gray-900 transition hover:text-gray-900/75"
         >
@@ -51,12 +60,12 @@ function Product({ product }) {
           </div>
 
 
-          <a
-            href=''
-            className="block w-full rounded p-2 text-white bg-green-500 lg:p-4  md:p-3 text-sm font-medium transition hover:scale-105"
+          <button
+            onClick={() => hundleAddToCart(product)}
+            className="block w-full text-center rounded p-2 text-white bg-green-500 lg:p-4  md:p-3 text-sm font-medium transition hover:scale-105"
           >
             Add to Cart
-          </a>
+          </button>
 
         </div>
 

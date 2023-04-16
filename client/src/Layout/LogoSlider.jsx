@@ -40,16 +40,16 @@ function LogoSlider() {
                     {/* 2. */}
                     <div className=" lg:w-[200%] w-[50%]  flex items-center p-5 h-20 justify-around absolute left-0 animate gap-20 animate">
                         {/* 3 */}
-                        {fadeImages.map((i) => {
+                        {fadeImages.map((i,key) => {
                             return (
-                                <div className="flex justify-center items-start w-[10rem]">
+                                <div key={key}  className="flex justify-center items-start w-[10rem]">
                                     <img src={i.url} />
                                 </div>
                             );
                         })}
-                        {fadeImages.map((i) => {
+                        {fadeImages.map((i,key) => {
                             return (
-                                <div className="flex justify-center items-start w-[10rem]">
+                                <div key={key} className="flex justify-center items-start w-[10rem]">
                                     <img src={i.url} />
                                 </div>
                             );

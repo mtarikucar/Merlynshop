@@ -2,21 +2,31 @@ import { useEffect, useState } from 'react'
 import { AiOutlineHome, AiOutlineExclamationCircle } from 'react-icons/Ai';
 import { HiOutlineShoppingCart, HiUser } from 'react-icons/Hi';
 import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-import ShoppingCarts from './ShoppingCarts';
-import { FcAbout } from 'react-icons/Fc';
-import { FaProductHunt } from 'react-icons/fa';
+import { useSelector, useDispatch } from 'react-redux'
 import { MdProductionQuantityLimits, MdOutlineContacts } from 'react-icons/Md';
-import { GrContact } from 'react-icons/Gr';
+import { logout, reset } from '../features/auth/authSlice'
+
+
 function Navbar({ open, setOpen }) {
 
+
+    const {cartTotalQuantity} = useSelector(state => state.cart)
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const { user } = useSelector((state) => state.auth)
     let location = useLocation();
 
     useEffect(() => {
 
     }, [location]);
 
-
+    const onLogout = () => {
+        dispatch(logout())
+        dispatch(reset())
+        navigate('/')
+    }
 
     return (
         <div className=' sticky w-full shadow-lg  z-40 top-0 left-0  '>
@@ -29,16 +39,25 @@ function Navbar({ open, setOpen }) {
                     </a>
                     <div className="flex items-center ">
                         <a href="tel:5541251234" className="mr-6 text-sm  text-gray-500  hover:underline">(555) 412-1234</a>
-                        
-                        <NavLink
-                            to="/login"
-                            className="text-white bg-[#008037] hover:bg-white hover:text-[#008037] hover:border focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0"
-                        >
 
-                            Login
+                        {
+                            user ? (
+                                <button
+                                    onClick={onLogout}
+                                    className='btn text-white bg-green-500 hover:bg-white hover:text-green-500 hover:border focus:ring-4 focus:outline-none focus:ring-none font-medium rounded-lg text-sm px-4 py-2 '>
+                                    Logout
+                                </button>
+                            ) : (
+                                <NavLink
+                                    to="/login"
+                                    className="text-white bg-[#008037] hover:bg-white hover:text-[#008037] hover:border focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0"
+                                >
+                                    Login
+                                </NavLink>
+                            )
+                        }
 
 
-                        </NavLink>
 
                     </div>
                 </div>
@@ -112,7 +131,7 @@ function Navbar({ open, setOpen }) {
                                         <div className="  flex ">
                                             <div className="relative">
                                                 <div className=" -top-2 absolute left-5">
-                                                    <p className="flex h-2 w-2 items-center justify-center rounded-full bg-green-500 p-3 text-xs text-white">3</p>
+                                                    <p className="flex h-2 w-2 items-center justify-center rounded-full bg-green-500 p-3 text-xs text-white">{cartTotalQuantity}</p>
                                                 </div>
 
                                                 <HiOutlineShoppingCart className='h-8 w-8  ' />
@@ -121,7 +140,7 @@ function Navbar({ open, setOpen }) {
                                     </button>
 
                                 </li>
-                                
+
 
                             </ul>
                         </div>

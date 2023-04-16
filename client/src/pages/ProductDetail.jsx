@@ -5,26 +5,23 @@ import { useQuery } from 'react-query'
 function ProductDetail() {
 
 
-    const [activeImage, setActiveImage] = useState()
-
-    const [quantity, setQuatity] = useState(1)
-
     const { id } = useParams()
-    const successFetch = ()=>{
-        setActiveImage(data?.images[0])
-    }
+    console.log(id);
+
+    const [activeImage, setActiveImage] = useState()
+    const [quantity, setQuatity] = useState(1)
+   
 
     const { isLoading, error, data } = useQuery('product', () => {
 
-       return fetch(`https://dummyjson.com/products/${id}`).then(res =>
+        return fetch(`https://dummyjson.com/products/${id}`).then(res =>
             res.json()
         )
-    },{
-        onSuccess :successFetch
-        
     }
+    
     )
 
+    console.log(data);
 
 
     if (isLoading) return 'Loading...'
@@ -69,7 +66,7 @@ function ProductDetail() {
                         <div className="lg:flex lg:items-center gap-24">
                             <div className="lg:order-2 lg:ml-5">
                                 <div className="max-w-xl overflow-hidden rounded-lg">
-                                    <img className="h-full w-full max-w-full object-cover" src={activeImage} alt="" />
+                                    <img className="h-full w-full max-w-full object-cover" src={activeImage ? activeImage : data.thumbnail} alt="" />
                                 </div>
                             </div>
 

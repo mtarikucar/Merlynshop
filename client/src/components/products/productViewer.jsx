@@ -2,7 +2,7 @@ import { Fragment, useState } from 'react'
 import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
-import Products from '../components/Products'
+import Products from '../Products'
 
 const sortOptions = [
     { name: 'Most Popular', href: '#', current: true },
@@ -59,7 +59,7 @@ const filters = [
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
-function CategoryFilters() {
+function ProductViewer() {
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
     return (
         <div className="bg-white shadow-xl border-2 lg:m-8 xl:m-8  rounded-lg">
@@ -144,7 +144,7 @@ function CategoryFilters() {
                                                                             className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                                                         />
                                                                         <label
-                                                                            htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
+                                                                            htmlhtmlFor={`filter-mobile-${section.id}-${optionIdx}`}
                                                                             className="ml-3 min-w-0 flex-1 text-gray-500"
                                                                         >
                                                                             {option.label}
@@ -273,7 +273,7 @@ function CategoryFilters() {
                                                                     className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                                                 />
                                                                 <label
-                                                                    htmlFor={`filter-${section.id}-${optionIdx}`}
+                                                                    htmlhtmlFor={`filter-${section.id}-${optionIdx}`}
                                                                     className="ml-3 text-sm text-gray-600"
                                                                 >
                                                                     {option.label}
@@ -300,4 +300,4 @@ function CategoryFilters() {
     )
 }
 
-export default CategoryFilters
+export default ProductViewer
