@@ -43,7 +43,7 @@ for (const modelDefiner of modelDefiners) {
 // We execute any extra setup after the models are defined, such as adding associations.
 applyRelationships(sequelize);
 
-sequelize.sync({force:true}) //force: true
+//sequlize.sync({force:true}) //force: true
 
 // We export the sequelize connection instance to be used around our app.
 module.exports = sequelize;

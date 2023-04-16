@@ -45,9 +45,13 @@ sequelize
 
 // Routes
 const productRouter = require("./routers/product");
+const categoryRouter = require("./routers/category");
 const authRouter = require("./routers/auth");
+const userRouter = require("./routers/user");
 
 app.use("/api/product", productRouter);
+app.use("/api/category", categoryRouter);
+app.use("/api/user",userRouter)
 app.use("/api/auth",authRouter)
 
 app.listen(process.env.PORT, () => {

@@ -1,31 +1,32 @@
-const {models} = require("../database/");
+const { models } = require("../database/");
 
 // Create a new Product
 async function createProduct(req, res, next) {
-  const {photos, thumbnail, name, description, price, quantity,categoryId} = req.body
+  const { photos, thumbnail, name, description, price, quantity, categoryId } =
+    req.body;
   try {
-
-    const newProduct = await models.product.create({
-      name:name,
-      thumbnail: thumbnail,
-      description:description,
-      price:price,
-      quantity:quantity,
-      categoryId: categoryId
-    });
-
-    photos.forEach(async (element) => {
-      await models.photo.create({
-        imgpath: element.imgpath,
-        productId: newProduct._id
+    await models.product
+      .create({
+        name: name,
+        thumbnail: thumbnail,
+        description: description,
+        price: price,
+        quantity: quantity,
+        categoryId: categoryId,
       })
-    });
-    res.status(201).json(newProduct);
+      .then((newProduct) => {
+        photos.forEach(async (element) => {
+          await models.photo.create({
+            imgpath: element.imgpath,
+            productId: newProduct.id,
+          });
+        });
+        res.status(201).json(newProduct);
+      });
   } catch (err) {
     next(err);
   }
 }
-
 
 // Get a list of all Products
 async function getAllProducts(req, res, next) {
@@ -36,7 +37,6 @@ async function getAllProducts(req, res, next) {
     next(err);
   }
 }
-
 
 // Get a specific Product by ID
 async function getProductById(req, res, next) {
@@ -51,7 +51,6 @@ async function getProductById(req, res, next) {
     next(err);
   }
 }
-
 
 // Update a Product by ID
 async function updateProductById(req, res, next) {
@@ -70,16 +69,25 @@ async function updateProductById(req, res, next) {
   }
 }
 
-
 // Delete a Product by ID
 async function deleteProductById(req, res, next) {
   const ProductId = req.params.id;
   try {
-    const numDeleted = await models.product.destroy({ where: { id: ProductId } });
-    if (numDeleted === 0) {
-      return res.status(404).json({ message: "Product not found" });
-    }
-    res.sendStatus(204);
+    await models.product.destroy({
+      where: { id: ProductId },
+    }).then(async (numDeleted)=>{
+      if (numDeleted === 0) {
+        return res.status(404).json({ message: "Product not found" });
+      }
+      await models.photos.destroy({
+        where: {productId:ProductId}
+      }).then(()=> {
+        return res.status(204);
+      })
+
+
+    });
+
   } catch (err) {
     next(err);
   }
