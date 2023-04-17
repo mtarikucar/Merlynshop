@@ -21,13 +21,11 @@ module.exports.verifyToken = (req, res, next) => {
     });
   }
   req.user = payload;
-  
   next();
 };
 
 module.exports.verifyTokenAndAdmin = (req, res, next) => {
   this.verifyToken(req, res, () => {
-    console.log(req.params);
     if (req.user.id === req.params.id || req.user.role == "admin"){
       next();
     } else {

@@ -16,7 +16,6 @@ async function register(req, res) {
     if (oldUser) {
       return res.status(400).send("User Has Already Exist. Please Login");
     }
-    console.log();
 
     bcrypt
       .hash(req.body.password, 12)

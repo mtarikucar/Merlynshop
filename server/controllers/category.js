@@ -1,4 +1,4 @@
-const {models} = require("../database/");
+const {models} = require("../database");
 
 // Create a new Category
 async function createCategory(req, res, next) {
