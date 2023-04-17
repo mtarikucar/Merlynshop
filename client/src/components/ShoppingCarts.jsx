@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { useSelector, useDispatch } from 'react-redux'
-import { removeFromCart, decreaseCart, addToCart, getTotals } from '../features/auth/cartSlice'
+import { removeFromCart, decreaseCart, addToCart, getTotals } from '../features/cartSlice'
 import store from '../app/store'
 
 function ShoppingCarts({ open, setOpen }) {

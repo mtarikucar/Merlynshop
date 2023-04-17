@@ -1,7 +1,7 @@
 
 import authSlice from '../features/auth/authSlice'
 import storage from 'redux-persist/lib/storage';
-import cartReducer from '../features/auth/cartSlice';
+import cartReducer from '../features/cartSlice';
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 
 import {

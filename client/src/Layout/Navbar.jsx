@@ -7,12 +7,11 @@ import { useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
 import { MdProductionQuantityLimits, MdOutlineContacts } from 'react-icons/Md';
 import { logout, reset } from '../features/auth/authSlice'
+import Dropdown from './Dropdown';
 
 
 function Navbar({ open, setOpen }) {
 
-
-    const {cartTotalQuantity} = useSelector(state => state.cart)
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const { user } = useSelector((state) => state.auth)
@@ -42,11 +41,7 @@ function Navbar({ open, setOpen }) {
 
                         {
                             user ? (
-                                <button
-                                    onClick={onLogout}
-                                    className='btn text-white bg-green-500 hover:bg-white hover:text-green-500 hover:border focus:ring-4 focus:outline-none focus:ring-none font-medium rounded-lg text-sm px-4 py-2 '>
-                                    Logout
-                                </button>
+                            <Dropdown/>
                             ) : (
                                 <NavLink
                                     to="/login"
@@ -64,7 +59,7 @@ function Navbar({ open, setOpen }) {
             </nav>
             <nav className="bg-gray-100 ">
 
-                <div className=" lg:sticky  xl:sticky md:sticky fixed  lg:top-0  xl:top-0 md:top-0  bottom-0 z-50 w-full h-16  flex bg-white border-t border-gray-200 ">
+                <div className=" lg:sticky  xl:sticky md:sticky fixed  lg:top-0  xl:top-0 md:top-0  bottom-0 z-40 w-full h-16  flex bg-white border-t border-gray-200 ">
                     <div className=' container mx-auto flex flex-row items-center max-w-screen-xl '>
 
                         <ul className="flex lg:justify-start md:justify-start justify-between  xl:justify-start h-full w-full  font-medium mx-2 p-2 lg:space-x-10" >
@@ -127,7 +122,7 @@ function Navbar({ open, setOpen }) {
                                 <li>
 
 
-                                    <button onClick={() => setOpen(!open)}>
+                                    {/* <button onClick={() => setOpen(!open)}>
                                         <div className="  flex ">
                                             <div className="relative">
                                                 <div className=" -top-2 absolute left-5">
@@ -137,7 +132,7 @@ function Navbar({ open, setOpen }) {
                                                 <HiOutlineShoppingCart className='h-8 w-8  ' />
                                             </div>
                                         </div>
-                                    </button>
+                                    </button> */}
 
                                 </li>
 
