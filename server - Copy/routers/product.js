@@ -2,7 +2,7 @@ const router = require("express").Router();
 const {createProduct,getAllProducts,getProductById,updateProductById,deleteProductById} = require("../controllers/product");
 const {verifyTokenAndAdmin} = require("../middlewares/verifyToken")
 // Create a new company
-router.post("/", createProduct);
+router.post("/",verifyTokenAndAdmin, createProduct);
 
 // Get a list of all companies
 router.get("/",verifyTokenAndAdmin, getAllProducts);

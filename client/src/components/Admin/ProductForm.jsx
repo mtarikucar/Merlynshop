@@ -1,17 +1,15 @@
-import { useState } from 'react';
-import { useFormik } from 'formik';
-import { v4 as uuidv4 } from 'uuid';
-import axios from 'axios';
-import { useMutation, useQueryClient } from 'react-query';
-import { storage } from '../../firebase'; // Firebase yapılandırmanızı içeren dosyanız
-
+import { useState } from "react";
+import { useFormik } from "formik";
+import { v4 as uuidv4 } from "uuid";
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { storage } from "../../firebase"; // Firebase yapılandırmanızı içeren dosyanız
+import axios from "axios";
 // Firebase sürüm 9.0.0 ve üzeri için güncellenmiş import
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import AdminCategoryForm from './AdminCategoryForm';
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import AdminCategoryForm from "./AdminCategoryForm";
 
 const ProductForm = ({ setOpen }) => {
-
-  const [openCategory, setOpenCategory]=useState(false)
+  const [openCategory, setOpenCategory] = useState(false);
   const queryClient = useQueryClient();
 
   const uploadToFirebase = async (image) => {
@@ -23,27 +21,35 @@ const ProductForm = ({ setOpen }) => {
   };
 
   const postProductMutation = useMutation(
-    (product) => axios.post('/api/products', product),
+    (product) => axios.post("http://localhost:3000/api/products", product),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries('products');
+        queryClient.invalidateQueries("products");
       },
-    },
+    }
   );
+
+  const fetchCategories = async () => {
+    const res = await axios.get('http://localhost:3000/api/category');
+    return res.data;
+  };
+
+  const { data: categories, isLoading, isError } = useQuery('categories', fetchCategories);
+
 
   const formik = useFormik({
     initialValues: {
-      name: '',
+      name: "",
       photos: [],
-      thumbnail: '',
-      description: '',
-      price: '',
-      quantity: '',
-      categoryId: '',
+      thumbnail: "",
+      description: "",
+      price: "",
+      quantity: "",
+      categoryId: "",
     },
     onSubmit: async (values) => {
-      /* postProductMutation.mutate(values); */
-      console.log(values);
+      postProductMutation.mutate(values);
+      /* console.log(values); */
     },
   });
 
@@ -58,15 +64,11 @@ const ProductForm = ({ setOpen }) => {
     };
   };
 
-
   const handlePhotoChange = async (e) => {
     const file = e.target.files[0];
     if (file && formik.values.photos.length < 4) {
       const imgpath = await uploadToFirebase(file);
-      formik.setFieldValue('photos', [
-        ...formik.values.photos,
-        { imgpath },
-      ]);
+      formik.setFieldValue("photos", [...formik.values.photos, { imgpath }]);
       createPreview(file); // Önizlemeyi oluştur
     } else {
       alert("En fazla 4 fotoğraf ekleyebilirsiniz.");
@@ -77,14 +79,13 @@ const ProductForm = ({ setOpen }) => {
     const file = e.target.files[0];
     if (file) {
       const imgpath = await uploadToFirebase(file);
-      formik.setFieldValue('thumbnail', imgpath);
+      formik.setFieldValue("thumbnail", imgpath);
       setPreviews([reader.result]); // Küçük resmi önizlemede göster
       createPreview(file); // Önizlemeyi oluştur
     }
   };
 
   return (
-
     <form
       onSubmit={formik.handleSubmit}
       className="min-w-md w-full mx-auto my-10 bg-white p-5 rounded shadow-sm"
@@ -92,7 +93,10 @@ const ProductForm = ({ setOpen }) => {
       <div className="grid grid-cols-2 gap-4">
         <div className="col-span-1">
           <div className="mb-4">
-            <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-600">
+            <label
+              htmlFor="name"
+              className="block mb-2 text-sm font-medium text-gray-600"
+            >
               Product Name:
             </label>
             <input
@@ -105,7 +109,10 @@ const ProductForm = ({ setOpen }) => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="description" className="block mb-2 text-sm font-medium text-gray-600">
+            <label
+              htmlFor="description"
+              className="block mb-2 text-sm font-medium text-gray-600"
+            >
               description:
             </label>
             <textarea
@@ -117,7 +124,10 @@ const ProductForm = ({ setOpen }) => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-600">
+            <label
+              htmlFor="price"
+              className="block mb-2 text-sm font-medium text-gray-600"
+            >
               Price:
             </label>
             <input
@@ -131,13 +141,16 @@ const ProductForm = ({ setOpen }) => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="quantity" className="block mb-2 text-sm font-medium text-gray-600">
+            <label
+              htmlFor="quantity"
+              className="block mb-2 text-sm font-medium text-gray-600"
+            >
               Quantity:
             </label>
             <input
               id="quantity"
               name="quantity"
-              type="number"
+              type="text"
               onChange={formik.handleChange}
               value={formik.values.quantity}
               className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-indigo-500"
@@ -145,25 +158,51 @@ const ProductForm = ({ setOpen }) => {
           </div>
         </div>
         <div className="col-span-1">
-          <div className="mb-4" >
-            <label htmlFor="categoryId" className="block mb-2 text-sm font-medium text-gray-600">
+          <div className="mb-4">
+            <label
+              htmlFor="categoryId"
+              className="block mb-2 text-sm font-medium text-gray-600"
+            >
               Category:
             </label>
-            <div className=' flex flex-row' >
-              <input
-                id="categoryId"
-                name="categoryId"
-                type="text"
-                onChange={formik.handleChange}
-                value={formik.values.categoryId}
-                className="w-full p-2 border border-gray-300 rounded-l focus:outline-none focus:border-indigo-500"
+            <div className="flex flex-row">
+              {isLoading ? (
+                <p>Loading categories...</p>
+              ) : isError ? (
+                <p>Error loading categories</p>
+              ) : (
+                <select
+                  id="categoryId"
+                  name="categoryId"
+                  value={formik.values.categoryId}
+                  onChange={formik.handleChange}
+                  className="w-full p-2 border border-gray-300 rounded-l focus:outline-none focus:border-indigo-500"
+                >
+                  <option value="">Select a category</option>
+                  {categories.map((category) => (
+                    <option key={category.id} value={category.id}>
+                      {category.name}
+                    </option>
+                  ))}
+                </select>
+              )}
+              <AdminCategoryForm
+                openCategory={openCategory}
+                setOpenCategory={setOpenCategory}
               />
-              <AdminCategoryForm openCategory={openCategory} setOpenCategory={setOpenCategory} />
-              <button onClick={()=> setOpenCategory(true)} className='py-2 px-4 text-white bg-green-500 rounded-r hover:bg-white hover:text-black   text-xl ' >+</button>
+              <button
+                onClick={() => setOpenCategory(true)}
+                className="py-2 px-4 text-white bg-green-500 rounded-r hover:bg-white hover:text-black text-xl"
+              >
+                +
+              </button>
             </div>
           </div>
           <div className="mb-4">
-            <label htmlFor="thumbnail" className="block mb-2 text-sm font-medium text-gray-600">
+            <label
+              htmlFor="thumbnail"
+              className="block mb-2 text-sm font-medium text-gray-600"
+            >
               Thumbnail:
             </label>
             <input
@@ -174,7 +213,10 @@ const ProductForm = ({ setOpen }) => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="photos" className="block mb-2 text-sm font-medium text-gray-600">
+            <label
+              htmlFor="photos"
+              className="block mb-2 text-sm font-medium text-gray-600"
+            >
               Photos:
             </label>
             <input
@@ -213,4 +255,4 @@ const ProductForm = ({ setOpen }) => {
   );
 };
 
-export default ProductForm;    
+export default ProductForm;

@@ -1,6 +1,6 @@
 import React from 'react'
 
-function AdminNavabr() {
+function AdminNavbar() {
     return (
         <div className="sticky top-0 z-50 w-full flex items-center justify-between h-14 text-white ">
             <div className="flex items-center justify-start md:justify-start px-3  w-14 md:w-64 h-14 bg-gray-700  border-none">
@@ -27,4 +27,4 @@ function AdminNavabr() {
     )
 }
 
-export default AdminNavabr
+export default AdminNavbar

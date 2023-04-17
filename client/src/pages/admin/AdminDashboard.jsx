@@ -1,12 +1,12 @@
 import React from 'react'
-import AdminNavabr from '../../Layout/Admin/AdminNavabr'
+import AdminNavbar from '../../Layout/Admin/AdminNavbar'
 import AdminSidebar from '../../Layout/Admin/AdminSidebar'
 
 function AdminDashboard() {
     return (
 
         <div className="min-h-screen flex flex-col w-full flex-auto flex-shrink-0 antialiased bg-white  text-black">
-            <AdminNavabr />
+            <AdminNavbar />
             <AdminSidebar />
             <div className="h-full m-4 md:ml-64">
                 <div className="grid mb-4 pb-10 px-8 mx-4 rounded-3xl bg-gray-100 border-4 border-green-400 ">

@@ -30,7 +30,7 @@ module.exports = (sequelize) => {
       quantity: {
         allowNull: false,
         type: DataTypes.STRING,
-      }
+      },
     },
     {
       tableName: "products",
