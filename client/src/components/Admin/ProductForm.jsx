@@ -21,11 +21,11 @@ const ProductForm = ({ setOpen }) => {
   };
 
   const postProductMutation = useMutation(
-    (product) => axios.post("http://localhost:3000/api/products", product),
+    (product) => axios.post("http://localhost:3000/api/product", product),
     {
       onSuccess: () => {
         queryClient.invalidateQueries("products");
-      },
+      }
     }
   );
 
@@ -49,7 +49,7 @@ const ProductForm = ({ setOpen }) => {
     },
     onSubmit: async (values) => {
       postProductMutation.mutate(values);
-      /* console.log(values); */
+      console.log(values);
     },
   });
 
