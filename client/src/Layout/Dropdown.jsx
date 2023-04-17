@@ -13,6 +13,7 @@ function classNames(...classes) {
 function Dropdown() {
 
     const { user } = useSelector((state) => state.auth)
+    console.log(user);
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const onLogout = () => {
@@ -20,12 +21,12 @@ function Dropdown() {
         dispatch(reset())
         navigate('/')
     }
-    console.log(user.data.user);
+
     return (
         <Menu as="div" className="relative inline-block text-left">
             <div>
                 <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                    {user.data.user.name}
+                    {user.data.user?.name}
                     <ExpandMoreIcon className="-mr-1 h-5 w-5 text-gray-400" />
                 </Menu.Button>
             </div>
@@ -43,11 +44,12 @@ function Dropdown() {
                     <div className="py-1">
 
                         {
-                            user.data.user.role == 'member' &&
+                            
+                            user.data.user?.role == 'member' &&
                             <Menu.Item>
                                 {({ active }) => (
                                     <NavLink
-                                        to='/admin'
+                                        to='/admin/dashboard'
                                         className={classNames(
                                             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                                             'block px-4 py-2 text-sm'
@@ -57,6 +59,7 @@ function Dropdown() {
                                     </NavLink>
                                 )}
                             </Menu.Item>
+                            
                         }
 
 

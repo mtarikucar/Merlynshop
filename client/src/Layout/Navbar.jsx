@@ -1,128 +1,162 @@
-import { useEffect, useState } from 'react'
-import { AiOutlineHome, AiOutlineExclamationCircle } from 'react-icons/Ai';
-import { HiOutlineShoppingCart, HiUser } from 'react-icons/Hi';
-import { NavLink } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux'
-import { MdProductionQuantityLimits, MdOutlineContacts } from 'react-icons/Md';
-import { logout, reset } from '../features/auth/authSlice'
-import Dropdown from './Dropdown';
-
+import { useEffect, useState } from "react";
+import { AiOutlineHome, AiOutlineExclamationCircle } from "react-icons/Ai";
+import { HiOutlineShoppingCart, HiUser } from "react-icons/Hi";
+import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { MdProductionQuantityLimits, MdOutlineContacts } from "react-icons/Md";
+import { logout, reset } from "../features/auth/authSlice";
+import Dropdown from "./Dropdown";
 
 function Navbar({ open, setOpen }) {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+  let location = useLocation();
 
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
-    const { user } = useSelector((state) => state.auth)
-    let location = useLocation();
+  useEffect(() => {}, [location]);
 
-    useEffect(() => {
+  const onLogout = () => {
+    dispatch(logout());
+    dispatch(reset());
+    navigate("/");
+  };
 
-    }, [location]);
+  return (
+    <div className=" sticky w-full shadow-lg  z-40 top-0 left-0  ">
+      <nav className="bg-white  ">
+        <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4">
+          <a href="/" className="flex items-center">
+            <img
+              src="https://nurlightllc.com/image/logo2.png"
+              className="h-12 mr-3"
+              alt="Flowbite Logo"
+            />
+          </a>
+          <div className="flex items-center ">
+            <a
+              href="tel:5541251234"
+              className="mr-6 text-sm  text-gray-500  hover:underline"
+            >
+              (555) 412-1234
+            </a>
 
-    const onLogout = () => {
-        dispatch(logout())
-        dispatch(reset())
-        navigate('/')
-    }
+            {user ? (
+              <Dropdown />
+            ) : (
+              <NavLink
+                to="/login"
+                className="text-white bg-[#008037] hover:bg-white hover:text-[#008037] hover:border focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0"
+              >
+                Login
+              </NavLink>
+            )}
+          </div>
+        </div>
+      </nav>
+      <nav className="bg-gray-100 ">
+        <div className=" lg:sticky  xl:sticky md:sticky fixed  lg:top-0  xl:top-0 md:top-0  bottom-0 z-40 w-full h-16  flex bg-white border-t border-gray-200 ">
+          <div className=" container mx-auto flex flex-row items-center max-w-screen-xl ">
+            <ul className="flex lg:justify-start md:justify-start justify-between  xl:justify-start h-full w-full  font-medium mx-2 p-2 lg:space-x-10">
+              <li className="inline-flex flex-col items-center justify-center  p-3  rounded-lg  hover:bg-gray-50  group">
+                <NavLink
+                  to="/"
+                  className={({ isActive, isPending }) =>
+                    isPending
+                      ? "text-red-400"
+                      : isActive
+                      ? " text-green-500 text-center "
+                      : "text-black"
+                  }
+                >
+                  <AiOutlineHome className="text-center w-full text-2xl" />
+                  <span className="text-sm mb-2">Home</span>
 
-    return (
-        <div className=' sticky w-full shadow-lg  z-40 top-0 left-0  '>
+                  <hr
+                    className={`${
+                      location.pathname == "/"
+                        ? "w-full h-0.5  bg-green-500 border-0 rounded "
+                        : "w-full h-1 hidden "
+                    }  `}
+                  />
+                </NavLink>
+              </li>
 
-            <nav className="bg-white  ">
-                <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4">
-                    <a href="/" className="flex items-center">
-                        <img src="https://nurlightllc.com/image/logo2.png" className="h-12 mr-3" alt="Flowbite Logo" />
+              <li className="inline-flex flex-col items-center justify-center p-3 hover:bg-gray-50 group  rounded-lg  ">
+                <NavLink
+                  to="/product"
+                  className={({ isActive, isPending }) =>
+                    isPending
+                      ? "text-red-400"
+                      : isActive
+                      ? " text-green-500 "
+                      : "text-gray-800"
+                  }
+                >
+                  <MdProductionQuantityLimits className="text-center w-full text-2xl" />
+                  <span className="text-sm mb-2">Product</span>
 
-                    </a>
-                    <div className="flex items-center ">
-                        <a href="tel:5541251234" className="mr-6 text-sm  text-gray-500  hover:underline">(555) 412-1234</a>
+                  <hr
+                    className={`${
+                      location.pathname == "/product"
+                        ? "w-full h-0.5  bg-green-500 border-0 rounded "
+                        : "w-full h-1 hidden "
+                    }  `}
+                  />
+                </NavLink>
+              </li>
+              <li className="inline-flex flex-col items-center justify-center p-3 hover:bg-gray-50 group  rounded-lg ">
+                <NavLink
+                  to="/about"
+                  className={({ isActive, isPending }) =>
+                    isPending
+                      ? "text-red-400"
+                      : isActive
+                      ? " text-green-500 "
+                      : "text-gray-800"
+                  }
+                >
+                  <AiOutlineExclamationCircle className="text-center w-full text-2xl" />
+                  <span className="text-sm mb-2">About</span>
 
-                        {
-                            user ? (
-                            <Dropdown/>
-                            ) : (
-                                <NavLink
-                                    to="/login"
-                                    className="text-white bg-[#008037] hover:bg-white hover:text-[#008037] hover:border focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0"
-                                >
-                                    Login
-                                </NavLink>
-                            )
-                        }
+                  <hr
+                    className={`${
+                      location.pathname == "/about"
+                        ? "w-full h-0.5  bg-green-500 border-0 rounded "
+                        : "w-full h-1 hidden "
+                    }  `}
+                  />
+                </NavLink>
+              </li>
+              <li className="inline-flex flex-col items-center justify-center p-3 hover:bg-gray-50 group  rounded-lg  ">
+                <NavLink
+                  to="/contact"
+                  className={({ isActive, isPending }) =>
+                    isPending
+                      ? "text-red-400"
+                      : isActive
+                      ? " text-green-500 "
+                      : "text-gray-800"
+                  }
+                >
+                  <MdOutlineContacts className="text-center w-full text-2xl" />
+                  <span className="text-sm mb-2">Contact</span>
 
-
-
-                    </div>
-                </div>
-            </nav>
-            <nav className="bg-gray-100 ">
-
-                <div className=" lg:sticky  xl:sticky md:sticky fixed  lg:top-0  xl:top-0 md:top-0  bottom-0 z-40 w-full h-16  flex bg-white border-t border-gray-200 ">
-                    <div className=' container mx-auto flex flex-row items-center max-w-screen-xl '>
-
-                        <ul className="flex lg:justify-start md:justify-start justify-between  xl:justify-start h-full w-full  font-medium mx-2 p-2 lg:space-x-10" >
-                            <li className='inline-flex flex-col items-center justify-center  p-3  rounded-lg  hover:bg-gray-50  group'>
-                                <NavLink
-                                    to="/"
-                                    className={({ isActive, isPending }) =>
-                                        isPending ? "text-red-400" : isActive ? " text-green-500 text-center " : "text-black"
-                                    }
-                                >
-                                    <AiOutlineHome className='text-center w-full text-2xl' />
-                                    <span className='text-sm mb-2'>Home</span>
-
-                                    <hr className={`${location.pathname == '/' ? 'w-full h-0.5  bg-green-500 border-0 rounded ' : 'w-full h-1 hidden '}  `} />
-                                </NavLink>
-                            </li>
-
-                            <li className="inline-flex flex-col items-center justify-center p-3 hover:bg-gray-50 group  rounded-lg  ">
-                                <NavLink
-                                    to="/product"
-                                    className={({ isActive, isPending }) =>
-                                        isPending ? "text-red-400" : isActive ? " text-green-500 " : "text-gray-800"
-                                    }
-                                >
-                                    <MdProductionQuantityLimits className='text-center w-full text-2xl' />
-                                    <span className='text-sm mb-2'>Product</span>
-
-                                    <hr className={`${location.pathname == '/product' ? 'w-full h-0.5  bg-green-500 border-0 rounded ' : 'w-full h-1 hidden '}  `} />
-                                </NavLink>
-                            </li>
-                            <li className="inline-flex flex-col items-center justify-center p-3 hover:bg-gray-50 group  rounded-lg ">
-                                <NavLink
-                                    to="/about"
-                                    className={({ isActive, isPending }) =>
-                                        isPending ? "text-red-400" : isActive ? " text-green-500 " : "text-gray-800"
-                                    }
-                                >
-                                    <AiOutlineExclamationCircle className='text-center w-full text-2xl' />
-                                    <span className='text-sm mb-2'>About</span>
-
-                                    <hr className={`${location.pathname == '/about' ? 'w-full h-0.5  bg-green-500 border-0 rounded ' : 'w-full h-1 hidden '}  `} />
-                                </NavLink>
-                            </li>
-                            <li className="inline-flex flex-col items-center justify-center p-3 hover:bg-gray-50 group  rounded-lg  ">
-                                <NavLink
-                                    to="/contact"
-                                    className={({ isActive, isPending }) =>
-                                        isPending ? "text-red-400" : isActive ? " text-green-500 " : "text-gray-800"
-                                    }
-                                >
-                                    <MdOutlineContacts className='text-center w-full text-2xl' />
-                                    <span className='text-sm mb-2'>Contact</span>
-
-                                    <hr className={`${location.pathname == '/contact' ? 'w-full h-0.5  bg-green-500 border-0 rounded ' : 'w-full h-1 hidden '}  `} />
-                                </NavLink>
-                            </li>
-                        </ul>
-                        <div className=' lg:flex w-full justify-end hidden  '>
-                            <ul className='lg:flex hidden   flex-row font-medium mt-0 mr-6 space-x-8 justify-start items-center text-sm' >
-                                <li>
-
-
-                                    {/* <button onClick={() => setOpen(!open)}>
+                  <hr
+                    className={`${
+                      location.pathname == "/contact"
+                        ? "w-full h-0.5  bg-green-500 border-0 rounded "
+                        : "w-full h-1 hidden "
+                    }  `}
+                  />
+                </NavLink>
+              </li>
+            </ul>
+            <div className=" lg:flex w-full justify-end hidden  ">
+              <ul className="lg:flex hidden   flex-row font-medium mt-0 mr-6 space-x-8 justify-start items-center text-sm">
+                <li>
+                  {/* <button onClick={() => setOpen(!open)}>
                                         <div className="  flex ">
                                             <div className="relative">
                                                 <div className=" -top-2 absolute left-5">
@@ -133,16 +167,13 @@ function Navbar({ open, setOpen }) {
                                             </div>
                                         </div>
                                     </button> */}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
-                                </li>
-
-
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                {/* <div className="max-w-screen-xl px-4 py-3 mx-auto">
+        {/* <div className="max-w-screen-xl px-4 py-3 mx-auto">
                     <div className="flex flex-row  lg:justify-between justify-center items-center">
                         <ul className="flex flex-row font-medium mt-0 mr-6   lg:space-x-8 space-x-4 text-sm">
                             <li >
@@ -221,11 +252,9 @@ function Navbar({ open, setOpen }) {
                         </ul>
                     </div>
                 </div> */}
-            </nav >
-
-        </div >
-
-    )
+      </nav>
+    </div>
+  );
 }
 
-export default Navbar
+export default Navbar;

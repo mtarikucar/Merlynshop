@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import AdminNavabr from '../../Layout/Admin/AdminNavabr'
+import AdminNavbar from '../../Layout/Admin/AdminNavbar'
 import AdminSidebar from '../../Layout/Admin/AdminSidebar'
 import AdminAddProduct from '../../components/Admin/AdminAddProduct'
 
@@ -7,7 +7,7 @@ function AdminProduct() {
     const [open, setOpen] = useState(false)
     return (
         <div className="min-h-screen flex flex-col w-full flex-auto flex-shrink-0 antialiased bg-white  text-black ">
-            <AdminNavabr />
+            <AdminNavbar />
             <AdminSidebar />
             <AdminAddProduct open={open} setOpen={setOpen} />
             <div className="h-full ml-14 mt-14 mb-10 md:ml-64 ">
