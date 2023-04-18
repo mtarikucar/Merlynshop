@@ -1,12 +1,11 @@
 const { models } = require("../database");
 
-
 async function updateUser(req, res) {
   try {
     const updatedUser = await models.user.findByPk(req.params.id);
     updatedUser.update({
       name: req.body.name,
-      gender: req.body.gender
+      gender: req.body.gender,
     });
     // updatedUser is the document after update because of new: true
     res.status(200).json({
@@ -50,17 +49,26 @@ async function getUser(req, res) {
     const user = await models.user.findByPk(req.params.id);
     res.status(200).json({
       status: "success",
-        user: user,
+      user: user,
     });
   } catch (error) {
     res.status(500).json(error);
   }
 }
 
+async function getAllUser(req, res) {
+  try {
+    const user = await models.user.findAll();
+    res.status(200);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
 
 module.exports = {
   getUser,
   deleteUser,
   updateUser,
-  deleteUserPermanent
+  deleteUserPermanent,
+  getAllUser,
 };

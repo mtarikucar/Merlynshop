@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const {verifyTokenAndAdmin} = require('../middlewares/verifyToken');
-const { updateUser, deleteUser, getUser, deleteUserPermanent } = require('../controllers/user');
+const { updateUser, deleteUser, getUser, deleteUserPermanent,getAllUser } = require('../controllers/user');
 const { register } = require('../controllers/auth');
 const router = Router()
 
@@ -19,5 +19,8 @@ router.post('/admin/add',verifyTokenAndAdmin, register);
 
 // GET => /api/user/:id
 router.get('/:id',verifyTokenAndAdmin, getUser);
+
+// GET => /api/user
+router.get('/',verifyTokenAndAdmin, getAllUser);
 
 module.exports =router
