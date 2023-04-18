@@ -21,6 +21,6 @@ router.post('/admin/add',verifyTokenAndAdmin, register);
 router.get('/:id',verifyTokenAndAdmin, getUser);
 
 // GET => /api/user
-router.get('/',verifyTokenAndAdmin, getAllUser);
+router.get('/', getAllUser);
 
 module.exports =router

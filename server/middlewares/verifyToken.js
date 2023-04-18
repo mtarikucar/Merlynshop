@@ -26,7 +26,8 @@ module.exports.verifyToken = (req, res, next) => {
 
 module.exports.verifyTokenAndAdmin = (req, res, next) => {
   this.verifyToken(req, res, () => {
-    if (req.user.id === req.params.id || req.user.role == "admin"){
+    console.log(req.user.role);
+    if (/* req.user.id === req.params.id || */ req.user.role == "admin"){
       next();
     } else {
       res.status(403).json('You are not allowed to do that!');

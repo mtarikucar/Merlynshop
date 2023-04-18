@@ -79,7 +79,7 @@ async function deleteProductById(req, res, next) {
       if (numDeleted === 0) {
         return res.status(404).json({ message: "Product not found" });
       }
-      await models.photos.destroy({
+      await models.photo.destroy({
         where: {productId:ProductId}
       }).then(()=> {
         return res.status(204);

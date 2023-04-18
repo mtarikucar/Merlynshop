@@ -58,8 +58,10 @@ async function getUser(req, res) {
 
 async function getAllUser(req, res) {
   try {
-    const user = await models.user.findAll();
-    res.status(200);
+    const users = await models.user.findAll();
+    res.status(200).json({
+      users
+    });
   } catch (error) {
     res.status(500).json(error);
   }
