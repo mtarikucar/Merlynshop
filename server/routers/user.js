@@ -22,4 +22,7 @@ router.get('/:id', getUser);
 // GET all user => /api/user
 router.get('/', getAllUser);
 
+// GET => /api/user
+router.get('/',verifyTokenAndAdmin, getAllUser);
+
 module.exports =router

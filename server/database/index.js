@@ -25,6 +25,7 @@ const sequelize = new Sequelize(
 
 
 const modelDefiners = [
+  require("./models/order_product.model"),
   require("./models/cart.model"),
   require("./models/category.model"),
   require("./models/location.model"),
@@ -43,7 +44,7 @@ for (const modelDefiner of modelDefiners) {
 // We execute any extra setup after the models are defined, such as adding associations.
 applyRelationships(sequelize);
 
-//sequlize.sync({force:true}) //force: true
+//sequelize.sync({force:true}) //force: true
 
 // We export the sequelize connection instance to be used around our app.
 module.exports = sequelize;

@@ -10,10 +10,6 @@ module.exports = (sequelize) => {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
       },
-      date: {
-        type: DataTypes.DATE,
-        allowNull: false,
-      },
       status: {
         type: DataTypes.ENUM("pending", "processing", "delivered"),
         defaultValue: "pending",
@@ -23,6 +19,8 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
     },
+
+    
     {
       tableName: "order",
       createaAt: true,
