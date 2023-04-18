@@ -3,7 +3,24 @@ import axios from 'axios'
 
 export const getProducts =async()=>{
 
-    const {data} = await axios.get(`https://dummyjson.com/products`);
+    const {data} = await axios.get(`http://localhost:3000/api/product/`);
+    return data;
+};
+export const deleteProduct =async(id)=>{
+
+    const {data} = await axios.delete(`http://localhost:3000/api/product/${id}`);
+    return data;
+};
+
+export const getUsers =async()=>{
+
+    const {data} = await axios.get(`http://localhost:3000/api/user/`);
+    return data;
+};
+
+export const deleteUsers =async(id)=>{
+
+    const {data} = await axios.delete(`http://localhost:3000/api/user/${id}`);
     return data;
 };
 

@@ -46,12 +46,10 @@ function Product({ product }) {
           />
         </Link>
 
-
-
         <div className="relative gap-1  border-gray-100 bg-white p-3">
 
 
-          <h3 className=" text-lg font-medium text-gray-900">{product.brand}</h3>
+          <h3 className=" text-lg font-medium text-gray-900">{product.name}</h3>
           <p className="mb-2 text-base text-gray-700  truncate  ">{product.description}</p>
           <div className='flex justify-start flex-row'>
 

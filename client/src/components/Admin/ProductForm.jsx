@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useFormik } from "formik";
 import { v4 as uuidv4 } from "uuid";
+import { toast } from "react-toastify";
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { storage } from "../../firebase"; // Firebase yapılandırmanızı içeren dosyanız
 import axios from "axios";
@@ -25,6 +26,17 @@ const ProductForm = ({ setOpen }) => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries("products");
+        setOpen(false)
+        toast.success(` product Added`, {
+          position: 'bottom-left'
+      })
+
+      
+      },
+      onError:(err)=>{
+        toast.success(`${err} product error`, {
+          position: 'bottom-left'
+      })
       }
     }
   );

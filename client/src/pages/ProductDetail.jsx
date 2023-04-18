@@ -14,7 +14,7 @@ function ProductDetail() {
 
     const { isLoading, error, data } = useQuery('product', () => {
 
-        return fetch(`https://dummyjson.com/products/${id}`).then(res =>
+        return fetch(`http://localhost:3000/api/product/${id}`).then(res =>
             res.json()
         )
     }
@@ -54,7 +54,7 @@ function ProductDetail() {
                             <div className="flex items-center">
                                 <span className="mx-2 text-gray-400">/</span>
                                 <div className="-m-1">
-                                    <a href="#" className="rounded-md p-1 text-sm font-medium text-gray-600 focus:text-gray-900 focus:shadow hover:text-gray-800" aria-current="page"> Coffee </a>
+                                    <a href="#" className="rounded-md p-1 text-sm font-medium text-gray-600 focus:text-gray-900 focus:shadow " aria-current="page"> Coffee </a>
                                 </div>
                             </div>
                         </li>
@@ -86,7 +86,7 @@ function ProductDetail() {
                     </div>
 
                     <div className="lg:col-span-2 lg:row-span-2 lg:row-end-2">
-                        <h1 className="sm: text-2xl font-bold text-gray-900 sm:text-3xl">{data.brand}</h1>
+                        <h1 className="sm: text-2xl font-bold text-gray-900 sm:text-3xl">{data.name}</h1>
 
                         {/*  <div className="mt-5 flex items-center">
                             <div className="flex items-center">
