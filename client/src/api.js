@@ -13,12 +13,17 @@ export const getProducts = async () => {
   }
 };
 
-export const deleteProduct = async (id, token) => {
+export const deleteProduct =  async (id, token) => {
   const data = await axios.delete(`http://localhost:3000/api/product/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
+  return data;
+};
+
+export const getUser = async (id) => {
+  const { data } = await axios.get(`http://localhost:3000/api/user/${id}`);
   return data;
 };
 
@@ -43,5 +48,10 @@ export const fetchRegister = async (input) => {
 
 export const fetchLogin = async (input) => {
   const { data } = await axios.post(`https://dummyjson.com/auth/login`, input);
+  return data;
+};
+
+export const getOrders = async () => {
+  const data = await axios.get(`http://localhost:3000/api/order/`);
   return data;
 };

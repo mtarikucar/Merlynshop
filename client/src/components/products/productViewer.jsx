@@ -139,7 +139,7 @@ function ProductViewer() {
 
                 <main className="mx-auto  sm:px-6 lg:px-8">
                     <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 px-4 pt-24">
-                        <h1 className="text-2xl font-bold tracking-tight text-gray-900">New Arrivals</h1>
+                        <h1 className="text-2xl font-bold tracking-tight text-gray-900">Products</h1>
 
                         <div className="flex items-center">
                             <Menu as="div" className="relative inline-block text-left">

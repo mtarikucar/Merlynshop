@@ -2,13 +2,21 @@ import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 function AdminCategoryForm({ openCategory, setOpenCategory }) {
+  
+  const { user } = useSelector((state) => state.auth);
+  
   const createCategory = async (newCategory) => {
     const res = await axios.post(
       "http://localhost:3000/api/category",
       newCategory
-    );
+    ,{
+      headers:{
+        Authorization: `Bearer ${user.token}`
+      }
+    });
     return res.data;
   };
 
@@ -85,7 +93,7 @@ function AdminCategoryForm({ openCategory, setOpenCategory }) {
                           add
                         </button>
                         <button
-                          type="button"
+                          type="submit"
                           className="mt-3 flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 "
                           onClick={() => setOpenCategory(false)}
                           ref={cancelButtonRef}

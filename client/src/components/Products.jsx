@@ -13,14 +13,21 @@ function Products() {
 
 
 
-  const { isLoading, error, data } = useQuery('products', getProducts)
-  if (isLoading) return 'Loading...'
+  const {
+    isLoading,
+    isError,
+    data: products,
+    error,
+  } = useQuery({
+    queryKey: ["products"],
+    queryFn: getProducts,
+  });
 
   if (error) return 'An error has occurred: ' + error.message
-data && console.log(data);
+  products && console.log(products);
 
   return (
-    < div className={`${location.pathname == '/' ? 'grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-4 lg:px-12' : 'grid grid-cols-2   md:grid-cols-2 lg:grid-cols-2  xl:grid-cols-3 '} `} >
+    < div className={`${location.pathname == '/' ? 'grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-4 lg:px-12' : 'grid grid-cols-2   md:grid-cols-2 lg:grid-cols-2  xl:grid-cols-3 '} gap-4 `} >
       <div className={`${location.pathname == '/product' ? ' hidden  ' : ' lg:grid md:grid hidden  col-span-2 mt-6'}`}>
 
 
@@ -57,8 +64,8 @@ data && console.log(data);
 
       </div>
       {
-        data &&
-        data?.map((product, key) => (
+        products &&
+        products?.map((product, key) => (
           <Product product={product} key={key} />
         ))
       }

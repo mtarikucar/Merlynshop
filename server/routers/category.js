@@ -12,7 +12,7 @@ const { verifyTokenAndAdmin } = require("../middlewares/verifyToken");
 router.post("/",verifyTokenAndAdmin, createCategory);
 
 // Get a list of all companies
-router.get("/",verifyTokenAndAdmin, getAllCategories);
+router.get("/", getAllCategories);
 
 // Get a specific company by ID
 router.get("/:id", verifyTokenAndAdmin, getCategoryById);

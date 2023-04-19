@@ -2,14 +2,17 @@ import { useState } from "react";
 import { useFormik } from "formik";
 import { v4 as uuidv4 } from "uuid";
 import { toast } from "react-toastify";
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { storage } from "../../firebase"; // Firebase yapılandırmanızı içeren dosyanız
 import axios from "axios";
 // Firebase sürüm 9.0.0 ve üzeri için güncellenmiş import
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import AdminCategoryForm from "./AdminCategoryForm";
+import { useSelector } from "react-redux";
 
 const ProductForm = ({ setOpen }) => {
+  const { user } = useSelector((state) => state.auth);
+
   const [openCategory, setOpenCategory] = useState(false);
   const queryClient = useQueryClient();
 
@@ -22,32 +25,39 @@ const ProductForm = ({ setOpen }) => {
   };
 
   const postProductMutation = useMutation(
-    (product) => axios.post("http://localhost:3000/api/product", product),
+    (product) =>
+      axios.post("http://localhost:3000/api/product", product, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }),
     {
       onSuccess: () => {
         queryClient.invalidateQueries("products");
-        setOpen(false)
+        setOpen(false);
         toast.success(` product Added`, {
-          position: 'bottom-left'
-      })
-
-      
+          position: "bottom-left",
+        });
       },
-      onError:(err)=>{
+      onError: (err) => {
         toast.success(`${err} product error`, {
-          position: 'bottom-left'
-      })
-      }
+          position: "bottom-left",
+          type: "error"
+        });
+      },
     }
   );
 
   const fetchCategories = async () => {
-    const res = await axios.get('http://localhost:3000/api/category');
+    const res = await axios.get("http://localhost:3000/api/category");
     return res.data;
   };
 
-  const { data: categories, isLoading, isError } = useQuery('categories', fetchCategories);
-
+  const {
+    data: categories,
+    isLoading,
+    isError,
+  } = useQuery("categories", fetchCategories);
 
   const formik = useFormik({
     initialValues: {
@@ -256,13 +266,12 @@ const ProductForm = ({ setOpen }) => {
       >
         Gönder
       </button>
-      <button
+      <div
         onClick={() => setOpen(false)}
-        type="submit"
-        className="w-full p-2 mt-2 text-red font-semibold rounded hover:bg-red-600 hover:text-white"
+        className="w-full p-2 mt-2 text-red font-semibold rounded hover:bg-red-600 text-center cursor-pointer hover:text-white"
       >
         kapat
-      </button>
+      </div>
     </form>
   );
 };
