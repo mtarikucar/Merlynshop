@@ -57,6 +57,8 @@ function App() {
         <Route path="/products/:id" element={<ProductDetail />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+
+        
         <Route path='/admin' element={<Admin />} />
         <Route path='/admin/product' element={<AdminProduct />} />
         <Route path='/admin/dashboard' element={<AdminDashboard />} />

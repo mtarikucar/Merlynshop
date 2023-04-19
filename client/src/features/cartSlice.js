@@ -20,13 +20,13 @@ const cartSlice = createSlice({
             );
             if (itemIndex >= 0) {
                 state.cartItems[itemIndex].cartQuantity += 1;
-                toast.info(`Increased ${state.cartItems[itemIndex].brand} Cart Quantity`, {
+                toast.info(`Increased ${state.cartItems[itemIndex].name} Cart Quantity`, {
                     position: 'bottom-left'
                 })
             } else {
                 const tempProduct = { ...action.payload, cartQuantity: 1 };
                 state.cartItems.push(tempProduct);
-                toast.success(` ${action.payload.brand} Added To Cart`, {
+                toast.success(` ${action.payload.name} Added To Cart`, {
                     position: 'bottom-left'
                 })
             }
@@ -40,7 +40,7 @@ const cartSlice = createSlice({
             );
             state.cartItems = nextCartItems;
             localStorage.setItem('cartItems', JSON.stringify(state.cartItems))
-            toast.error(` ${action.payload.brand} Removed From Cart`, {
+            toast.error(` ${action.payload.name} Removed From Cart`, {
                 position: 'bottom-left'
             })
         },
@@ -52,7 +52,7 @@ const cartSlice = createSlice({
             if (state.cartItems[itemIndex].cartQuantity > 1) {
                 state.cartItems[itemIndex].cartQuantity -= 1;
 
-                toast.info(`Decreased ${action.payload.brand} Cart Quantity`, {
+                toast.info(`Decreased ${action.payload.name} Cart Quantity`, {
                     position: 'bottom-left'
                 })
             } else if (state.cartItems[itemIndex].cartQuantity === 1) {
@@ -62,7 +62,7 @@ const cartSlice = createSlice({
                 );
                 state.cartItems = nextCartItems;
                 localStorage.setItem('cartItems', JSON.stringify(state.cartItems))
-                toast.error(` ${action.payload.brand} Removed From Cart`, {
+                toast.error(` ${action.payload.name} Removed From Cart`, {
                     position: 'bottom-left'
                 })
             }

@@ -17,10 +17,8 @@ module.exports = (sequelize) => {
       total_price: {
         type: DataTypes.FLOAT,
         allowNull: false,
-      },
+      }
     },
-
-    
     {
       tableName: "order",
       createaAt: true,

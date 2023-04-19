@@ -73,21 +73,25 @@ async function updateProductById(req, res, next) {
 async function deleteProductById(req, res, next) {
   const ProductId = req.params.id;
   try {
-    await models.product.destroy({
-      where: { id: ProductId },
-    }).then(async (numDeleted)=>{
-      if (numDeleted === 0) {
-        return res.status(404).json({ message: "Product not found" });
-      }
-      await models.photo.destroy({
-        where: {productId:ProductId}
-      }).then(()=> {
-        return res.status(204);
+    await models.product
+      .destroy({
+        where: { id: ProductId },
       })
-
-
-    });
-
+      .then((numDeleted) => {
+        if (numDeleted === 0) {
+          return res.status(404).json({ message: "Product not found" });
+        }
+        models.photo
+          .destroy({
+            where: { productId: ProductId },
+          })
+          .then(() => {
+            console.log("buraya geldim");
+            return res
+              .status(200)
+              .json({ message: "Product deleted successfully" });
+          });
+      });
   } catch (err) {
     next(err);
   }

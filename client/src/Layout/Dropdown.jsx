@@ -45,7 +45,7 @@ function Dropdown() {
 
                         {
                             
-                            user.user?.role == 'member' &&
+                            user.user?.role == 'admin' &&
                             <Menu.Item>
                                 {({ active }) => (
                                     <NavLink

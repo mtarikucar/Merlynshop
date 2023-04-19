@@ -1,12 +1,25 @@
 import React from 'react'
 import AdminNavbar from '../../Layout/Admin/AdminNavbar'
 import AdminSidebar from '../../Layout/Admin/AdminSidebar'
+import { useQuery } from 'react-query'
+import { getUsers ,deleteUsers } from '../../api'
 function AdminUser() {
+
+
+
+    const { isLoading, error, data } = useQuery('products', getUsers)
+    if (isLoading) return 'Loading...'
+
+    if (error) return 'An error has occurred: ' + error.message
+    data && console.log(data, 'admin');
+
+
+
     return (
         <div className="min-h-screen flex flex-col w-full flex-auto flex-shrink-0 antialiased bg-white  text-black ">
             <AdminNavbar />
             <AdminSidebar />
-            <div  className="h-full m-4 md:ml-64">
+            <div className="h-full m-4 md:ml-64">
                 <div className="grid  px-6 ">
                     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <div className="flex items-center justify-between pb-4 bg-white ">
@@ -16,7 +29,7 @@ function AdminUser() {
                                     Action
                                     <svg className="w-3 h-3 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
                                 </button>
-                                
+
                             </div>
                             <label htmlFor="table-search" className="sr-only">Search</label>
                             <div className="relative">
@@ -29,12 +42,12 @@ function AdminUser() {
                         <table className="w-full text-sm text-left text-gray-500 ">
                             <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
                                 <tr>
-                                    
+
                                     <th scope="col" className="px-6 py-3">
                                         Name
                                     </th>
                                     <th scope="col" className="px-6 py-3">
-                                        Position
+                                        operation
                                     </th>
                                     <th scope="col" className="px-6 py-3">
                                         Status
@@ -45,29 +58,38 @@ function AdminUser() {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr className="bg-white border-b  hover:bg-gray-50 ">
-                                   
-                                    <th scope="row" className="flex items-center  py-4whitespace-nowrap ">
-                                   
-                                        <div className="pl-3">
-                                            <div className="text-base font-semibold">Neil Sims</div>
-                                            <div className="font-normal text-gray-500">neil.sims@flowbite.com</div>
-                                        </div>
-                                    </th>
-                                    <td className="px-6 py-4">
-                                        React Developer
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        <div className="flex items-center">
-                                            <div className="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div> Online
-                                        </div>
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        <a href="#" className="font-medium text-red-500  hover:underline">Delete</a>
-                                    </td>
-                                </tr>
-                                
-                                
+
+                                {
+
+                                    data &&
+                                    data?.map((user) => (
+                                        <tr key={user.id} className="bg-white border-b  hover:bg-gray-50 ">
+
+                                            <th scope="row" className="flex items-center  py-4whitespace-nowrap ">
+
+                                                <div className="pl-3">
+                                                    <div className="text-base font-semibold">{user.name}</div>
+                                                    <div className="font-normal text-gray-500">{user.email}</div>
+                                                </div>
+                                            </th>
+                                            <td className="px-6 py-4">
+                                                operation name
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <div className="flex items-center">
+                                                    <div className={`h-2.5 w-2.5 rounded-full bg-green-500 mr-2`}></div> {user.role}
+                                                </div>
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <button 
+                                                onClick={()=> deleteUsers(user.id)}
+                                                className="font-medium text-red-500  hover:underline">Delete</button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                }
+
+
 
 
 

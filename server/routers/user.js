@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const {verifyTokenAndAdmin} = require('../middlewares/verifyToken');
-const { updateUser, deleteUser, getUser, deleteUserPermanent,getAllUser } = require('../controllers/user');
+const { updateUser, deleteUser, getUser, deleteUserPermanent ,getAllUser} = require('../controllers/user');
 const { register } = require('../controllers/auth');
 const router = Router()
 
@@ -9,7 +9,7 @@ const router = Router()
 router.put('/:id', verifyTokenAndAdmin, updateUser);
 
 // DELETE => /api/user/:id
-router.delete('/:id', deleteUser);
+router.delete('/:id',verifyTokenAndAdmin, deleteUser);
 
 // DELETE => /api/user/admin/:id
 router.delete('/admin/:id', verifyTokenAndAdmin, deleteUserPermanent);
@@ -18,9 +18,9 @@ router.delete('/admin/:id', verifyTokenAndAdmin, deleteUserPermanent);
 router.post('/admin/add',verifyTokenAndAdmin, register);
 
 // GET => /api/user/:id
-router.get('/:id',verifyTokenAndAdmin, getUser);
+router.get('/:id', getUser);
 
-// GET => /api/user
-router.get('/', getAllUser);
+// GET all user => /api/user
+router.get('/',verifyTokenAndAdmin, getAllUser);
 
 module.exports =router

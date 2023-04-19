@@ -91,7 +91,7 @@ function ShoppingCarts({ open, setOpen }) {
                                                                     <div>
                                                                         <div className="flex justify-between text-base font-medium text-gray-900">
                                                                             <h3>
-                                                                                <a href={`/products/${product.id}`}>{product.brand}</a>
+                                                                                <a href={`/products/${product.id}`}>{product.name}</a>
                                                                             </h3>
                                                                             <div className='flex flex-col justify-center items-center'>
 

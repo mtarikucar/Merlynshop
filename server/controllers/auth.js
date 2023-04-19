@@ -93,7 +93,7 @@ async function login(req, res) {
       message: "User is logined successfully",
       data: {
         token,
-        user: user,
+        user,
       },
     });
   } catch (err) {

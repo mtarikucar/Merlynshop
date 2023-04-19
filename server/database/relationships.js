@@ -1,23 +1,8 @@
-const { DataTypes } = require("sequelize");
 
 
 function applyRelationships(sequelize) {
-  const {
-    photo,
-    order,
-    user,
-    payment,
-    product,
-    category,
-    cart
-  } = sequelize.models;
-
-  
-  //cart
-  user.hasOne(cart)
-  cart.belongsTo(user)
-  cart.belongsToMany(product, {through: "cart_roduct"})
-  product.belongsToMany(cart, {through: "cart_roduct"})
+  const { photo, order, user, payment, product, category, location } =
+    sequelize.models;
 
   //order
   order.belongsToMany(product, { through: "order_product" });
@@ -26,12 +11,13 @@ function applyRelationships(sequelize) {
   order.belongsTo(user);
   payment.belongsTo(order);
   order.hasOne(payment);
+  order.hasOne(location);
 
   //product
   product.belongsTo(category);
   category.hasMany(product);
-  photo.belongsTo(product)
-  product.hasMany(photo)
+  photo.belongsTo(product);
+  product.hasMany(photo);
 }
 
 module.exports = { applyRelationships };
