@@ -44,21 +44,36 @@ function Dropdown() {
                     <div className="py-1">
 
                         {
-                            
-                            user.user?.role == 'member' &&
-                            <Menu.Item>
-                                {({ active }) => (
-                                    <NavLink
-                                        to='/admin/dashboard'
-                                        className={classNames(
-                                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                            'block px-4 py-2 text-sm'
-                                        )}
-                                    >
-                                        Admin
-                                    </NavLink>
-                                )}
-                            </Menu.Item>
+
+                            user.user?.role == 'admin ' ? (
+                                <Menu.Item>
+                                    {({ active }) => (
+                                        <NavLink
+                                            to='/admin/dashboard'
+                                            className={classNames(
+                                                active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                                'block px-4 py-2 text-sm'
+                                            )}
+                                        >
+                                            Admin
+                                        </NavLink>
+                                    )}
+                                </Menu.Item>
+                            ):(
+                                <Menu.Item>
+                                    {({ active }) => (
+                                        <NavLink
+                                            to='/profile'
+                                            className={classNames(
+                                                active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                                'block px-4 py-2 text-sm'
+                                            )}
+                                        >
+                                            Profile
+                                        </NavLink>
+                                    )}
+                                </Menu.Item>
+                            )
                             
                         }
 

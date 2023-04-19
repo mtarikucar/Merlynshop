@@ -16,8 +16,8 @@ function applyRelationships(sequelize) {
   //cart
   user.hasOne(cart)
   cart.belongsTo(user)
-  cart.belongsToMany(product, {through: "cart_roduct"})
-  product.belongsToMany(cart, {through: "cart_roduct"})
+  cart.belongsToMany(product, {through: "cart_product"})
+  product.belongsToMany(cart, {through: "cart_product"})
 
   //order
   order.belongsToMany(product, { through: "order_product" });

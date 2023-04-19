@@ -7,11 +7,11 @@ function AdminUser() {
 
 
 
-    const { isLoading, error, data } = useQuery('products', getUsers)
+    const { isLoading, error, data } = useQuery('users', getUsers)
     if (isLoading) return 'Loading...'
 
     if (error) return 'An error has occurred: ' + error.message
-    data && console.log(data, 'admin');
+  
 
 
 

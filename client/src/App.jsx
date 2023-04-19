@@ -25,6 +25,9 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminUser from './pages/admin/AdminUser';
 import AdminOrder from './pages/admin/AdminOrder';
 import AdminMessage from './pages/admin/AdminMessage';
+import Profile from './pages/Profile';
+import AdminOrderDetail from './pages/admin/AdminOrderDetail';
+import Checkout from './pages/Checkout';
 
 function App() {
 
@@ -53,6 +56,8 @@ function App() {
         <Route path="/product" element={<ProductPage />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/checkout" element={<Checkout />} />
 
         <Route path="/products/:id" element={<ProductDetail />} />
         <Route path="/login" element={<Login />} />
@@ -63,6 +68,7 @@ function App() {
         <Route path='/admin/user' element={<AdminUser />} />
         <Route path='/admin/order' element={<AdminOrder />} />
         <Route path='/admin/message' element={<AdminMessage />} />
+        <Route path='/admin/order/:id' element={<AdminOrderDetail />} />
 
 
       </Routes>

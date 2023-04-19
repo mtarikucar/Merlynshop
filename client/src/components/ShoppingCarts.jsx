@@ -4,6 +4,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 import { useSelector, useDispatch } from 'react-redux'
 import { removeFromCart, decreaseCart, addToCart, getTotals } from '../features/cartSlice'
 import store from '../app/store'
+import { Link } from 'react-router-dom'
 
 function ShoppingCarts({ open, setOpen }) {
 
@@ -139,12 +140,13 @@ function ShoppingCarts({ open, setOpen }) {
                                             </div>
                                             <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                                             <div className="mt-6">
-                                                <a
-                                                    href="#"
+                                                <Link
+                                                    to='checkout'
+                                                    onClick={() => setOpen(!open)}
                                                     className="flex items-center justify-center rounded-md border border-transparent bg-green-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-green-700"
                                                 >
                                                     Checkout
-                                                </a>
+                                                </Link>
                                             </div>
                                             <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                                                 <p>

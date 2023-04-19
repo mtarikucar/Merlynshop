@@ -256,13 +256,13 @@ const ProductForm = ({ setOpen }) => {
       >
         Gönder
       </button>
-      <button
+      <div
         onClick={() => setOpen(false)}
-        type="submit"
-        className="w-full p-2 mt-2 text-red font-semibold rounded hover:bg-red-600 hover:text-white"
+       
+        className="w-full p-2 mt-2 text-red font-semibold rounded hover:bg-red-600 text-center cursor-pointer hover:text-white"
       >
         kapat
-      </button>
+      </div>
     </form>
   );
 };
