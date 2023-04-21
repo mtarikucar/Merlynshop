@@ -59,6 +59,8 @@ const ProductForm = ({ setOpen }) => {
     isError,
   } = useQuery("categories", fetchCategories);
 
+
+  categories && console.log(categories, 'sdvsdvb');
   const formik = useFormik({
     initialValues: {
       name: "",

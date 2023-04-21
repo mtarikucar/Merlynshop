@@ -4,6 +4,15 @@ const baseAPI = axios.create({
   baseURL: "http://localhost:3000/api",
 });
 
+/* export const getCategories = async () => {
+  try {
+    const { data } = await baseAPI.get(`/category`);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}; */
+
 export const getProducts = async () => {
   try {
     const { data } = await baseAPI.get(`/product`);
@@ -13,7 +22,7 @@ export const getProducts = async () => {
   }
 };
 
-export const deleteProduct =  async (id, token) => {
+export const deleteProduct = async (id, token) => {
   const data = await axios.delete(`http://localhost:3000/api/product/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,

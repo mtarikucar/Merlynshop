@@ -2,7 +2,7 @@ const { models } = require("../database/");
 
 // Create a new Product
 async function createProduct(req, res, next) {
-  const { photos, thumbnail, name, description, price, quantity, categoryId } =
+  const { photos, thumbnail, name, description, price, quantity,size, categoryId } =
     req.body;
   try {
     await models.product
@@ -13,6 +13,7 @@ async function createProduct(req, res, next) {
         price: price,
         quantity: quantity,
         categoryId: categoryId,
+        size:size
       })
       .then((newProduct) => {
         photos.forEach(async (element) => {
@@ -29,10 +30,31 @@ async function createProduct(req, res, next) {
 }
 
 // Get a list of all Products
-async function getAllProducts(req, res, next) {
+/* async function getAllProducts(req, res, next) {
   try {
     const Products = await models.product.findAll();
     res.status(200).json(Products);
+  } catch (err) {
+    next(err);
+  }
+} */
+async function getAllProducts(req, res, next) {
+  const { categoryId, size } = req.query;
+
+  let where = {};
+  if (categoryId) {
+    where.categoryId = categoryId;
+  }
+  if (size) {
+    where.size = size;
+  }
+
+  try {
+    const products = await models.product.findAll({
+      where,
+      include: [{ model: models.category}],
+    });
+    res.status(200).json(products);
   } catch (err) {
     next(err);
   }

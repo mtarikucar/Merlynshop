@@ -3,7 +3,8 @@ import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
 import Products from '../Products'
-
+import axios from 'axios'
+import { useQuery } from 'react-query'
 const sortOptions = [
     { name: 'Most Popular', href: '#', current: true },
     { name: 'Newest', href: '#', current: false },
@@ -11,37 +12,60 @@ const sortOptions = [
     { name: 'Price: High to Low', href: '#', current: false },
 ]
 
-const filters = [
-    {
-        id: 'category',
-        name: 'Category',
-        options: [
-            { value: 'new-arrivals', label: 'New Arrivals', checked: false },
-            { value: 'sale', label: 'Sale', checked: false },
-            { value: 'travel', label: 'Travel', checked: true },
-            { value: 'organization', label: 'Organization', checked: false },
-            { value: 'accessories', label: 'Accessories', checked: false },
-        ],
-    },
-    {
-        id: 'size',
-        name: 'Size',
-        options: [
-            { value: '2l', label: '2L', checked: false },
-            { value: '6l', label: '6L', checked: false },
-            { value: '12l', label: '12L', checked: false },
-            { value: '18l', label: '18L', checked: false },
-            { value: '20l', label: '20L', checked: false },
-            { value: '40l', label: '40L', checked: true },
-        ],
-    },
-]
+const sizes =
+    [
+        { id: 1, value: 'xs', },
+        { id: 2, value: 's', },
+        { id: 3, value: 'm', },
+        { id: 4, value: 'l', },
+        { id: 5, value: 'xl', },
+        { id: 6, value: 'xxl', },
+
+    ]
+
+
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 function ProductViewer() {
+    const [categoryFilter, setCategoryFilter] = useState()
+    const [sizeFilter, setSizeFilter] = useState()
+
+
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+
+    const fetchCategories = async () => {
+        const res = await axios.get("http://localhost:3000/api/category");
+        return res.data;
+    };
+
+    const {
+        data: categories,
+        isLoading,
+        isError,
+    } = useQuery("categories", fetchCategories);
+
+
+    if (isLoading) return 'Loading...';
+    if (isError) return 'An error has occurred: '
+    categories && console.log(categories);
+
+    const hundleSize = (size) => {
+        if (sizeFilter == null) {
+            setSizeFilter(size)
+        } else {
+            setSizeFilter(null)
+        }
+    }
+    const hundleCategory = (category) => {
+        if (categoryFilter == null) {
+            setCategoryFilter(category)
+        } else {
+            setCategoryFilter(null)
+        }
+    }
+
     return (
         <div className="bg-white shadow-xl border-2 lg:m-8 xl:m-8  rounded-lg">
             <div>
@@ -85,51 +109,94 @@ function ProductViewer() {
 
                                     {/* Filters */}
                                     <form className="mt-4 border-t border-gray-200">
-                                        <h3 className="sr-only">Categories</h3>
-                                       
+                                        <h3 className="sr-only">Category</h3>
 
-                                        {filters.map((section) => (
-                                            <Disclosure as="div" key={section.id} className="border-t border-gray-200 px-4 py-6">
-                                                {({ open }) => (
-                                                    <>
-                                                        <h3 className="-mx-2 -my-3 flow-root">
-                                                            <Disclosure.Button className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
-                                                                <span className="font-medium text-gray-900">{section.name}</span>
-                                                                <span className="ml-6 flex items-center">
-                                                                    {open ? (
-                                                                        <MinusIcon className="h-5 w-5" aria-hidden="true" />
-                                                                    ) : (
-                                                                        <PlusIcon className="h-5 w-5" aria-hidden="true" />
-                                                                    )}
-                                                                </span>
-                                                            </Disclosure.Button>
-                                                        </h3>
-                                                        <Disclosure.Panel className="pt-6">
-                                                            <div className="space-y-6">
-                                                                {section.options.map((option, optionIdx) => (
-                                                                    <div key={option.value} className="flex items-center">
-                                                                        <input
-                                                                            id={`filter-mobile-${section.id}-${optionIdx}`}
-                                                                            name={`${section.id}[]`}
-                                                                            defaultValue={option.value}
-                                                                            type="checkbox"
-                                                                            defaultChecked={option.checked}
-                                                                            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                                                                        />
-                                                                        <label
-                                                                            htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
-                                                                            className="ml-3 min-w-0 flex-1 text-gray-500"
-                                                                        >
-                                                                            {option.label}
-                                                                        </label>
-                                                                    </div>
-                                                                ))}
-                                                            </div>
-                                                        </Disclosure.Panel>
-                                                    </>
-                                                )}
-                                            </Disclosure>
-                                        ))}
+
+
+                                        <Disclosure as="div" className="border-t border-gray-200 px-4 py-6">
+                                            {({ open }) => (
+                                                <>
+                                                    <h3 className="-mx-2 -my-3 flow-root">
+                                                        <Disclosure.Button className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
+                                                            <span className="font-medium text-gray-900">Category</span>
+                                                            <span className="ml-6 flex items-center">
+                                                                {open ? (
+                                                                    <MinusIcon className="h-5 w-5" aria-hidden="true" />
+                                                                ) : (
+                                                                    <PlusIcon className="h-5 w-5" aria-hidden="true" />
+                                                                )}
+                                                            </span>
+                                                        </Disclosure.Button>
+                                                    </h3>
+                                                    <Disclosure.Panel className="pt-6">
+                                                        <div className="space-y-6">
+                                                            {categories?.map((category) => (
+                                                                <div key={category.id} className="flex items-center">
+                                                                    <input
+                                                                        id={category.name}
+                                                                        name={category.name}
+                                                                        defaultValue={category.id}
+                                                                        type='checkbox'
+                                                                        onClick={(e) => hundleCategory(e.target.value)}
+                                                                        value={category.id}
+                                                                        className="h-4 w-14 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                                                    />
+                                                                    <label
+                                                                        htmlFor={category.name}
+                                                                        className="ml-3 text-sm text-gray-600"
+                                                                    >
+                                                                        {category.name}
+                                                                    </label>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </Disclosure.Panel>
+                                                </>
+                                            )}
+                                        </Disclosure>
+
+                                        <Disclosure as="div" className="border-t border-gray-200 px-4 py-6">
+                                            {({ open }) => (
+                                                <>
+                                                    <h3 className="-mx-2 -my-3 flow-root">
+                                                        <Disclosure.Button className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
+                                                            <span className="font-medium text-gray-900">Category</span>
+                                                            <span className="ml-6 flex items-center">
+                                                                {open ? (
+                                                                    <MinusIcon className="h-5 w-5" aria-hidden="true" />
+                                                                ) : (
+                                                                    <PlusIcon className="h-5 w-5" aria-hidden="true" />
+                                                                )}
+                                                            </span>
+                                                        </Disclosure.Button>
+                                                    </h3>
+                                                    <Disclosure.Panel className="pt-6">
+                                                        <div className="space-y-6">
+                                                            {sizes?.map((size) => (
+                                                                <div key={size.id} className="flex items-center">
+                                                                    <input
+                                                                        id={size.id}
+                                                                        name={size.value}
+                                                                        defaultValue={size.id}
+                                                                        type='checkbox'
+                                                                        onClick={(e) => hundleSize(e.target.value)}
+                                                                        value={size.value}
+                                                                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                                                    />
+                                                                    <label
+                                                                        htmlFor={size.id}
+                                                                        className="ml-3 text-sm text-gray-600"
+                                                                    >
+                                                                        {size.value}
+                                                                    </label>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </Disclosure.Panel>
+                                                </>
+                                            )}
+                                        </Disclosure>
+
                                     </form>
                                 </Dialog.Panel>
                             </Transition.Child>
@@ -209,55 +276,97 @@ function ProductViewer() {
                             {/* Filters */}
                             <form className="hidden lg:block">
                                 <h3 className="sr-only">Categories</h3>
-                               
 
-                                {filters.map((section) => (
-                                    <Disclosure as="div" key={section.id} className="border-b border-gray-200 py-6">
-                                        {({ open }) => (
-                                            <>
-                                                <h3 className="-my-3 flow-root">
-                                                    <Disclosure.Button className="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
-                                                        <span className="font-medium text-gray-900">{section.name}</span>
-                                                        <span className="ml-6 flex items-center">
-                                                            {open ? (
-                                                                <MinusIcon className="h-5 w-5" aria-hidden="true" />
-                                                            ) : (
-                                                                <PlusIcon className="h-5 w-5" aria-hidden="true" />
-                                                            )}
-                                                        </span>
-                                                    </Disclosure.Button>
-                                                </h3>
-                                                <Disclosure.Panel className="pt-6">
-                                                    <div className="space-y-4">
-                                                        {section.options.map((option, optionIdx) => (
-                                                            <div key={option.value} className="flex items-center">
-                                                                <input
-                                                                    id={`filter-${section.id}-${optionIdx}`}
-                                                                    name={`${section.id}[]`}
-                                                                    defaultValue={option.value}
-                                                                    type="checkbox"
-                                                                    defaultChecked={option.checked}
-                                                                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                                                                />
-                                                                <label
-                                                                    htmlFor={`filter-${section.id}-${optionIdx}`}
-                                                                    className="ml-3 text-sm text-gray-600"
-                                                                >
-                                                                    {option.label}
-                                                                </label>
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                </Disclosure.Panel>
-                                            </>
-                                        )}
-                                    </Disclosure>
-                                ))}
+
+
+                                <Disclosure as="div" className="border-b border-gray-200 py-6">
+                                    {({ open }) => (
+                                        <>
+                                            <h3 className="-my-3 flow-root">
+                                                <Disclosure.Button className="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
+                                                    <span className="font-medium text-gray-900">category</span>
+                                                    <span className="ml-6 flex items-center">
+                                                        {open ? (
+                                                            <MinusIcon className="h-5 w-5" aria-hidden="true" />
+                                                        ) : (
+                                                            <PlusIcon className="h-5 w-5" aria-hidden="true" />
+                                                        )}
+                                                    </span>
+                                                </Disclosure.Button>
+                                            </h3>
+                                            <Disclosure.Panel className="pt-6">
+                                                <div className="space-y-4">
+                                                    {categories?.map((category) => (
+                                                        <div key={category.id} className="flex items-center">
+                                                            <input
+                                                                id={category.name}
+                                                                name={category.name}
+                                                                defaultValue={category.id}
+                                                                type='checkbox'
+                                                                onClick={(e) => hundleCategory(e.target.value)}
+                                                                value={category.id}
+                                                                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                                            />
+                                                            <label
+                                                                htmlFor={category.name}
+                                                                className="ml-3 text-sm text-gray-600"
+                                                            >
+                                                                {category.name}
+                                                            </label>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </Disclosure.Panel>
+                                        </>
+                                    )}
+                                </Disclosure>
+                                <Disclosure as="div" className="border-b border-gray-200 py-6">
+                                    {({ open }) => (
+                                        <>
+                                            <h3 className="-my-3 flow-root">
+                                                <Disclosure.Button className="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
+                                                    <span className="font-medium text-gray-900">Size</span>
+                                                    <span className="ml-6 flex items-center">
+                                                        {open ? (
+                                                            <MinusIcon className="h-5 w-5" aria-hidden="true" />
+                                                        ) : (
+                                                            <PlusIcon className="h-5 w-5" aria-hidden="true" />
+                                                        )}
+                                                    </span>
+                                                </Disclosure.Button>
+                                            </h3>
+                                            <Disclosure.Panel className="pt-6">
+                                                <div className="space-y-4">
+                                                    {sizes?.map((size) => (
+                                                        <div key={size.id} className="flex items-center">
+                                                            <input
+                                                                id={size.id}
+                                                                name={size.value}
+                                                                defaultValue={size.id}
+                                                                type='checkbox'
+                                                                onClick={(e) => hundleSize(e.target.value)}
+                                                                value={size.value}
+                                                                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                                            />
+                                                            <label
+                                                                htmlFor={size.id}
+                                                                className="ml-3 text-sm text-gray-600"
+                                                            >
+                                                                {size.value}
+                                                            </label>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </Disclosure.Panel>
+                                        </>
+                                    )}
+                                </Disclosure>
+
                             </form>
 
                             {/* Product grid */}
-                            <div className="lg:col-span-3 ">{/* Your content */}
-                                <Products />
+                            <div className="lg:col-span-3 ">
+                                <Products categoryId={categoryFilter} size={sizeFilter} />
                             </div>
                         </div>
                     </section>

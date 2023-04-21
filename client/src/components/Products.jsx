@@ -1,31 +1,44 @@
 import React, { useState, useEffect } from 'react'
 import Product from './product'
-
+import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 
 import { useQuery } from 'react-query'
 
-import { getProducts } from '../api';
 
-function Products() {
+function getProduct(categoryId, size) {
+  let base = 'http://localhost:3000/api/product';
+  if (categoryId || size) {
+    base += '?';
+    if (categoryId) {
+      base += `categoryId=${categoryId}&`;
+    }
+    if (size) {
+      base += `size=${size}&`;
+    }
+  }
+
+  return axios.get(base).then((res) => res.data);
+}
 
 
+function Products({categoryId, size}) {
 
 
+/*   const [categoryName, setCategoryName] = useState('tabak')
+  const [sizeName, setSizeNmae] = useState('m') */
 
-  const {
-    isLoading,
-    isError,
-    data: products,
-    error,
-  } = useQuery({
-    queryKey: ["products"],
-    queryFn: getProducts,
-  });
 
-  if (error) return 'An error has occurred: ' + error.message
+  const { isLoading, isError, data: products, error } = useQuery(
+    ['products', { categoryId: categoryId, size: size }],
+    ({ queryKey }) => getProduct(queryKey[1].categoryId, queryKey[1].size)
+  );
+
+  if (isLoading) return 'Loading...';
+  if (isError) return 'An error has occurred: ' + error.message;
+
+
   products && console.log(products);
-
   return (
     < div className={`${location.pathname == '/' ? 'grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-4 lg:px-12' : 'grid grid-cols-2   md:grid-cols-2 lg:grid-cols-2  xl:grid-cols-3 '} gap-4 `} >
       <div className={`${location.pathname == '/product' ? ' hidden  ' : ' lg:grid md:grid hidden  col-span-2 mt-6'}`}>

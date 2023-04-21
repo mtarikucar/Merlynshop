@@ -34,7 +34,7 @@ function ProductDetail() {
 
     )
 
-    console.log(data);
+    data && console.log(data);
 
 
     if (isLoading) return 'Loading...'
