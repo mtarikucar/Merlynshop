@@ -17,7 +17,7 @@ function getProduct(categoryId, size) {
       base += `size=${size}&`;
     }
   }
-
+dc
   return axios.get(base).then((res) => res.data);
 }
 

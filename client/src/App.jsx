@@ -32,7 +32,7 @@ import Checkout from "./pages/Checkout";
 function App() {
   let location = useLocation();
 
-  useEffect(() => {}, [location]);
+  useEffect(() => { }, [location]);
 
   const [open, setOpen] = useState(false);
   return (
@@ -44,10 +44,11 @@ function App() {
           {/* <Hero /> */}
           <Navbar setOpen={setOpen} open={open} />
           {open && <ShoppingCarts open={open} setOpen={setOpen} />}
+
         </>
       ) : (
         <>
-        
+
         </>
       )}
       <Routes>
@@ -70,6 +71,11 @@ function App() {
         <Route path="/admin/message" element={<AdminMessage />} />
         <Route path="/admin/order/:id" element={<AdminOrderDetail />} />
       </Routes>
+
+      {
+        !location.pathname.includes("admin") &&
+        <Footer />
+      }
     </>
   );
 }
