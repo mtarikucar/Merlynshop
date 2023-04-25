@@ -47,9 +47,7 @@ function ProductViewer() {
     } = useQuery("categories", fetchCategories);
 
 
-    if (isLoading) return 'Loading...';
-    if (isError) return 'An error has occurred: '
-    categories && console.log(categories);
+
 
     const hundleSize = (size) => {
         if (sizeFilter == null) {
@@ -65,7 +63,10 @@ function ProductViewer() {
             setCategoryFilter(null)
         }
     }
-
+    
+    
+    if (isLoading) return 'Loading...';
+    if (isError) return 'An error has occurred: '
     return (
         <div className="bg-white shadow-xl border-2 lg:m-8 xl:m-8  rounded-lg">
             <div>

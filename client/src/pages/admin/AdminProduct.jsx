@@ -1,20 +1,29 @@
-import React, { useState } from "react";
-import AdminNavbar from "../../Layout/Admin/AdminNavbar";
-import AdminSidebar from "../../Layout/Admin/AdminSidebar";
+import React, { useState, useRef } from "react";
+
 import AdminAddProduct from "../../components/Admin/AdminAddProduct";
+import AdminUpdateProduct from "../../components/Admin/AdminUpdateProduct";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { getProducts } from "../../api";
 import { ToastContainer } from "react-toastify";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { Audio } from 'react-loader-spinner'
-function AdminProduct() {
-  const [open, setOpen] = useState(false);
+import { Audio } from "react-loader-spinner";
 
+function AdminProduct() {
+  const [openAddProduct, setOpenAddProduct] = useState(false);
+  const [openUpdateProduct, setOpenUpdateProduct] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
   const queryClient = useQueryClient();
 
   const { user } = useSelector((state) => state.auth);
+
+  const sortByCreatedAt = (a, b) => {
+    if (a.createdAt < b.createdAt) return 1;
+    if (a.createdAt > b.createdAt) return -1;
+    return 0;
+  };
 
   const {
     isLoading,
@@ -24,6 +33,9 @@ function AdminProduct() {
   } = useQuery({
     queryKey: ["products"],
     queryFn: getProducts,
+    onSuccess: (data) => {
+      data.sort(sortByCreatedAt);
+    },
   });
 
   const deleteProductMutation = useMutation(
@@ -53,16 +65,28 @@ function AdminProduct() {
     deleteProductMutation.mutate(e.target.id);
   };
 
+  const updateHandle = (product) => {
+    setSelectedProduct(product);
+    setOpenUpdateProduct(true);
+  };
 
+  const filteredProducts = products?.filter((product) =>
+    product.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   if (error) return "An error has occurred: " + error.message;
   return (
-    <div className="min-h-screen flex flex-col w-full flex-auto flex-shrink-0 antialiased bg-white  text-black ">
-      <ToastContainer />
-      <AdminNavbar />
-      <AdminSidebar />
-      <AdminAddProduct open={open} setOpen={setOpen} />
+   
       <div className="h-full ml-14 mt-14 mb-10 md:ml-64 ">
+      <ToastContainer />
+      <AdminAddProduct open={openAddProduct} setOpen={setOpenAddProduct} />
+      {selectedProduct && (
+        <AdminUpdateProduct
+          open={openUpdateProduct}
+          setOpen={setOpenUpdateProduct}
+          oldProduct={selectedProduct}
+        />
+      )}
         <div className="grid  px-6 ">
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <div className="flex items-center justify-between pb-4 bg-white  px-5">
@@ -74,23 +98,25 @@ function AdminProduct() {
                     fill="currentColor"
                     viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg"
-                    >
+                  >
                     <path
                       fillRule="evenodd"
                       d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
                       clipRule="evenodd"
-                      ></path>
+                    ></path>
                   </svg>
                 </div>
                 <input
                   type="text"
-                  id="table-search-users"
+                  id="table-search-products"
                   className="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-green-500 focus:border-green-500 "
-                  placeholder="Search for users"
+                  placeholder="Search for products"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                 />
               </div>
               <button
-                onClick={() => setOpen(true)}
+                onClick={() => setOpenAddProduct(true)}
                 className="inline-flex items-center text-white  bg-green-500 border hover:bg-white border-green-500 hover:text-gray-900  outline-none  font-medium rounded-lg text-sm px-3 py-1.5 "
                 type="button"
               >
@@ -120,26 +146,24 @@ function AdminProduct() {
                   </th>
                 </tr>
               </thead>
-                  {
-                    isLoading &&
-                    <div className="flex justify-center items-center text-center w-full">
-  
-                      <Audio
-                        height="80"
-                        width="80"
-                        radius="9"
-                        color='green'
-                        ariaLabel='three-dots-loading'
-                        wrapperStyle
-                        wrapperClass
-                      />
-                    </div>
-  
-                  }
+              {isLoading && (
+                <div className="flex justify-center items-center text-center w-full">
+                  <Audio
+                    height="80"
+                    width="80"
+                    radius="9"
+                    color="green"
+                    ariaLabel="three-dots-loading"
+                    wrapperStyle
+                    wrapperClass
+                    className="flex justify-center items-center text-center"
+                  />
+                </div>
+              )}
 
               <tbody>
-                {products &&
-                  products?.map((product) => (
+                {filteredProducts &&
+                  filteredProducts?.map((product) => (
                     <tr
                       key={product.id}
                       className="bg-white border-b  hover:bg-gray-50 "
@@ -176,7 +200,13 @@ function AdminProduct() {
                         </div>
                       </td>
                       <td className="px-6 py-4 space-x-2 text-center">
-                        <button className="font-medium bg-green-600  px-2 py-1 rounded-lg text-white ">
+                        <button
+                          id={product.id}
+                          className="font-medium bg-green-600  px-2 py-1 rounded-lg text-white "
+                          onClick={() => {
+                            updateHandle(product);
+                          }}
+                        >
                           Edit
                         </button>
                         <button
@@ -195,7 +225,7 @@ function AdminProduct() {
           </div>
         </div>
       </div>
-    </div>
+    
   );
 }
 

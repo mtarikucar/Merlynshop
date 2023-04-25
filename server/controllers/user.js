@@ -2,18 +2,40 @@ const { models } = require("../database");
 
 async function updateUser(req, res) {
   try {
-    const updatedUser = await models.user.findByPk(req.params.id);
-    updatedUser.update({
-      name: req.body.name,
-      gender: req.body.gender,
+    const user = await models.user.findOne({
+      where: {
+        id: req.params.id,
+        isDeleted: false,
+      },
     });
-    // updatedUser is the document after update because of new: true
+
+    if (!user) {
+      return res.status(404).send("User not found. Please check the provided ID.");
+    }
+
+    const updatedData = {
+      name: req.body.name || user.name,
+      email: (req.body.email && req.body.email.toLowerCase()) || user.email,
+    };
+
+    if (req.body.password) {
+      const hashedPassword = await bcrypt.hash(req.body.password, 12);
+      updatedData.password = hashedPassword;
+    }
+
+    const updatedUser = await user.update(updatedData);
+
     res.status(200).json({
-      message: "User is updated successfully!",
-      updatedUser,
+      status: "success",
+      message: "User is updated successfully.",
+      user: updatedUser,
     });
-  } catch (error) {
-    res.status(500).json(error);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      status: "error at updateUser to database",
+      message: JSON.stringify(err),
+    });
   }
 }
 

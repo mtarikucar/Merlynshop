@@ -13,7 +13,6 @@ function Profile() {
     }, [])
 
 
-    user && console.log(user);
     return (
 
         <div className='grid grid-cols-12 w-full h-full p-6'>

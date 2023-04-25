@@ -2,7 +2,7 @@ const { models } = require("../database/");
 
 // Create a new Product
 async function createProduct(req, res, next) {
-  const { photos, thumbnail, name, description, price, quantity,size, categoryId } =
+  const { photos, thumbnail, name, description, price, quantity,size, categoryId,discountedPrice } =
     req.body;
   try {
     await models.product
@@ -13,7 +13,8 @@ async function createProduct(req, res, next) {
         price: price,
         quantity: quantity,
         categoryId: categoryId,
-        size:size
+        size:size,
+        discountedPrice:discountedPrice
       })
       .then((newProduct) => {
         photos.forEach(async (element) => {
@@ -52,8 +53,10 @@ async function getAllProducts(req, res, next) {
   try {
     const products = await models.product.findAll({
       where,
-      include: [{ model: models.category}],
+      include: [{ model: models.category},{ model: models.photo}],
     });
+
+    
     res.status(200).json(products);
   } catch (err) {
     next(err);
@@ -74,18 +77,58 @@ async function getProductById(req, res, next) {
   }
 }
 
-// Update a Product by ID
 async function updateProductById(req, res, next) {
-  const ProductId = req.params.id;
+  const productId = req.params.id;
+  const { photos, thumbnail, name, description, price, quantity, size, categoryId } =
+    req.body;
   try {
-    const [numUpdated, updatedProduct] = await models.product.update(req.body, {
-      where: { id: ProductId },
-      returning: true,
+    const updatedProduct = await models.product.findOne({
+      where: { id: productId },
     });
-    if (numUpdated === 0) {
+
+    if (!updatedProduct) {
       return res.status(404).json({ message: "Product not found" });
     }
-    res.status(200).json(updatedProduct[0]);
+
+    await updatedProduct.update({
+      name: name || updatedProduct.name,
+      thumbnail: thumbnail || updatedProduct.thumbnail,
+      description: description || updatedProduct.description,
+      price: price || updatedProduct.price,
+      quantity: quantity || updatedProduct.quantity,
+      categoryId: categoryId || updatedProduct.categoryId,
+      size: size || updatedProduct.size,
+      discountedPrice: discountedPrice || updatedProduct.discountedPrice
+    });
+
+    // Update product photos
+    if (photos && photos.length > 0) {
+      const newPhotos = await Promise.all(
+        photos.map(async (photo) => {
+          return await models.photo.create({
+            imgpath: photo.imgpath,
+            productId: productId,
+          });
+        })
+      );
+
+      // Remove old photos
+      const oldPhotos = await updatedProduct.getPhotos();
+      await Promise.all(
+        oldPhotos.map(async (photo) => {
+          if (!newPhotos.find((p) => p.id === photo.id)) {
+            await photo.destroy();
+          }
+        })
+      );
+    }
+
+    const updatedProductWithPhotos = await models.product.findOne({
+      where: { id: productId },
+      include: { model: models.photo, as: "photos" },
+    });
+
+    res.status(200).json(updatedProductWithPhotos);
   } catch (err) {
     next(err);
   }

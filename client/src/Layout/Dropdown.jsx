@@ -13,7 +13,7 @@ function classNames(...classes) {
 function Dropdown() {
 
     const { user } = useSelector((state) => state.auth)
-    console.log(user);
+
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const onLogout = () => {
@@ -45,7 +45,7 @@ function Dropdown() {
 
                         {
 
-                            user.user?.role == 'admin' ? (
+                            user.user?.role == 'admin' && (
                                 <Menu.Item>
                                     {({ active }) => (
                                         <NavLink
@@ -59,7 +59,9 @@ function Dropdown() {
                                         </NavLink>
                                     )}
                                 </Menu.Item>
-                            ):(
+                            )
+                        }
+
                                 <Menu.Item>
                                     {({ active }) => (
                                         <NavLink
@@ -73,10 +75,6 @@ function Dropdown() {
                                         </NavLink>
                                     )}
                                 </Menu.Item>
-                            )
-                            
-                        }
-
 
                         <form method="POST" action="#">
                             <Menu.Item>

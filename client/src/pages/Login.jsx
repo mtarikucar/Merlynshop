@@ -21,7 +21,7 @@ function Login() {
 
         if (isSuccess || user) {
             navigate('/')
-            console.log('success');
+
         }
 
         dispatch(reset())
@@ -35,7 +35,7 @@ function Login() {
         onSubmit: (values, bag) => {
             try {
                 const registerResponse = dispatch(login(values))
-                console.log(registerResponse);
+
             } catch (e) {
 
             }
