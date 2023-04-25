@@ -17,17 +17,11 @@ function getProduct(categoryId, size) {
       base += `size=${size}&`;
     }
   }
-dc
   return axios.get(base).then((res) => res.data);
 }
 
 
 function Products({categoryId, size}) {
-
-
-/*   const [categoryName, setCategoryName] = useState('tabak')
-  const [sizeName, setSizeNmae] = useState('m') */
-
 
   const { isLoading, isError, data: products, error } = useQuery(
     ['products', { categoryId: categoryId, size: size }],

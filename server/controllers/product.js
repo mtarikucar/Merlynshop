@@ -52,7 +52,7 @@ async function getAllProducts(req, res, next) {
   try {
     const products = await models.product.findAll({
       where,
-      include: [{ model: models.category}],
+      include: [{ model: models.category},{ model: models.photo}],
     });
     res.status(200).json(products);
   } catch (err) {

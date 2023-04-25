@@ -5,7 +5,7 @@ async function updateUser(req, res) {
     const updatedUser = await models.user.findByPk(req.params.id);
     updatedUser.update({
       name: req.body.name,
-      gender: req.body.gender,
+      email: req.body.email,
     });
     // updatedUser is the document after update because of new: true
     res.status(200).json({

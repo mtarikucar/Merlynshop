@@ -6,7 +6,7 @@ const router = Router()
 
 
 // PUT => /api/user/:id
-router.put('/:id', verifyTokenAndAdmin, updateUser);
+router.put('/:id', updateUser);
 
 // DELETE => /api/user/:id
 router.delete('/:id',verifyTokenAndAdmin, deleteUser);
