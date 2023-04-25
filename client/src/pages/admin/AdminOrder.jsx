@@ -1,6 +1,5 @@
 import React from "react";
-import AdminNavbar from "../../Layout/Admin/AdminNavbar";
-import AdminSidebar from "../../Layout/Admin/AdminSidebar";
+
 import { Link } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
@@ -29,12 +28,10 @@ function AdminOrder() {
   if (isLoading) return "Loading...";
 
   if (error) return "An error has occurred: " + error.message;
-  orders && console.log(orders.data);
+
 
   return (
-    <div className="min-h-screen flex flex-col w-full flex-auto flex-shrink-0 antialiased bg-white text-black ">
-      <AdminNavbar />
-      <AdminSidebar />
+
       <div className="h-full ml-14 mt-14 mb-10 md:ml-64">
         <h1 className="text-center text-4xl">orders</h1>
         <div className="grid  px-6 ">
@@ -205,7 +202,7 @@ function AdminOrder() {
 
                 </div> */}
       </div>
-    </div>
+
   );
 }
 

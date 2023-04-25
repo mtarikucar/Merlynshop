@@ -31,8 +31,6 @@ function Products({categoryId, size}) {
   if (isLoading) return 'Loading...';
   if (isError) return 'An error has occurred: ' + error.message;
 
-
-  products && console.log(products);
   return (
     < div className={`${location.pathname == '/' ? 'grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-4 lg:px-12' : 'grid grid-cols-2   md:grid-cols-2 lg:grid-cols-2  xl:grid-cols-3 '} gap-4 `} >
       <div className={`${location.pathname == '/product' ? ' hidden  ' : ' lg:grid md:grid hidden  col-span-2 mt-6'}`}>

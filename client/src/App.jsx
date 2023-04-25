@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, NavLink } from "react-router-dom";
 
 import Home from "./pages/Home";
 import ProductPage from "./pages/ProductPage";
@@ -11,12 +9,12 @@ import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import ProductDetail from "./pages/ProductDetail";
 import Signup from "./pages/Signup";
-
 import CartButton from "./Layout/CartButton";
 import Navbar from "./Layout/Navbar";
+
 import Footer from "./Layout/Footer";
-import Hero from "./Layout/Hero";
-import Admin from "./pages/admin/Admin";
+import AdminNavbar from "./Layout/Admin/AdminNavbar";
+import AdminSidebar from "./Layout/Admin/AdminSidebar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ShoppingCarts from "./components/ShoppingCarts";
@@ -29,26 +27,51 @@ import Profile from "./pages/Profile";
 import AdminOrderDetail from "./pages/admin/AdminOrderDetail";
 import Checkout from "./pages/Checkout";
 
+import { useSelector } from "react-redux";
+
+function Admin() {
+  const { user } = useSelector((store) => store.auth);
+  console.log(user);
+  return user?.user.role === "admin" ? (
+    <div>
+      <div className="min-h-screen flex flex-col w-full flex-auto flex-shrink-0 antialiased bg-white  text-black">
+        <AdminNavbar />
+        <AdminSidebar />
+        <Routes>
+          <Route path="product" element={<AdminProduct />} />
+          <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="user" element={<AdminUser />} />
+          <Route path="order" element={<AdminOrder />} />
+          <Route path="message" element={<AdminMessage />} />
+          <Route path="order/:id" element={<AdminOrderDetail />} />
+        </Routes>
+      </div>
+    </div>
+  ) : (
+    <div>
+      <div className="min-h-screen flex flex-col w-full flex-auto flex-shrink-0 justify-center items-center antialiased bg-white  text-black">
+        hele uyanığa bak önce giriş yap
+        <NavLink to="/login" className={"bg-green-500 rounded hover:boder-2 hover:p-3 p-2 ease-in-out duration-300 m-4 text-white"}> log in</NavLink>
+      </div>
+    </div>
+  );
+}
+
 function App() {
   let location = useLocation();
 
-  useEffect(() => { }, [location]);
+  useEffect(() => {}, [location]);
 
   const [open, setOpen] = useState(false);
   return (
     <>
-      {!location.pathname.includes("admin") ? (
+      {!location.pathname.includes("admin") && (
         <>
           <ToastContainer />
           <CartButton setOpen={setOpen} open={open} />
           {/* <Hero /> */}
           <Navbar setOpen={setOpen} open={open} />
           {open && <ShoppingCarts open={open} setOpen={setOpen} />}
-
-        </>
-      ) : (
-        <>
-
         </>
       )}
       <Routes>
@@ -63,19 +86,11 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
 
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/admin/product" element={<AdminProduct />} />
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        <Route path="/admin/user" element={<AdminUser />} />
-        <Route path="/admin/order" element={<AdminOrder />} />
-        <Route path="/admin/message" element={<AdminMessage />} />
-        <Route path="/admin/order/:id" element={<AdminOrderDetail />} />
+        <Route path="admin/*" element={<Admin />} />
+        <Route path="admin" element={<Admin />} />
       </Routes>
 
-      {
-        !location.pathname.includes("admin") &&
-        <Footer />
-      }
+      {!location.pathname.includes("admin") && <Footer />}
     </>
   );
 }

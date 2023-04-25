@@ -1,6 +1,5 @@
 import React from "react";
-import AdminNavbar from "../../Layout/Admin/AdminNavbar";
-import AdminSidebar from "../../Layout/Admin/AdminSidebar";
+
 import { useQuery } from "react-query";
 import { getUsers, deleteUsers } from "../../api";
 import { useSelector } from "react-redux";
@@ -26,11 +25,8 @@ function AdminUser() {
 
   if (error) return "An error has occurred: " + error.message;
 
-  data && console.log(data);
   return (
-    <div className="min-h-screen flex flex-col w-full flex-auto flex-shrink-0 antialiased bg-white  text-black ">
-      <AdminNavbar />
-      <AdminSidebar />
+
       <div className="h-full m-4 md:ml-64">
         <div className="grid  px-6 ">
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -149,7 +145,7 @@ function AdminUser() {
           </div>
         </div>
       </div>
-    </div>
+    
   );
 }
 

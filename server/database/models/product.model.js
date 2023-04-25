@@ -31,6 +31,9 @@ module.exports = (sequelize) => {
         allowNull: false,
         type: DataTypes.SMALLINT,
       },
+      discountedPrice: {
+        type: DataTypes.SMALLINT,
+      },
       quantity: {
         allowNull: false,
         type: DataTypes.STRING,

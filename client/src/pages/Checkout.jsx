@@ -8,7 +8,6 @@ function Checkout() {
 
 
 
-    cart && console.log(cart);
     return (
         <div>
             <section>

@@ -1,6 +1,5 @@
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useRef, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import CloseIcon from "@mui/icons-material/Close";
 import { useFormik } from "formik";
 import { v4 as uuidv4 } from "uuid";
 import { toast } from "react-toastify";
@@ -11,15 +10,48 @@ import axios from "axios";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import AdminCategoryForm from "./AdminCategoryForm";
 import { useSelector } from "react-redux";
+import CloseIcon from "@mui/icons-material/Close";
 
-function AdminAddProduct({ open, setOpen }) {
+function AdminUpdateProduct({ open, setOpen, oldProduct }) {
   const cancelButtonRef = useRef(null);
 
   const { user } = useSelector((state) => state.auth);
 
+  
   const [openCategory, setOpenCategory] = useState(false);
-  const queryClient = useQueryClient();
+  const [previews, setPreviews] = useState([]);
+  const [thumbnailPreview, setThumbnailPreview] = useState(null);
+  const [initialValues, setInitialValues] = useState({
+    name: "",
+    photos: [],
+    thumbnail: "",
+    description: "",
+    price: 0,
+    quantity: 0,
+    categoryId: "",
+  });
 
+  const formik = useFormik({
+    initialValues:initialValues,
+    onSubmit: async (values) => {
+      postProductMutation.mutate(values);
+
+    },
+  });
+  
+  useEffect(() => {
+    formik.setFieldValue('name', oldProduct.name);
+    formik.setFieldValue('photos', oldProduct.photos);
+    formik.setFieldValue('thumbnail', oldProduct.thumbnail);
+    formik.setFieldValue('description', oldProduct.description);
+    formik.setFieldValue('price', oldProduct.price);
+    formik.setFieldValue('quantity', oldProduct.quantity);
+    formik.setFieldValue('categoryId', oldProduct.categoryId);
+    setPreviews(oldProduct.photos.map((photo) => photo.imgpath));
+    setThumbnailPreview(oldProduct.thumbnail);
+  }, [oldProduct]);
+  const queryClient = useQueryClient();
+  
   const uploadToFirebase = async (image) => {
     const uniqueId = uuidv4();
     const storageRef = ref(storage, `images/${uniqueId}`);
@@ -30,7 +62,7 @@ function AdminAddProduct({ open, setOpen }) {
 
   const postProductMutation = useMutation(
     (product) =>
-      axios.post("http://localhost:3000/api/product", product, {
+      axios.put(`http://localhost:3000/api/product/${oldProduct.id}`, product, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
@@ -39,48 +71,33 @@ function AdminAddProduct({ open, setOpen }) {
       onSuccess: () => {
         queryClient.invalidateQueries("products");
         setOpen(false);
-        toast.success(` product Added`, {
+        toast.success(` product updated`, {
           position: "bottom-left",
         });
       },
       onError: (err) => {
-        toast.success(`${err} product error`, {
+        toast.success(`${err} product update error`, {
           position: "bottom-left",
-          type: "error",
+          type: "error"
         });
       },
     }
   );
 
   const fetchCategories = async () => {
-    const res = await axios.get("http://localhost:3000/api/category");
-    return res.data;
+      const res = await axios.get("http://localhost:3000/api/category");
+      return res.data;
   };
+
 
   const {
     data: categories,
     isLoading,
     isError,
   } = useQuery("categories", fetchCategories);
+  
+  
 
-  const formik = useFormik({
-    initialValues: {
-      name: "",
-      photos: [],
-      thumbnail: "",
-      description: "",
-      price: "",
-      quantity: "",
-      categoryId: "",
-    },
-    onSubmit: async (values) => {
-      postProductMutation.mutate(values);
-
-    },
-  });
-
-  const [previews, setPreviews] = useState([]);
-  const [thumbnailPreview, setThumbnailPreview] = useState(null);
   // Önizleme oluşturucu fonksiyon
   const createPreview = (file) => {
     const reader = new FileReader();
@@ -89,7 +106,7 @@ function AdminAddProduct({ open, setOpen }) {
       setPreviews((prevPreviews) => [...prevPreviews, reader.result]);
     };
   };
-
+  
   const handlePhotoChange = async (e) => {
     const file = e.target.files[0];
     if (file && formik.values.photos.length < 4) {
@@ -100,7 +117,7 @@ function AdminAddProduct({ open, setOpen }) {
       alert("En fazla 4 fotoğraf ekleyebilirsiniz.");
     }
   };
-
+  
   const handleThumbnailChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -111,7 +128,8 @@ function AdminAddProduct({ open, setOpen }) {
       createPreview(file); // Önizlemeyi oluştur
     }
   };
-
+  
+  
   const handleRemovePhoto = (index) => {
     setPreviews((prevPreviews) => prevPreviews.filter((_, i) => i !== index));
     formik.setFieldValue(
@@ -138,7 +156,7 @@ function AdminAddProduct({ open, setOpen }) {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0  bg-gray-500 bg-opacity-75 transition-opacity" />
+          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
         </Transition.Child>
 
         <div className="fixed inset-0 z-10 overflow-y-auto">
@@ -358,5 +376,4 @@ function AdminAddProduct({ open, setOpen }) {
   );
 }
 
-export default AdminAddProduct;
-  
+export default AdminUpdateProduct;

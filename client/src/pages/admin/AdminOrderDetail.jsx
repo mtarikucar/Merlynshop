@@ -1,11 +1,10 @@
 import React from 'react'
-import AdminNavbar from '../../Layout/Admin/AdminNavbar'
-import AdminSidebar from '../../Layout/Admin/AdminSidebar'
+
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { useParams } from 'react-router-dom'
 function AdminOrderDetail() {
     const { id } = useParams()
-    console.log(id);
+
     const { isLoading, error, data } = useQuery('order', () => {
 
         return fetch(`http://localhost:3000/api/order/${id}`).then(res =>
@@ -15,7 +14,7 @@ function AdminOrderDetail() {
 
     )
 
-    data && console.log(data , 'order');
+
 
 
     if (isLoading) return 'Loading...'
@@ -23,9 +22,7 @@ function AdminOrderDetail() {
     if (error) return 'An error has occurred: ' + error.message
 
     return (
-        <div className="min-h-screen flex flex-col w-full flex-auto flex-shrink-0 antialiased bg-white  text-black ">
-            <AdminNavbar />
-            <AdminSidebar />
+
             <div className="h-full w-full ml-14 mt-14 mb-10 md:ml-64">
 
                 <div className=' text-center  '>
@@ -167,7 +164,7 @@ function AdminOrderDetail() {
 
                 </div>
             </div>
-        </div>
+       
     )
 }
 
