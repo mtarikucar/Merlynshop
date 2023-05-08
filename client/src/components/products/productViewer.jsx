@@ -366,7 +366,7 @@ function ProductViewer() {
                             </form>
 
                             {/* Product grid */}
-                            <div className="lg:col-span-3 ">
+                            <div className="lg:col-span-3 xl:col-span-3 gap-4">
                                 <Products categoryId={categoryFilter} size={sizeFilter} />
                             </div>
                         </div>

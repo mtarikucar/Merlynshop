@@ -10,7 +10,7 @@ function Product({ product }) {
 
   return (
     <>
-      <div className="mx-auto mt-6 max-h-[450px] w-44  md:w-72 lg:w-80 transform overflow-hidden rounded-lg bg-white  shadow-md duration-300 hover:scale-105 hover:shadow-lg">
+      <div className="mx-auto m-6 max-h-[450px  ] w-44  md:w-72 lg:w-80 transform overflow-hidden rounded-lg bg-white  shadow-md duration-300 hover:scale-105 hover:shadow-lg">
         <Link to={`/products/${product.id}`}>
           <img
             src={product.thumbnail}

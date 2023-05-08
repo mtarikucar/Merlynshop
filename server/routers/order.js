@@ -5,7 +5,6 @@ const router = Router()
 
 
 // Create a new order
-// Create a new order
 router.post("/", createOrder);
 router.get("/",verifyTokenAndAdmin, getAllOrders);
 router.get("/:id",getOrderById)

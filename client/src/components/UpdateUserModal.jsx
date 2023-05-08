@@ -1,7 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import axios from 'axios';
+
 
 // Modal component
 function UpdateUserModal({ user, setOnClose, onClose }) {

@@ -1,4 +1,5 @@
 import React from 'react'
+import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 function Checkout() {
 
@@ -6,6 +7,7 @@ function Checkout() {
     const dispatch = useDispatch()
     const cart = useSelector((state) => state.cart)
 
+    console.log(cart);
 
 
     return (
@@ -57,12 +59,7 @@ function Checkout() {
                                                                 <dl className="mt-0.5 space-y-px text-sm text-gray-600">
                                                                     <div>
                                                                         <dt className="inline">Size:</dt>
-                                                                        <dd className="inline">XXS</dd>
-                                                                    </div>
-
-                                                                    <div>
-                                                                        <dt className="inline">category:</dt>
-                                                                        <dd className="inline">{product.category}</dd>
+                                                                        <dd className="inline">{product.size}</dd>
                                                                     </div>
                                                                 </dl>
                                                             </div>
