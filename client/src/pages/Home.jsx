@@ -11,7 +11,7 @@ function Home() {
   return (
     <div className='h-fit bg-[#eaeff6]'>
 
-      {/* <Banner /> */}
+      <Banner />
       <Products />
 
       <HomeAbout />

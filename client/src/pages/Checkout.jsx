@@ -60,10 +60,7 @@ function Checkout() {
                                                                         <dd className="inline">XXS</dd>
                                                                     </div>
 
-                                                                    <div>
-                                                                        <dt className="inline">category:</dt>
-                                                                        <dd className="inline">{product.category}</dd>
-                                                                    </div>
+                                                                  
                                                                 </dl>
                                                             </div>
                                                             <div className='text-sm  text-center'>

@@ -1,4 +1,4 @@
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useRef, useState,useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import CloseIcon from "@mui/icons-material/Close";
 import { useFormik } from "formik";
@@ -52,6 +52,17 @@ function AdminAddProduct({ open, setOpen }) {
     }
   );
 
+  useEffect(() => {
+    formik.setFieldValue('name', '');
+    formik.setFieldValue('photos', '');
+    formik.setFieldValue('thumbnail', '');
+    formik.setFieldValue('description', '');
+    formik.setFieldValue('price','');
+    formik.setFieldValue('quantity', '');
+    formik.setFieldValue('categoryId', '');
+    setPreviews([]);
+    setThumbnailPreview('');
+  }, []);
   const fetchCategories = async () => {
     const res = await axios.get("http://localhost:3000/api/category");
     return res.data;
@@ -359,4 +370,3 @@ function AdminAddProduct({ open, setOpen }) {
 }
 
 export default AdminAddProduct;
-  

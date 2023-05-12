@@ -14,7 +14,7 @@ function ShoppingCarts({ open, setOpen }) {
     const dispatch = useDispatch()
     const cart = useSelector((state) => state.cart)
     useEffect(() => {
-        dispatch(getTotals)
+        dispatch(getTotals())
     }, [cart])
 
     

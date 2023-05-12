@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import SettingsIcon from '@mui/icons-material/Settings';
 import UpdateUserModal from '../components/UpdateUserModal';
+
 function Profile() {
     const [createdAt, setCreatedAt] = useState('');
     const [onClose, setOnClose] = useState(false);
@@ -87,8 +88,6 @@ function Profile() {
                             </div>
                         </div>
                     </a>
-
-
                     <a href="" className="group relative block h-64 sm:h-80 lg:h-96">
                         <span className="absolute inset-0 border-2 border-dashed border-black"></span>
 
