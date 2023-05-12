@@ -20,7 +20,8 @@
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.8.0",
     "pg-hstore": "^2.3.4",
-    "sequelize": "^6.25.3"
+    "sequelize": "^6.25.3",
+    "stripe": "^12.4.0"
   },
   "devDependencies": {
     "got": "^11.3.0",

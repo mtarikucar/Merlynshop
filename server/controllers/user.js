@@ -13,9 +13,11 @@ async function updateUser(req, res) {
       return res.status(404).send("User not found. Please check the provided ID.");
     }
 
+    console.log(req.body);
     const updatedData = {
       name: req.body.name || user.name,
       email: (req.body.email && req.body.email.toLowerCase()) || user.email,
+      phone:  req.body.phone_number  || user.phone_number
     };
 
     if (req.body.password) {
