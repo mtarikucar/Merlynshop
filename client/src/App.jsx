@@ -28,6 +28,7 @@ import AdminOrderDetail from "./pages/admin/AdminOrderDetail";
 import Checkout from "./pages/Checkout";
 
 import { useSelector } from "react-redux";
+import CheckoutSuccess from "./pages/Checkout-success";
 
 function Admin() {
   const { user } = useSelector((store) => store.auth);
@@ -81,6 +82,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/checkout-success" element={<CheckoutSuccess />} />
 
         <Route path="/products/:id" element={<ProductDetail />} />
         <Route path="/login" element={<Login />} />

@@ -50,12 +50,14 @@ const categoryRouter = require("./routers/category");
 const authRouter = require("./routers/auth");
 const userRouter = require("./routers/user");
 const orderRouter = require("./routers/order");
+const stripeRouter = require("./routers/stripe");
 
 app.use("/api/product", productRouter);
 app.use("/api/category", categoryRouter);
 app.use("/api/user",userRouter)
 app.use("/api/auth",authRouter)
 app.use("/api/order",orderRouter)
+app.use("/api/stripe",stripeRouter)
 
 app.listen(process.env.PORT, () => {
   console.log(
