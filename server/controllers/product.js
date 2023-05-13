@@ -2,7 +2,7 @@ const { models } = require("../database/");
 
 // Create a new Product
 async function createProduct(req, res, next) {
-  const { photos, thumbnail, name, description, price, quantity,size, categoryId,discountedPrice } =
+  const { photos, thumbnail, name, description, price, quantity, size, categoryId, discountedPrice } =
     req.body;
   try {
     await models.product
@@ -13,8 +13,8 @@ async function createProduct(req, res, next) {
         price: price,
         quantity: quantity,
         categoryId: categoryId,
-        size:size,
-        discountedPrice:discountedPrice
+        size: size,
+        discountedPrice: discountedPrice
       })
       .then((newProduct) => {
         photos.forEach(async (element) => {
@@ -53,10 +53,10 @@ async function getAllProducts(req, res, next) {
   try {
     const products = await models.product.findAll({
       where,
-      include: [{ model: models.category},{ model: models.photo}],
+      include: [{ model: models.category }, { model: models.photo }],
     });
 
-    
+
     res.status(200).json(products);
   } catch (err) {
     next(err);
@@ -67,7 +67,10 @@ async function getAllProducts(req, res, next) {
 async function getProductById(req, res, next) {
   const ProductId = req.params.id;
   try {
-    const foundProduct = await models.product.findByPk(ProductId);
+    const foundProduct = await models.product.findByPk(ProductId, {
+
+      include: [{ model: models.category }, { model: models.photo }],
+    });
     if (!foundProduct) {
       return res.status(404).json({ message: "Product not found" });
     }
@@ -79,7 +82,7 @@ async function getProductById(req, res, next) {
 
 async function updateProductById(req, res, next) {
   const productId = req.params.id;
-  const { photos, thumbnail, name, description, price, quantity, size, categoryId,discountedPrice } =
+  const { photos, thumbnail, name, description, price, quantity, size, categoryId, discountedPrice } =
     req.body;
   try {
     const updatedProduct = await models.product.findOne({
