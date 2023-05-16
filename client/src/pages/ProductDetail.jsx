@@ -124,7 +124,7 @@ function ProductDetail() {
                   -
                 </button>
                 <div className="flex  items-center justify-center bg-gray-100 px-4 text-xs uppercase transition">
-                  1
+                {quantity}
                 </div>
                 <button
                   onClick={() => setQuatity(quantity+1)}

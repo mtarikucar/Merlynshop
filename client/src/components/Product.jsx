@@ -36,8 +36,8 @@ function Product({ product }) {
               </>
             ) : (
               <>
-                <p className="mr-2 text-lg font-semibold text-gray-900 ">
-                  {product.price}
+                <p className="mr-2 mb-2 text-lg font-semibold text-gray-900 ">
+                  ${product.price}.00
                 </p>  
               </>
             )}

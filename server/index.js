@@ -44,6 +44,13 @@ sequelize
     console.error("Unable to connect to the database:", err);
   });
 
+app.use((req, res, next) => {
+  if (req.originalUrl === '/webhook') {
+    next(); // Do nothing with the body because I need it in a raw state.
+  } else {
+    express.json()(req, res, next);  // ONLY do express.json() if the received request is NOT a WebHook from Stripe.
+  }
+});
 // Routes
 const productRouter = require("./routers/product");
 const categoryRouter = require("./routers/category");
@@ -54,11 +61,10 @@ const stripeRouter = require("./routers/stripe");
 
 app.use("/api/product", productRouter);
 app.use("/api/category", categoryRouter);
-app.use("/api/user",userRouter)
-app.use("/api/auth",authRouter)
-app.use("/api/order",orderRouter)
-app.use("/api/stripe",stripeRouter)
-
+app.use("/api/user", userRouter)
+app.use("/api/auth", authRouter)
+app.use("/api/order", orderRouter)
+app.use("/api/stripe", stripeRouter)
 app.listen(process.env.PORT, () => {
   console.log(
     process.env.NODE_ENV && process.env.NODE_ENV === "development"

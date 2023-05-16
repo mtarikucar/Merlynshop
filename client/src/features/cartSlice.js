@@ -19,8 +19,10 @@ const cartSlice = createSlice({
             const itemIndex = state.cartItems.findIndex(
                 (item) => item.id === action.payload.id,
             );
+           
             console.log(action.payload)
             if (itemIndex >= 0) {
+                
                 action.payload.cartQuantity
                     ? state.cartItems[itemIndex].cartQuantity += action.payload.cartQuantity
                     : state.cartItems[itemIndex].cartQuantity += 1;
@@ -31,11 +33,10 @@ const cartSlice = createSlice({
             } else {
                 const tempProduct = { ...action.payload, cartQuantity: 1 };
                 state.cartItems.push(tempProduct);
-                toast.success(` ${action.payload.name} Added To Cart`, {
+                toast.success(` ${action.payload.title} Added To Cart`, {
                     position: 'bottom-left'
                 })
             }
-
             localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
         },
         removeFromCart(state, action) {
