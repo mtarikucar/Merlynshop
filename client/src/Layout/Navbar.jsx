@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
-import { AiOutlineHome, AiOutlineExclamationCircle } from "react-icons/Ai";
 
+import HomeIcon from '@mui/icons-material/Home';
+import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
+import ContactMailIcon from '@mui/icons-material/ContactMail';
+import InfoIcon from '@mui/icons-material/Info';
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { MdProductionQuantityLimits, MdOutlineContacts } from "react-icons/Md";
+
 import { logout, reset } from "../features/auth/authSlice";
 import Dropdown from "./Dropdown";
 
@@ -70,8 +73,8 @@ function Navbar({ open, setOpen }) {
                       : "text-black"
                   }
                 >
-                  <AiOutlineHome className="text-center w-full text-2xl" />
-                  <span className="text-sm mb-2">Home</span>
+                  <HomeIcon className="text-center w-full text-2xl" />
+                  <span className="text-sm mb-2"> Home</span>
 
                   <hr
                     className={`${
@@ -94,8 +97,8 @@ function Navbar({ open, setOpen }) {
                       : "text-gray-800"
                   }
                 >
-                  <MdProductionQuantityLimits className="text-center w-full text-2xl" />
-                  <span className="text-sm mb-2">Product</span>
+                  <ProductionQuantityLimitsIcon className="text-center w-full text-2xl" />
+                  <span className="text-sm mb-2"> Product</span>
 
                   <hr
                     className={`${
@@ -117,8 +120,8 @@ function Navbar({ open, setOpen }) {
                       : "text-gray-800"
                   }
                 >
-                  <AiOutlineExclamationCircle className="text-center w-full text-2xl" />
-                  <span className="text-sm mb-2">About</span>
+                  <InfoIcon   className="text-center w-full text-2xl" />
+                  <span className="text-sm mb-2"> About</span>
 
                   <hr
                     className={`${
@@ -140,8 +143,8 @@ function Navbar({ open, setOpen }) {
                       : "text-gray-800"
                   }
                 >
-                  <MdOutlineContacts className="text-center w-full text-2xl" />
-                  <span className="text-sm mb-2">Contact</span>
+                  <ContactMailIcon   className="text-center w-full text-2xl" />
+                  <span className="text-sm mb-2"> Contact</span>
 
                   <hr
                     className={`${
