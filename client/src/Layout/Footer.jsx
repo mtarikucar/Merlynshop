@@ -6,7 +6,7 @@ import { MdFax } from 'react-icons/Md'
 function Footer() {
     return (
 
-        <footer aria-label="Site Footer h-full" className="bg-white">
+        <footer aria-label="Site Footer h-full" className="bg-white border-2 border-green-500 mx-1 rounded-lg">
             <div
                 className="max-w-screen-xl px-4 py-16 mx-auto space-y-8 sm:px-6  lg:px-8"
             >

@@ -10,16 +10,10 @@ function ProductDetail() {
   const dispatch = useDispatch();
   const hundleAddToCart = (product) => {
     dispatch(addToCart({...product,cartQuantity:quantity}));
-    setQuatity(0)
+    setQuatity(1)
   };
 
-  const hundleDecreaseCart = (product) => {
-    dispatch(decreaseCart(product));
-  };
 
-  const hundleIncreaseCart = (product) => {
-    dispatch(addToCart(product));
-  };
   const { id } = useParams();
 
   const [activeImage, setActiveImage] = useState();

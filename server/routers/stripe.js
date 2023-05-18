@@ -1,17 +1,22 @@
 const express = require("express");
 
 const router = express.Router();
-
+const { createOrder } = require("../controllers/order")
 router.post("/create-checkout-session", async (req, res) => {
-  var cartItemIds = req.body.cartItems.map(function (item) {
-    return item.id;
+  var cartItemsInfo = req.body.cartItems.map(function (item) {
+    return {
+      id: item.id,
+      quantity: item.cartQuantity
+    };
   });
+
   const customer = await stripe.customers.create({
     metadata: {
       userId: req.body.userId,
-      cart: JSON.stringify(cartItemIds),
+      cart: JSON.stringify(cartItemsInfo),
     },
   });
+
 
   const line_items = req.body.cartItems.map((item) => {
     return {
@@ -34,7 +39,7 @@ router.post("/create-checkout-session", async (req, res) => {
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     shipping_address_collection: {
-      allowed_countries: ["US", "CA", "TR"],
+      allowed_countries: ["US", "CA", "KE"],
     },
     shipping_options: [
       {
@@ -88,51 +93,11 @@ router.post("/create-checkout-session", async (req, res) => {
     customer: customer.id,
     success_url: `http://127.0.0.1:5173/checkout-success`,
     cancel_url: `http://127.0.0.1:5173/`,
+
   });
 
   res.send({ url: session.url });
 });
-
-// Create order function
-
-const createOrder = async (customer, data) => {
-  const Items = JSON.parse(customer.metadata.cart);
-
-  const products = Items.map((item) => {
-    return {
-      productId: item.id,
-      quantity: item.cartQuantity,
-    };
-  });
-
-  const newOrder = new Order({
-    userId: customer.metadata.userId,
-    customerId: data.customer,
-    paymentIntentId: data.payment_intent,
-    products,
-    subtotal: data.amount_subtotal,
-    total: data.amount_total,
-    shipping: data.customer_details,
-    payment_status: data.payment_status,
-  });
-
-  try {
-    const savedOrder = await newOrder.save();
-    console.log("Processed Order:", savedOrder);
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-// Stripe webhoook
-
-
-
-
-
-
-// This is your Stripe CLI webhook secret for testing your endpoint locally.
-
 
 
 
@@ -145,7 +110,6 @@ router.post(
   async (req, res) => {
     const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET;
     let data;
-    let eventType;
 
     const payload = req.body;
     const payloadString = JSON.stringify(payload, null, 2);
@@ -157,26 +121,58 @@ router.post(
     let event;
     try {
       event = stripe.webhooks.constructEvent(payloadString, header, endpointSecret);
-      console.log(`Webhook Verified: `, event);
+      console.log(`Webhook Verified `);
+      // Extract the object from the event.
+      data = event.data.object;
+      eventType = event.type;
     } catch (err) {
-      console.log(`Webhook Error: ${(err ).message}`);
-      res.status(400).send(`Webhook Error: ${(err ).message}`);
+      console.log(`Webhook Error: ${(err).message}`);
+      res.status(400).send(`Webhook Error: ${(err).message}`);
+      // Webhook signing is recommended, but if the secret is not configured in `config.js`,
+      // retrieve the event data directly from the request body.
+      data = req.body.data.object;
+      eventType = req.body.type;
       return;
     }
     // Check if webhook signing is configured.
-    console.log(endpointSecret, "endpointSecret");
-   
-   
+
+
+
+    /* console.log("eventtype:\n", eventType, "data:",data, ); */
+
 
     // Handle the checkout.session.completed event
     if (eventType === "checkout.session.completed") {
+
+      console.log("ödeme başarılı mı?");
+
       stripe.customers
         .retrieve(data.customer)
         .then(async (customer) => {
           try {
-            console.log(customer);
             // CREATE ORDER
-            /* createOrder(customer, data); */
+         
+            const Items = JSON.parse(customer.metadata.cart);
+
+            const products = Items.map((item) => {
+              return {
+                id: item.id,
+                quantity: item.quantity,
+              };
+            });
+            const addressString = `${data.customer_details.address.city}, ${data.customer_details.address.country}, ${data.customer_details.address.line1}, ${data.customer_details.address.line2}, ${data.customer_details.address.postal_code}, ${data.customer_details.address.state}`;
+
+            // CREATE ORDER
+            createOrder(
+
+              prop = {
+                status: "pending",
+                total_price: data.amount_total,
+                products: products,
+                userId: customer.metadata.userId,
+                location: addressString,
+              })
+
           } catch (err) {
             console.log(typeof createOrder);
             console.log(err);

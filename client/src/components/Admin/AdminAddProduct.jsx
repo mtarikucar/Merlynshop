@@ -62,7 +62,7 @@ function AdminAddProduct({ open, setOpen }) {
     formik.setFieldValue('categoryId', '');
     setPreviews([]);
     setThumbnailPreview('');
-  }, []);
+  }, [open]);
   const fetchCategories = async () => {
     const res = await axios.get("http://localhost:3000/api/category");
     return res.data;

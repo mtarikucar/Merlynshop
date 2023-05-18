@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { useSelector, useDispatch } from 'react-redux'
-import { removeFromCart, decreaseCart, addToCart, getTotals } from '../features/cartSlice'
+import { removeFromCart, decreaseCart, getTotals,increaseCart } from '../features/cartSlice'
 import store from '../app/store'
 import { Link } from 'react-router-dom'
 
@@ -18,17 +18,16 @@ function ShoppingCarts({ open, setOpen }) {
     }, [cart])
 
     
-    const hundleRemoveFromCart = (product) => {
+    const handleRemoveFromCart = (product) => {
         dispatch(removeFromCart(product))
     }
 
-    const hundleDecreaseCart = (product) => {
+    const handleDecreaseCart = (product) => {
         dispatch(decreaseCart(product))
     }
-
-
-    const hundleIncreaseCart = (product) => {
-        dispatch(addToCart(product))
+  
+    const handleIncreaseCart = (product) => {
+        dispatch(increaseCart(product))
     }
     return (
         <Transition.Root show={open} as={Fragment}>
@@ -105,7 +104,7 @@ function ShoppingCarts({ open, setOpen }) {
                                                                     <div className="flex flex-1 items-center justify-between text-sm">
                                                                         <div className="flex">
                                                                             <button
-                                                                                onClick={() => hundleRemoveFromCart(product)}
+                                                                                onClick={() => handleRemoveFromCart(product)}
                                                                                 type="button"
                                                                                 className="font-medium text-green-600 hover:text-green-500"
                                                                             >
@@ -115,11 +114,11 @@ function ShoppingCarts({ open, setOpen }) {
                                                                         <div className="sm:order-1 ">
                                                                             <div className="flex h-8  text-gray-600">
                                                                                 <button
-                                                                                    onClick={() => hundleDecreaseCart(product)}
+                                                                                    onClick={() => handleDecreaseCart(product)}
                                                                                     className="flex items-center justify-center rounded-l-md bg-gray-200 px-4 transition hover:bg-green-500 hover:text-white">-</button>
                                                                                 <div className="flex  items-center justify-center bg-gray-100 px-4 text-xs uppercase transition">{product.cartQuantity}</div>
                                                                                 <button
-                                                                                    onClick={() => hundleIncreaseCart(product)}
+                                                                                    onClick={() => handleIncreaseCart(product)}
                                                                                     className="flex items-center justify-center rounded-r-md bg-gray-200 px-4 transition hover:bg-green-500 hover:text-white">+</button>
                                                                             </div>
                                                                         </div>
