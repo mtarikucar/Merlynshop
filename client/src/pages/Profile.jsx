@@ -5,8 +5,10 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import UpdateUserModal from "../components/UpdateUserModal";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import axios from 'axios';
+import DeleteOrderModal from "../components/DeleteOrderModal";
 function Profile() {
-
+    const [orderId, setOrderId] = useState()
+    const [close, setClose] = useState(false)
     const [createdAt, setCreatedAt] = useState("");
     const [onClose, setOnClose] = useState(false);
     const dispatch = useDispatch();
@@ -33,23 +35,34 @@ function Profile() {
         error,
     } = useQuery({
         queryKey: ["orders"],
-        queryFn: () => axios.get(`http://localhost:3000/api/order/`),
+        queryFn: () => axios.get(`http://localhost:3000/api/order/user/${user.id}`),
     });
 
-    /*     const { data } = useQuery('user', getUser(id) ) */
 
+    const cancelHandle = (order) => {
+        setOrderId(order)
+        setClose(true)
+    }
     if (isLoading) return "Loading...";
 
     if (error) return "An error has occurred: " + error.message;
 
-    const filteredData = orders?.data.filter(order => order.user.id === user.id);
+    /*  const filteredData = orders?.data.filter(order => order.user.id === user.id); */
 
 
-    console.log(filteredData, "filteredData");
+
+    console.log(orders, "orders");
 
 
     return (
         <div className="grid grid-cols-12 w-full h-full p-6">
+            {close ? (
+                <DeleteOrderModal
+                    close={close}
+                    setClose={setClose}
+                    orderId={orderId}
+                />
+            ) : null}
             <div className="col-span-3  h-full  ">
                 <div className="m-4 max-w-sm h-full">
                     <div className="rounded-lg border bg-white px-4 pt-4 pb-8 shadow-lg">
@@ -98,6 +111,7 @@ function Profile() {
                     />
                 ) : null}
             </div>
+
             <div className="col-span-9 z-10 mx-5 my-10 max-h-[60vh] w-full overflow-y-scroll scrollbar scrollbar-thumb-green-400 scrollbar-track-gray-100  overflow-hidden">
                 <div className="grid px-8">
 
@@ -110,14 +124,14 @@ function Profile() {
                                     <th scope="col" className="px-6 py-3">
                                         image
                                     </th>
-                                   
+
                                     <th scope="col" className="px-6 py-3">
                                         adress
                                     </th>
                                     <th scope="col" className="px-6 py-3">
                                         status
                                     </th>
-                                    
+
                                     <th scope="col" className="px-6 py-3">
                                         total price
                                     </th>
@@ -142,10 +156,10 @@ function Profile() {
                             )}
 
                             <tbody>
-                                {filteredData &&
-                                    filteredData?.map((product) => (
+                                {orders &&
+                                    orders?.data.map((order) => (
                                         <tr
-                                            key={product.id}
+                                            key={order.id}
                                             className="bg-white border-b  hover:bg-gray-50 "
                                         >
                                             <th
@@ -153,7 +167,7 @@ function Profile() {
                                                 className="flex items-center px-6 py-4whitespace-nowrap"
                                             >
                                                 {
-                                                    product.products.map((product, key) => (
+                                                    order.products.map((product, key) => (
 
                                                         <div>
                                                             <div>
@@ -166,7 +180,7 @@ function Profile() {
                                                             <td>
                                                                 <div className="text-center w-full">
                                                                     <div className=" text-sm font-semibold">
-                                                                    quantity: {product.order_product.quantity}
+                                                                        quantity: {product.order_product.quantity}
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -177,7 +191,7 @@ function Profile() {
                                             <td>
                                                 <div className="pl-3">
                                                     <div className="text-base font-semibold">
-                                                        {product.location.address}
+                                                        {order.location.address}
                                                     </div>
                                                 </div>
                                             </td>
@@ -185,20 +199,20 @@ function Profile() {
                                             <td className="px-6 py-4">
                                                 <div className="flex items-center">
                                                     <div className="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div>
-                                                    {product.status}
+                                                    {order.status}
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4">
                                                 <div className="flex items-center">
-                                                    ${product.total_price / 100}.00
+                                                    ${order.total_price / 100}.00
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4 space-x-2 text-center">
-                                               
+
                                                 <button
                                                     type="submit"
-                                                    id={`${product.id}`}
-
+                                                    id={`${order.id}`}
+                                                    onClick={() => cancelHandle(order)}
                                                     className="font-medium bg-red-600 px-2 py-1 rounded-lg text-white"
                                                 >
                                                     Censel Order
