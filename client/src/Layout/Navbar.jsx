@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AiOutlineHome, AiOutlineExclamationCircle } from "react-icons/Ai";
-import { HiOutlineShoppingCart, HiUser } from "react-icons/Hi";
+
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
