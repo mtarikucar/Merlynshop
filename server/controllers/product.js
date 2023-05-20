@@ -1,5 +1,5 @@
 const { models } = require("../database/");
-
+const { Op } = require('sequelize');
 // Create a new Product
 async function createProduct(req, res, next) {
   const { photos, thumbnail, name, description, price, quantity, size, categoryId, discountedPrice } =
@@ -30,17 +30,8 @@ async function createProduct(req, res, next) {
   }
 }
 
-// Get a list of all Products
-/* async function getAllProducts(req, res, next) {
-  try {
-    const Products = await models.product.findAll();
-    res.status(200).json(Products);
-  } catch (err) {
-    next(err);
-  }
-} */
 async function getAllProducts(req, res, next) {
-  const { categoryId, size } = req.query;
+  const { categoryId, size, minPrice, maxPrice } = req.query;
 
   let where = {};
   if (categoryId) {
@@ -49,13 +40,25 @@ async function getAllProducts(req, res, next) {
   if (size) {
     where.size = size;
   }
+  if (minPrice && maxPrice) {
+    where.price = {
+      [Op.between]: [minPrice, maxPrice]
+    };
+  } else if (minPrice) {
+    where.price = {
+      [Op.gte]: minPrice
+    };
+  } else if (maxPrice) {
+    where.price = {
+      [Op.lte]: maxPrice
+    };
+  }
 
   try {
     const products = await models.product.findAll({
       where,
       include: [{ model: models.category }, { model: models.photo }],
     });
-
 
     res.status(200).json(products);
   } catch (err) {

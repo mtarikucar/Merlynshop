@@ -6,30 +6,39 @@ import { useLocation } from 'react-router-dom';
 import { useQuery } from 'react-query'
 
 
-function getProduct(categoryId, size) {
+function getProduct(categoryId, minPrice, maxPrice) {
   let base = 'http://localhost:3000/api/product';
-  if (categoryId || size) {
-    base += '?';
-    if (categoryId) {
-      base += `categoryId=${categoryId}&`;
-    }
-    if (size) {
-      base += `size=${size}&`;
-    }
+  let queryParams = [];
+
+  if (categoryId) {
+    queryParams.push(`categoryId=${categoryId}`);
   }
+  if (minPrice) {
+    queryParams.push(`minPrice=${minPrice}`);
+  }
+  if (maxPrice) {
+    queryParams.push(`maxPrice=${maxPrice}`);
+  }
+
+  if (queryParams.length > 0) {
+    base += `?${queryParams.join('&')}`;
+  }
+
   return axios.get(base).then((res) => res.data);
 }
 
 
-function Products({categoryId, size}) {
+function Products({ categoryId, minPrice, maxPrice }) {
 
   const { isLoading, isError, data: products, error } = useQuery(
-    ['products', { categoryId: categoryId, size: size }],
-    ({ queryKey }) => getProduct(queryKey[1].categoryId, queryKey[1].size)
+    ['products', { categoryId, minPrice, maxPrice }],
+    ({ queryKey }) =>
+      getProduct(queryKey[1].categoryId, queryKey[1].minPrice, queryKey[1].maxPrice)
   );
 
   if (isLoading) return 'Loading...';
   if (isError) return 'An error has occurred: ' + error.message;
+
 
   return (
     < div className={`${location.pathname == '/' ? 'grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-4 lg:px-12' : 'grid grid-cols-2   md:grid-cols-2 lg:grid-cols-2  xl:grid-cols-3 '} gap-4 `} >
