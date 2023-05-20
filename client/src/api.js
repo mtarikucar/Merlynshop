@@ -4,14 +4,6 @@ const baseAPI = axios.create({
   baseURL: "http://localhost:8080/api",
 });
 
-/* export const getCategories = async () => {
-  try {
-    const { data } = await baseAPI.get(`/category`);
-    return data;
-  } catch (error) {
-    throw error;
-  }
-}; */
 
 export const getProducts = async () => {
   try {

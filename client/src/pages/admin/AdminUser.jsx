@@ -4,6 +4,7 @@ import { useQuery } from "react-query";
 import { getUsers, deleteUsers } from "../../api";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import LoadingPage from "../../components/LoadingPage";
 function AdminUser() {
   const { user } = useSelector((state) => state.auth);
 
@@ -21,7 +22,7 @@ function AdminUser() {
     }),
   });
 
-  if (isLoading) return "Loading...";
+  if (isLoading) return <LoadingPage/>;
 
   if (error) return "An error has occurred: " + error.message;
 

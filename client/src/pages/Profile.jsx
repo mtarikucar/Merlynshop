@@ -6,6 +6,7 @@ import UpdateUserModal from "../components/UpdateUserModal";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import axios from 'axios';
 import DeleteOrderModal from "../components/DeleteOrderModal";
+import LoadingPage from "../components/LoadingPage";
 function Profile() {
     const [orderId, setOrderId] = useState()
     const [close, setClose] = useState(false)
@@ -43,7 +44,7 @@ function Profile() {
         setOrderId(order)
         setClose(true)
     }
-    if (isLoading) return "Loading...";
+    if (isLoading) return <LoadingPage/>;
 
     if (error) return "An error has occurred: " + error.message;
 

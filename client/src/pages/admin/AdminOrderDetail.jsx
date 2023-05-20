@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import LoadingPage from '../../components/LoadingPage';
 function AdminOrderDetail() {
     const [status, setStatus] = useState("");
     const statusRef = useRef()
@@ -76,7 +77,7 @@ function AdminOrderDetail() {
         updateStatus.mutate({ status: status });
     };
 
-    if (isLoading) return 'Loading...'
+    if (isLoading) return <LoadingPage/>
 
     if (error) return 'An error has occurred: ' + error.message
 

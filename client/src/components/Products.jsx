@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 
 import { useQuery } from 'react-query'
+import LoadingPage from './LoadingPage';
 
 
 function getProduct(categoryId, minPrice, maxPrice) {
@@ -36,7 +37,7 @@ function Products({ categoryId, minPrice, maxPrice }) {
       getProduct(queryKey[1].categoryId, queryKey[1].minPrice, queryKey[1].maxPrice)
   );
 
-  if (isLoading) return 'Loading...';
+  if (isLoading) return <LoadingPage/>;
   if (isError) return 'An error has occurred: ' + error.message;
 
 

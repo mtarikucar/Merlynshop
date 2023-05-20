@@ -174,7 +174,7 @@ function Footer() {
                                     </li>
 
                                     <li className='flex gap-2 items-center'>
-                                        <FaxIcon width={12} className='text-green-500  text-xl' />
+                                        <FaxIcon width={12} fontSize='large' className='text-green-500  text-xl' />
                                         <p  className="text-gray-700 transition ">
                                             + 01 2244210338
                                         </p>

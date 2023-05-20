@@ -65,7 +65,7 @@ function ProductViewer() {
     }
     
     
-    if (isLoading) return 'Loading...';
+    if (isLoading) return ;
     if (isError) return 'An error has occurred: '
     return (
         <div className="bg-white shadow-xl border-2 lg:m-8 xl:m-8  rounded-lg">

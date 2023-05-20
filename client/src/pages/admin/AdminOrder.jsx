@@ -1,13 +1,11 @@
 import React from "react";
-
 import { Link } from "react-router-dom";
-import { useQuery, useMutation, useQueryClient } from "react-query";
+import { useQuery} from "react-query";
 import { useSelector } from "react-redux";
-import { getOrders, getUser } from "../../api";
-import { ToastContainer } from "react-toastify";
 import axios from "axios";
+import LoadingPage from "../../components/LoadingPage";
 function AdminOrder() {
-  const queryClient = useQueryClient();
+
   const { user } = useSelector((state) => state.auth);
 
   const {
@@ -25,7 +23,7 @@ function AdminOrder() {
     }),
   });
 
-  if (isLoading) return "Loading...";
+  if (isLoading) return <LoadingPage/>;
 
   if (error) return "An error has occurred: " + error.message;
 console.log(orders,"orders");
@@ -130,7 +128,7 @@ console.log(orders,"orders");
                       </div>
                     </th>
                     <td className="px-6 py-4 w-1/2">{order.location.address}</td>
-                    <td className="px-6 py-4">{order.total_price}</td>
+                    <td className="px-6 py-4">${order.total_price/100}.00</td>
                     <td className="px-6 py-4">
                       <div className="flex items-center">
                         <div

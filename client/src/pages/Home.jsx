@@ -6,6 +6,7 @@ import LogoSlider from '../Layout/LogoSlider'
 
 import Products from '../components/Products'
 import Review from '../components/home/Review'
+import LoadingPage from '../components/LoadingPage'
 
 function Home() {
   return (
@@ -18,6 +19,7 @@ function Home() {
 
       <Review />
       <LogoSlider />
+      
 
     </div>
   )

@@ -3,6 +3,7 @@ import {  useState } from 'react'
 import Products from '../components/Products'
 import axios from 'axios'
 import { useQuery } from 'react-query'
+import LoadingPage from '../components/LoadingPage'
 
 
 
@@ -53,7 +54,7 @@ function ProductPage() {
     // Add more product data as needed
   ];
 
-  if (isLoading) return 'Loading...';
+  if (isLoading) return <LoadingPage/>;
   if (isError) return 'An error has occurred: '
 
 
