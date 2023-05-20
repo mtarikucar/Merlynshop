@@ -7,7 +7,7 @@ import { useQuery } from 'react-query'
 
 
 function getProduct(categoryId, minPrice, maxPrice) {
-  let base = 'http://localhost:3000/api/product';
+  let base = 'http://localhost:8080/api/product';
   let queryParams = [];
 
   if (categoryId) {

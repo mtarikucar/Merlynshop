@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const baseAPI = axios.create({
-  baseURL: "http://localhost:3000/api",
+  baseURL: "http://localhost:8080/api",
 });
 
 /* export const getCategories = async () => {
@@ -23,7 +23,7 @@ export const getProducts = async () => {
 };
 
 export const deleteProduct = async (id, token) => {
-  const data = await axios.delete(`http://localhost:3000/api/product/${id}`, {
+  const data = await axios.delete(`http://localhost:8080/api/product/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -32,17 +32,17 @@ export const deleteProduct = async (id, token) => {
 };
 
 export const getUser = async (id) => {
-  const { data } = await axios.get(`http://localhost:3000/api/user/${id}`);
+  const { data } = await axios.get(`http://localhost:8080/api/user/${id}`);
   return data;
 };
 
 export const getUsers = async () => {
-  const { data } = await axios.get(`http://localhost:3000/api/user/`);
+  const { data } = await axios.get(`http://localhost:8080/api/user/`);
   return data;
 };
 
 export const deleteUsers = async (id) => {
-  const { data } = await axios.delete(`http://localhost:3000/api/user/${id}`);
+  const { data } = await axios.delete(`http://localhost:8080/api/user/${id}`);
   return data;
 };
 
@@ -61,6 +61,6 @@ export const fetchLogin = async (input) => {
 };
 
 export const getOrders = async () => {
-  const data = await axios.get(`http://localhost:3000/api/order/`);
+  const data = await axios.get(`http://localhost:8080/api/order/`);
   return data;
 };
