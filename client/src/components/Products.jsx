@@ -49,14 +49,14 @@ function Products({ categoryId, minPrice, maxPrice }) {
         <a href="#" className="group relative block ">
           <div className="relative h-[350px] lg:h-[450px]  ">
             <img
-              src="https://nurlightllc.com/image/product_image/8eae085c-68b0-4f34-a85b-234850fcf291.jpg_1180xaf%20(1).jpg"
+              src="/about.jpg"
               alt=""
               className="absolute inset-0 h-full w-full rounded-lg object-cover opacity-100 group-hover:opacity-0"
             />
 
             <img
               alt=""
-              src="https://nurlightllc.com/image/product_image/beanca-20-container-food-storage-set.webp"
+              src="/12.jpeg"
               className="absolute inset-0 h-full w-full rounded-lg object-cover opacity-0 group-hover:opacity-100"
             />
           </div>
