@@ -45,7 +45,7 @@ function Profile() {
 console.log(orders);
 
     return (
-        <div className="grid grid-cols-12 w-full h-full p-6">
+        <div className="  md:grid lg:grid  lg:grid-cols-12 w-full h-full lg:p-6">
             {close ? (
                 <DeleteOrderModal
                     close={close}
@@ -54,7 +54,7 @@ console.log(orders);
                 />
             ) : null}
             <div className="col-span-3  h-full  ">
-                <div className="m-4 max-w-sm h-full">
+                <div className="m-4 h-full">
                     <div className="rounded-lg border bg-white px-4 pt-4 pb-8 shadow-lg">
                         <button onClick={() => setOnClose(true)} className="btn ">
                             <SettingsIcon />{" "}
@@ -105,7 +105,7 @@ console.log(orders);
             {
                 isLoading && <LoadingPage />
             }
-            <div className="col-span-9 z-10 mx-5 my-10 max-h-[60vh] w-full overflow-y-scroll scrollbar scrollbar-thumb-green-400 scrollbar-track-gray-100  overflow-hidden">
+            <div className="lg:col-span-9 md:col-span-9 z-10 my-10 max-h-[60vh] w-full overflow-y-scroll overflow-x-scroll scrollbar scrollbar-thumb-green-400 scrollbar-track-gray-100  overflow-hidden">
                 <div className="grid px-8">
 
 
