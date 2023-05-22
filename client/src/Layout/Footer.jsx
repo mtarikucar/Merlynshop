@@ -13,7 +13,7 @@ function Footer() {
                 <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
                     <div>
                         <div className="text-teal-600">
-                            <img src="https://nurlightllc.com/image/logo2.png" className='h-12' alt="" />
+                            <img src="/logo2.png" className='h-12' alt="" />
                         </div>
 
                         <p className="max-w-xs mt-4 text-gray-500">

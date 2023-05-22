@@ -32,7 +32,7 @@ function Navbar({ open, setOpen }) {
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4">
           <a href="/" className="flex items-center">
             <img
-              src="https://nurlightllc.com/image/logo2.png"
+              src="/logo2.png"
               className="h-12 mr-3"
               alt="Flowbite Logo"
             />
