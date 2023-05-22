@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { verifyTokenAndAdmin } = require('../middlewares/verifyToken');
-const { createOrder, getOrderById, getAllOrders, updateOrder,getOrderByUserId } = require('../controllers/order');
+const { createOrder, getOrderById, getAllOrders, updateOrder,getOrderByUserId,deleteOrderById } = require('../controllers/order');
 const router = Router()
 
 
@@ -12,6 +12,8 @@ router.get("/", getAllOrders);
 
 // Get order by ID
 router.get("/:id", getOrderById);
+
+router.delete("/:id", deleteOrderById);
 
 // Get orders by user ID
 router.get("/user/:id", getOrderByUserId);

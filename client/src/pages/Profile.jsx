@@ -42,7 +42,7 @@ function Profile() {
         setClose(true)
     }
 
-
+console.log(orders);
 
     return (
         <div className="grid grid-cols-12 w-full h-full p-6">
@@ -110,7 +110,7 @@ function Profile() {
 
 
                     {
-                        isError ? (
+                        !isError ? (
 
                             <table className="w-full text-sm text-left text-gray-500 ">
                                 <thead className="text-xs text-gray-700 uppercase bg-gray-50  ">

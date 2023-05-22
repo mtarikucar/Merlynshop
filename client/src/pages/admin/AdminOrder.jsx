@@ -1,12 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useQuery} from "react-query";
+import { useQuery, useMutation, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import LoadingPage from "../../components/LoadingPage";
+
+
 function AdminOrder() {
 
   const { user } = useSelector((state) => state.auth);
+
+
 
   const {
     isLoading,
@@ -23,10 +27,38 @@ function AdminOrder() {
     }),
   });
 
-  if (isLoading) return <LoadingPage/>;
+
+  const handleDeleteOrder = async (orderId) => {
+    try {
+      await axios.delete(`https://whale-app-952oz.ondigitalocean.app/api/order/${orderId}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+
+      // Invalidate the 'orders' query to trigger a refetch and update the UI
+      queryClient.invalidateQueries('orders');
+
+      // Optional: Show a success message or perform any action after deletion
+    } catch (error) {
+      console.error('Error deleting order:', error);
+      // Optional: Show an error message or perform any error handling
+    }
+  };
+
+  const queryClient = useQueryClient();
+
+  const deleteMutation = useMutation(handleDeleteOrder, {
+    onSuccess: () => {
+      // Optional: Perform any action after the order is deleted successfully
+    },
+  });
+
+
+  if (isLoading) return <LoadingPage />;
 
   if (error) return "An error has occurred: " + error.message;
-console.log(orders,"orders");
+  console.log(orders, "orders");
   return (
 
     <div className="h-full ml-14 mt-14 mb-10 md:ml-64">
@@ -94,7 +126,7 @@ console.log(orders,"orders");
                   Name
                 </th>
                 <th scope="col" className="px-6 py-3">
-                 Address
+                  Address
                 </th>
                 <th scope="col" className="px-6 py-3">
                   total price
@@ -128,29 +160,44 @@ console.log(orders,"orders");
                       </div>
                     </th>
                     <td className="px-6 py-4 w-1/2">{order.location.address}</td>
-                    <td className="px-6 py-4">${order.total_price/100}.00</td>
+                    <td className="px-6 py-4">${order.total_price / 100}.00</td>
                     <td className="px-6 py-4">
                       <div className="flex items-center">
                         <div
-                          className={`h-2.5 w-2.5 rounded-full bg-green-500 mr-2`}
+                          className={`h-2.5 w-2.5 rounded-full ${order.status == "canceled" ? "bg-red-500" : "bg-green-500 "} bg-green-500 mr-2`}
                         ></div>
                         {order.status}
                       </div>
                     </td>
-                    <td className="px-6 py-4">
-                      <Link
-                        to={`/admin/order/${order.id}`}
-                        className="font-medium text-green-500  hover:underline"
-                      >
-                        Order Details
-                      </Link>
-                    </td>
+                    {
+                      order.status == "canceled" ? (
+                        <td className="px-6 py-4">
+
+                          <button
+                            onClick={handleDeleteOrder(order.id)}
+                            className="font-medium text-red-500  hover:underline"
+                          >
+                            Delete Order
+                          </button>
+                        </td>
+                      ) : (
+                        <td className="px-6 py-4">
+
+                          <Link
+                            to={`/admin/order/${order.id}`}
+                            className="font-medium text-green-500  hover:underline"
+                          >
+                            Order Details
+                          </Link>
+                        </td>
+                      )
+                    }
                   </tr>
                 ))}
             </tbody>
           </table>
         </div>
-      </div>
+      </div >
       {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 p-4 gap-4">
 
                     {
@@ -202,7 +249,7 @@ console.log(orders,"orders");
 
 
                 </div> */}
-    </div>
+    </div >
 
   );
 }
