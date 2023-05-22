@@ -44,10 +44,11 @@ function AdminAddProduct({ open, setOpen }) {
         });
       },
       onError: (err) => {
-        toast.success(`${err} product error`, {
+        console.log(err);
+        /* toast.success(`${err} product error`, {
           position: "bottom-left",
           type: "error",
-        });
+        }); */
       },
     }
   );
