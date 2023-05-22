@@ -67,10 +67,10 @@ function Navbar({ open, setOpen }) {
                   to="/"
                   className={({ isActive, isPending }) =>
                     isPending
-                      ? "text-red-400"
+                      ? "text-red-400 text-center"
                       : isActive
                       ? " text-green-500 text-center "
-                      : "text-black"
+                      : "text-black text-center"
                   }
                 >
                   <HomeIcon className="text-center w-full text-2xl" />
@@ -91,10 +91,10 @@ function Navbar({ open, setOpen }) {
                   to="/product"
                   className={({ isActive, isPending }) =>
                     isPending
-                      ? "text-red-400"
+                      ? "text-red-400 text-center"
                       : isActive
-                      ? " text-green-500 "
-                      : "text-gray-800"
+                      ? " text-green-500 text-center "
+                      : "text-gray-800 text-center"
                   }
                 >
                   <ProductionQuantityLimitsIcon className="text-center w-full text-2xl" />
@@ -114,10 +114,10 @@ function Navbar({ open, setOpen }) {
                   to="/about"
                   className={({ isActive, isPending }) =>
                     isPending
-                      ? "text-red-400"
+                      ? "text-red-400 text-center"
                       : isActive
-                      ? " text-green-500 "
-                      : "text-gray-800"
+                      ? " text-green-500 text-center"
+                      : "text-gray-800 text-center"
                   }
                 >
                   <InfoIcon   className="text-center w-full text-2xl" />
@@ -137,10 +137,10 @@ function Navbar({ open, setOpen }) {
                   to="/contact"
                   className={({ isActive, isPending }) =>
                     isPending
-                      ? "text-red-400"
+                      ? "text-red-400 text-center"
                       : isActive
-                      ? " text-green-500 "
-                      : "text-gray-800"
+                      ? " text-green-500 text-center "
+                      : "text-gray-800 text-center"
                   }
                 >
                   <ContactMailIcon   className="text-center w-full text-2xl" />
