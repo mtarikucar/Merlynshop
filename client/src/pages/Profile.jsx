@@ -36,7 +36,7 @@ function Profile() {
         error,
     } = useQuery({
         queryKey: ["orders"],
-        queryFn: () => axios.get(`http://localhost:8080/api/order/user/${user.id}`),
+        queryFn: () => axios.get(`http://localhost:3000/api/order/user/${user.id}`),
     });
 
 

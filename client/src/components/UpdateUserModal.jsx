@@ -14,7 +14,7 @@ function UpdateUserModal({ user, setOnClose, onClose }) {
 
     // Update user mutation using react-query
     const updateUserMutation = useMutation(async (values) => {
-        const response = await fetch(`http://localhost:8080/api/user/${user.id}`, {
+        const response = await fetch(`http://localhost:3000/api/user/${user.id}`, {
             method: 'PUT',
            
             body: JSON.stringify(values),

@@ -15,7 +15,7 @@ function AdminUser() {
     error,
   } = useQuery({
     queryKey: ["users"],
-    queryFn: () =>  axios.get(`http://localhost:8080/api/user/`,{
+    queryFn: () =>  axios.get(`http://localhost:3000/api/user/`,{
         headers:{
             Authorization: `Bearer ${user.token}`
         }

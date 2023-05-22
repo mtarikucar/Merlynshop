@@ -10,7 +10,7 @@ function AdminCategoryForm({ openCategory, setOpenCategory }) {
   
   const createCategory = async (newCategory) => {
     const res = await axios.post(
-      "http://localhost:8080/api/category",
+      "http://localhost:3000/api/category",
       newCategory
     ,{
       headers:{

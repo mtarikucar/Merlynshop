@@ -41,7 +41,7 @@ function AdminProduct() {
 
   const deleteProductMutation = useMutation(
     async (id) =>
-      await axios.delete(`http://localhost:8080/api/product/${id}`, {
+      await axios.delete(`http://localhost:3000/api/product/${id}`, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },

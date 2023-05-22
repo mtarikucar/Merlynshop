@@ -8,7 +8,7 @@ import LoadingPage from './LoadingPage';
 
 
 function getProduct(categoryId, minPrice, maxPrice) {
-  let base = 'http://localhost:8080/api/product';
+  let base = 'http://localhost:3000/api/product';
   let queryParams = [];
 
   if (categoryId) {
