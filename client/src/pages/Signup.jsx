@@ -58,7 +58,7 @@ function Signup() {
         }
 
         if (isSuccess) {
-            navigate('/login    ')
+            navigate('/login')
         }
 
         dispatch(reset())

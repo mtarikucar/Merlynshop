@@ -91,8 +91,8 @@ router.post("/create-checkout-session", async (req, res) => {
     line_items,
     mode: "payment",
     customer: customer.id,
-    success_url: `https://whale-app-952oz.ondigitalocean.app/checkout-success`,
-    cancel_url: `https://whale-app-952oz.ondigitalocean.app/`,
+    success_url: `https://nurlightllc.com/checkout-success`,
+    cancel_url: `https://nurlightllc.com/`,
 
   });
 
