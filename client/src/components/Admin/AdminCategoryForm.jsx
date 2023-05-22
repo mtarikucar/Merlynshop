@@ -5,29 +5,30 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 
 function AdminCategoryForm({ openCategory, setOpenCategory }) {
-  
+
   const { user } = useSelector((state) => state.auth);
-  
+  const queryClient = useQueryClient();
+
+  const [newCategoryName, setNewCategoryName] = useState("");
   const createCategory = async (newCategory) => {
     const res = await axios.post(
-      "http://localhost:8080/api/category",
+      "https://whale-app-952oz.ondigitalocean.app/api/category",
       newCategory
-    ,{
-      headers:{
-        Authorization: `Bearer ${user.token}`
-      }
-    });
+      , {
+        headers: {
+          Authorization: `Bearer ${user.token}`
+        }
+      });
     return res.data;
   };
 
-  const queryClient = useQueryClient();
   const createCategoryMutation = useMutation(createCategory, {
     onSuccess: () => {
       queryClient.invalidateQueries("categories");
+      setOpenCategory(false)
     },
   });
 
-  const [newCategoryName, setNewCategoryName] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -88,20 +89,20 @@ function AdminCategoryForm({ openCategory, setOpenCategory }) {
                         <button
                           type="submit"
                           className="flex mt-2 w-full justify-center rounded-md bg-green-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-700 "
-                          onClick={() => setOpenCategory(false)}
+
                         >
                           add
                         </button>
-                        <button
-                          type="submit"
-                          className="mt-3 flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 "
-                          onClick={() => setOpenCategory(false)}
-                          ref={cancelButtonRef}
-                        >
-                          Cancel
-                        </button>
                       </div>
                     </form>
+                    <button
+
+                      className="mt-3 flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 "
+                      onClick={() => setOpenCategory(false)}
+
+                    >
+                      Cancel
+                    </button>
                   </div>
                 </div>
               </Dialog.Panel>

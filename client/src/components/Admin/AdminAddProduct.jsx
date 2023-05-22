@@ -72,7 +72,7 @@ function AdminAddProduct({ open, setOpen }) {
     data: categories,
     isLoading,
     isError,
-  } = useQuery("categories", fetchCategories);
+  } = useQuery(["categories"], fetchCategories);
 
   const formik = useFormik({
     initialValues: {

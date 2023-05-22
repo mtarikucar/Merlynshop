@@ -4,7 +4,8 @@ import { useQuery, useMutation, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import LoadingPage from "../../components/LoadingPage";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function AdminOrder() {
 
@@ -37,7 +38,7 @@ function AdminOrder() {
       });
 
       // Invalidate the 'orders' query to trigger a refetch and update the UI
-      queryClient.invalidateQueries('orders');
+
 
       // Optional: Show a success message or perform any action after deletion
     } catch (error) {
@@ -45,15 +46,22 @@ function AdminOrder() {
       // Optional: Show an error message or perform any error handling
     }
   };
-
   const queryClient = useQueryClient();
 
   const deleteMutation = useMutation(handleDeleteOrder, {
     onSuccess: () => {
       // Optional: Perform any action after the order is deleted successfully
+      console.log("seradsbdrbab");
+      toast.info(`Order canceled`, {
+        position: "bottom-left",
+      });
+      queryClient.invalidateQueries("orders");
     },
   });
 
+  const handleDeleteButtonClick = (orderId) => {
+    deleteMutation.mutate(orderId);
+  };
 
   if (isLoading) return <LoadingPage />;
 
@@ -174,7 +182,7 @@ function AdminOrder() {
                         <td className="px-6 py-4">
 
                           <button
-                            onClick={handleDeleteOrder(order.id)}
+                            onClick={() => handleDeleteButtonClick(order.id)}
                             className="font-medium text-red-500  hover:underline"
                           >
                             Delete Order

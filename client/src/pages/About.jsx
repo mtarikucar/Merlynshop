@@ -26,12 +26,15 @@ function About() {
           IMAGE GALLERY
         </div>
       </div>
+      <div className='grid grid-cols-2 md:grid-cols-3 gap-4 py-12 px-6 lg:grid-cols-4'>
+        
       {
         data &&
         data?.map((product, key) => (
           <AboutImageGallery product={product} key={key} />
         ))
       }
+      </div>
     </div>
   )
 }
