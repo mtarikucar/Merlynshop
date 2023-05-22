@@ -44,15 +44,9 @@ function Profile() {
         setOrderId(order)
         setClose(true)
     }
-    if (isLoading) return <LoadingPage/>;
+   
 
-    if (error) return "An error has occurred: " + error.message;
-
-    /*  const filteredData = orders?.data.filter(order => order.user.id === user.id); */
-
-
-
-    console.log(orders, "orders");
+    /* if (error) return "An error has occurred: " + error.message; */
 
 
     return (
@@ -113,6 +107,9 @@ function Profile() {
                 ) : null}
             </div>
 
+{
+     isLoading && <LoadingPage />
+}
             <div className="col-span-9 z-10 mx-5 my-10 max-h-[60vh] w-full overflow-y-scroll scrollbar scrollbar-thumb-green-400 scrollbar-track-gray-100  overflow-hidden">
                 <div className="grid px-8">
 
@@ -156,72 +153,77 @@ function Profile() {
                                 </div>
                             )}
 
-                            <tbody>
-                                {orders &&
-                                    orders?.data.map((order) => (
-                                        <tr
-                                            key={order.id}
-                                            className="bg-white border-b  hover:bg-gray-50 "
-                                        >
-                                            <th
-                                                scope="row"
-                                                className="flex items-center px-6 py-4whitespace-nowrap"
-                                            >
-                                                {
-                                                    order.products.map((product, key) => (
-
-                                                        <div>
-                                                            <div>
-                                                                <img
-                                                                    className="w-20 px-1 h-20 rounded"
-                                                                    src={product.thumbnail}
-                                                                    alt="Jese image"
-                                                                />
-                                                            </div>
-                                                            <td>
-                                                                <div className="text-center w-full">
-                                                                    <div className=" text-sm font-semibold">
-                                                                        quantity: {product.order_product.quantity}
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                        </div>
-                                                    ))
-                                                }
-                                            </th>
-                                            <td>
-                                                <div className="pl-3">
-                                                    <div className="text-base font-semibold">
-                                                        {order.location.address}
-                                                    </div>
-                                                </div>
-                                            </td>
-
-                                            <td className="px-6 py-4">
-                                                <div className="flex items-center">
-                                                    <div className="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div>
-                                                    {order.status}
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                <div className="flex items-center">
-                                                    ${order.total_price / 100}.00
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-4 space-x-2 text-center">
-
-                                                <button
-                                                    type="submit"
-                                                    id={`${order.id}`}
-                                                    onClick={() => cancelHandle(order)}
-                                                    className="font-medium bg-red-600 px-2 py-1 rounded-lg text-white"
+                            {
+                                isError ? (
+                                    <tbody>
+                                        {orders &&
+                                            orders?.data.map((order) => (
+                                                <tr
+                                                    key={order.id}
+                                                    className="bg-white border-b  hover:bg-gray-50 "
                                                 >
-                                                    Censel Order
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    ))}
-                            </tbody>
+                                                    <th
+                                                        scope="row"
+                                                        className="flex items-center px-6 py-4whitespace-nowrap"
+                                                    >
+                                                        {
+                                                            order.products.map((product, key) => (
+
+                                                                <div>
+                                                                    <div>
+                                                                        <img
+                                                                            className="w-20 px-1 h-20 rounded"
+                                                                            src={product.thumbnail}
+                                                                            alt="Jese image"
+                                                                        />
+                                                                    </div>
+                                                                    <td>
+                                                                        <div className="text-center w-full">
+                                                                            <div className=" text-sm font-semibold">
+                                                                                quantity: {product.order_product.quantity}
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                </div>
+                                                            ))
+                                                        }
+                                                    </th>
+                                                    <td>
+                                                        <div className="pl-3">
+                                                            <div className="text-base font-semibold">
+                                                                {order.location.address}
+                                                            </div>
+                                                        </div>
+                                                    </td>
+
+                                                    <td className="px-6 py-4">
+                                                        <div className="flex items-center">
+                                                            <div className="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div>
+                                                            {order.status}
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-6 py-4">
+                                                        <div className="flex items-center">
+                                                            ${order.total_price / 100}.00
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-6 py-4 space-x-2 text-center">
+
+                                                        <button
+                                                            type="submit"
+                                                            id={`${order.id}`}
+                                                            onClick={() => cancelHandle(order)}
+                                                            className="font-medium bg-red-600 px-2 py-1 rounded-lg text-white"
+                                                        >
+                                                            Censel Order
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                    </tbody>
+                                ) : (null)
+
+                            }
                         </table>
 
 

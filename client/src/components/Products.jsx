@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Product from './Product'
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
 import { useQuery } from 'react-query'
@@ -37,7 +38,7 @@ function Products({ categoryId, minPrice, maxPrice }) {
       getProduct(queryKey[1].categoryId, queryKey[1].minPrice, queryKey[1].maxPrice)
   );
 
-  if (isLoading) return <LoadingPage/>;
+  if (isLoading) return <LoadingPage />;
   if (isError) return 'An error has occurred: ' + error.message;
 
 
@@ -62,18 +63,14 @@ function Products({ categoryId, minPrice, maxPrice }) {
           </div>
 
           <div className="absolute inset-0 flex flex-col items-start justify-end p-6 " >
-            <h3 className="text-xl font-medium text-gray-800">Skinny Jeans Blue</h3>
 
-            <p className="mt-1.5 max-w-[40ch] text-xs text-gray-800">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos sequi
-              dicta impedit aperiam ipsum!
-            </p>
-
-            <span
-              className="mt-3 inline-block bg-green-500 hover:bg-green-700 px-5 py-3 text-xs font-medium uppercase tracking-wide text-white"
-            >
-              Shop Now
-            </span>
+            <Link to={"/product"}>
+              <span
+                className="mt-3 inline-block bg-green-500 hover:bg-green-500 px-5 py-3 text-xs font-medium uppercase tracking-wide text-white"
+              >
+                Shop Now
+              </span>
+            </Link>
           </div>
         </a>
 
