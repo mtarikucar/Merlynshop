@@ -10,7 +10,7 @@ function AdminCategoryForm({ openCategory, setOpenCategory }) {
   
   const createCategory = async (newCategory) => {
     const res = await axios.post(
-      "http://localhost:3000/api/category",
+      "https://whale-app-952oz.ondigitalocean.app/api/category",
       newCategory
     ,{
       headers:{

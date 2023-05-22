@@ -15,7 +15,7 @@ function AdminOrder() {
     error,
   } = useQuery({
     queryKey: ["orders"],
-    queryFn: () => axios.get(`http://localhost:3000/api/order/`, {
+    queryFn: () => axios.get(`https://whale-app-952oz.ondigitalocean.app/api/order/`, {
       headers: {
         Authorization: `Bearer ${user.token}`,
 

@@ -20,7 +20,7 @@ function ProductDetail() {
   const [activeImage, setActiveImage] = useState();
 
   const { isLoading, error, data } = useQuery("product", () => {
-    return fetch(`http://localhost:3000/api/product/${id}`).then((res) =>
+    return fetch(`https://whale-app-952oz.ondigitalocean.app/api/product/${id}`).then((res) =>
       res.json()
     );
   });

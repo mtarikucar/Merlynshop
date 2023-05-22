@@ -36,7 +36,7 @@ function ProductViewer() {
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
 
     const fetchCategories = async () => {
-        const res = await axios.get("http://localhost:3000/api/category");
+        const res = await axios.get("https://whale-app-952oz.ondigitalocean.app/api/category");
         return res.data;
     };
 
