@@ -17,7 +17,7 @@ function LandingPage() {
                     <img className='w-64 p-8' src="https://www.webtasarimgezegeni.com/wp-content/uploads/2020/03/web-sitesi-olusturma.png" alt="" />
                     <h1 className="text-4xl font-bold mb-4">Welcome to Our Website</h1>
                     <p className="text-gray-700 mb-8">
-                    We apologize for the inconvenience, but we are unable to provide service today. Please contact us for further assistance.
+                        We are upgrading our website. Please login later. Thank you.
                     </p>
 
                     <div className="flex items-center justify-center mb-8">
@@ -34,7 +34,8 @@ function LandingPage() {
                         <FaMapMarkerAlt className="text-green-600 mr-2" />
                         <span className="text-gray-700">16200 Livingston Rd
                             Accokeek, MD 20607
-                            United States</span>
+                            United States
+                        </span>
                     </div>
                 </div>
             </main>
