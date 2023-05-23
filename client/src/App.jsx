@@ -62,7 +62,7 @@ function Admin() {
 function App() {
   let location = useLocation();
 
-  useEffect(() => {}, [location]);
+  useEffect(() => { }, [location]);
 
   const [open, setOpen] = useState(false);
   return (
@@ -71,7 +71,7 @@ function App() {
         <>
           <ToastContainer />
           <CartButton setOpen={setOpen} open={open} />
-        
+
           <Navbar setOpen={setOpen} open={open} />
           {open && <ShoppingCarts open={open} setOpen={setOpen} />}
         </>
@@ -93,7 +93,7 @@ function App() {
         <Route path="admin" element={<Admin />} />
       </Routes>
 
-     {/*  {!location.pathname.includes("admin") && <Footer />} */}
+      {!location.pathname.includes("admin") && <Footer />}
     </>
   );
 }
