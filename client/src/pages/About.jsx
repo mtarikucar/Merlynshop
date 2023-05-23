@@ -1,8 +1,22 @@
 import React from 'react'
 import AboutCard from '../components/about/AboutCard'
 import AboutImageGallery from '../components/about/AboutImageGallery'
-
+import { useQuery } from "react-query";
+import LoadingPage from '../components/LoadingPage';
 function About() {
+
+
+  const { isLoading, error, data } = useQuery("products", () => {
+    return fetch(`https://whale-app-952oz.ondigitalocean.app/api/product/`).then((res) =>
+      res.json()
+    );
+  });
+
+  if (isLoading) return <LoadingPage />;
+
+  if (error) return "An error has occurred: " + error.message;
+
+  console.log(data);
   return (
     <div className='bg-slate-50 w-full'>
       <AboutCard />
@@ -12,7 +26,15 @@ function About() {
           IMAGE GALLERY
         </div>
       </div>
-      <AboutImageGallery />
+      <div className='grid grid-cols-2 md:grid-cols-3 gap-4 py-12 px-6 lg:grid-cols-4'>
+        
+      {
+        data &&
+        data?.map((product, key) => (
+          <AboutImageGallery product={product} key={key} />
+        ))
+      }
+      </div>
     </div>
   )
 }

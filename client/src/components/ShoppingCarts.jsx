@@ -2,13 +2,13 @@ import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { useSelector, useDispatch } from 'react-redux'
-import { removeFromCart, decreaseCart, getTotals,increaseCart } from '../features/cartSlice'
+import { removeFromCart, decreaseCart, getTotals, increaseCart } from '../features/cartSlice'
 import store from '../app/store'
 import { Link } from 'react-router-dom'
 
 function ShoppingCarts({ open, setOpen }) {
 
-    
+    const { user } = useSelector((state) => state.auth);
     store.dispatch(getTotals())
 
     const dispatch = useDispatch()
@@ -17,7 +17,7 @@ function ShoppingCarts({ open, setOpen }) {
         dispatch(getTotals())
     }, [cart])
 
-    
+
     const handleRemoveFromCart = (product) => {
         dispatch(removeFromCart(product))
     }
@@ -25,7 +25,7 @@ function ShoppingCarts({ open, setOpen }) {
     const handleDecreaseCart = (product) => {
         dispatch(decreaseCart(product))
     }
-  
+
     const handleIncreaseCart = (product) => {
         dispatch(increaseCart(product))
     }
@@ -138,15 +138,30 @@ function ShoppingCarts({ open, setOpen }) {
                                                 <p>${cart.cartTotalAmount}</p>
                                             </div>
                                             <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
-                                            <div className="mt-6">
-                                                <Link
-                                                    to='checkout'
-                                                    onClick={() => setOpen(!open)}
-                                                    className="flex items-center justify-center rounded-md border border-transparent bg-green-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-green-700"
-                                                >
-                                                    Checkout
-                                                </Link>
-                                            </div>
+                                            {
+                                                user ? (
+
+                                                    <div className="mt-6">
+                                                        <Link
+                                                            to='/checkout'
+                                                            onClick={() => setOpen(!open)}
+                                                            className="flex items-center justify-center rounded-md border border-transparent bg-green-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-green-700"
+                                                        >
+                                                            Checkout
+                                                        </Link>
+                                                    </div>
+                                                ):(
+                                                    <div className="mt-6">
+                                                        <Link
+                                                            to='/login'
+                                                            onClick={() => setOpen(!open)}
+                                                            className="flex items-center justify-center rounded-md border border-transparent bg-green-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-green-700"
+                                                        >
+                                                            Please Login 
+                                                        </Link>
+                                                    </div>
+                                                )
+                                            }
                                             <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                                                 <p>
                                                     or

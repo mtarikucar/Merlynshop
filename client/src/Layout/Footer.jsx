@@ -1,8 +1,8 @@
 import React from 'react'
-import { AiFillHome } from 'react-icons/Ai'
-import { MdMarkEmailUnread } from 'react-icons/Md'
-import { BsTelephoneFill } from 'react-icons/Bs'
-import { MdFax } from 'react-icons/Md'
+import HomeIcon from '@mui/icons-material/Home';
+import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
+import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+import FaxIcon from '@mui/icons-material/Fax';
 function Footer() {
     return (
 
@@ -13,7 +13,7 @@ function Footer() {
                 <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
                     <div>
                         <div className="text-teal-600">
-                            <img src="https://nurlightllc.com/image/logo2.png" className='h-12' alt="" />
+                            <img src="/logo2.png" className='h-12' alt="" />
                         </div>
 
                         <p className="max-w-xs mt-4 text-gray-500">
@@ -151,7 +151,7 @@ function Footer() {
                             <nav aria-label="Footer Navigation-Legal " className="mt-6">
                                 <ul className="space-y-4   text-sm">
                                     <li className='flex gap-2 items-center'>
-                                        <AiFillHome width={12} className='text-green-500  text-lg' />
+                                        <HomeIcon width={12} fontSize='large' className='text-green-500 ' />
                                         <p  className="text-gray-700 transition ">
                                             16200 Livingston Rd
                                             Accokeek, MD 20607
@@ -160,21 +160,21 @@ function Footer() {
                                     </li>
 
                                     <li className='flex gap-2 items-center'>
-                                        <MdMarkEmailUnread className=' text-green-500 text-lg ' />
+                                        <MarkEmailReadIcon fontSize='large' className=' text-green-500 text-lg ' />
                                         <p  className="text-gray-700 transition ">
                                             nurlightllc@gmail.com
                                         </p>
                                     </li>
 
                                     <li className='flex gap-2 items-center'>
-                                        <BsTelephoneFill width={12} className='text-green-500 text-lg ' />
+                                        <LocalPhoneIcon fontSize='large' width={12} className='text-green-500 text-lg ' />
                                         <p  className="text-gray-700 transition ">
                                             + 01 2244210338
                                         </p>
                                     </li>
 
                                     <li className='flex gap-2 items-center'>
-                                        <MdFax width={12} className='text-green-500  text-xl' />
+                                        <FaxIcon width={12} fontSize='large' className='text-green-500  text-xl' />
                                         <p  className="text-gray-700 transition ">
                                             + 01 2244210338
                                         </p>

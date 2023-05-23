@@ -1,5 +1,5 @@
 import {useEffect} from 'react'
-import { HiOutlineShoppingCart } from 'react-icons/Hi';
+import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import { useSelector,useDispatch } from 'react-redux';
 import { getTotals } from '../features/cartSlice';
 function CartButton({ setOpen, open }) {
@@ -14,7 +14,7 @@ function CartButton({ setOpen, open }) {
                 <div className=" top-0 absolute left-8  ">
                     <p className="flex h-2 w-2 items-center justify-center rounded-full bg-white font-bold p-3 text-xs text-green-500">{cart.cartTotalQuantity}</p>
                 </div>
-                <HiOutlineShoppingCart  className="w-8 h-8" />
+                <ShoppingCartCheckoutIcon  fontSize='large'/>
             </button>
         </div>
     )

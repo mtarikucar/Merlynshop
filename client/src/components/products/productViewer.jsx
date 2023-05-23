@@ -36,7 +36,7 @@ function ProductViewer() {
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
 
     const fetchCategories = async () => {
-        const res = await axios.get("http://localhost:3000/api/category");
+        const res = await axios.get("https://whale-app-952oz.ondigitalocean.app/api/category");
         return res.data;
     };
 
@@ -65,7 +65,7 @@ function ProductViewer() {
     }
     
     
-    if (isLoading) return 'Loading...';
+    if (isLoading) return ;
     if (isError) return 'An error has occurred: '
     return (
         <div className="bg-white shadow-xl border-2 lg:m-8 xl:m-8  rounded-lg">

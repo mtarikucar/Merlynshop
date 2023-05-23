@@ -9,7 +9,7 @@ const PayButton = ({ cartItems }) => {
 console.log(user);
   const handleCheckout = () => {
     axios
-      .post(`http://localhost:3000/api/stripe/create-checkout-session`, {
+      .post(`https://whale-app-952oz.ondigitalocean.app/api/stripe/create-checkout-session`, {
         cartItems:cartItems,
         userId: user.id,
       })

@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { reset, login } from '../features/auth/authSlice';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import LoadingPage from '../components/LoadingPage';
 function Login() {
 
     const navigate = useNavigate()
@@ -44,6 +45,7 @@ function Login() {
 
     if (isLoading) {
         return notify;
+        
     }
     /* 
      username: 'kminchelle',

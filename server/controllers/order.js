@@ -29,7 +29,6 @@ async function createOrder(prop) {
     await models.location.create({
       orderId: newOrder.id,
       address: location,
-
     })
     console.log("lokasyon başarılı");
 
@@ -106,10 +105,32 @@ async function getOrderByUserId(req, res, next) {
   }
 }
 
+
+async function deleteOrderById(req, res, next) {
+  const { id } = req.params;
+
+  try {
+    // find the order by its id
+    const order = await models.order.findOne({ where: { id: id } });
+
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    // delete the order
+    await models.order.destroy({ where: { id: id } });
+
+    res.status(200).json({ message: "Order deleted successfully" });
+  } catch (err) {
+    next(err);
+  }
+}
+
 module.exports = {
   createOrder,
   getAllOrders,
   getOrderById,
   updateOrder,
-  getOrderByUserId
+  getOrderByUserId,
+  deleteOrderById
 };

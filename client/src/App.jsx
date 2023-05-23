@@ -29,6 +29,7 @@ import Checkout from "./pages/Checkout";
 
 import { useSelector } from "react-redux";
 import CheckoutSuccess from "./pages/Checkout-success";
+import LandingPage from "./pages/LandingPage";
 
 function Admin() {
   const { user } = useSelector((store) => store.auth);
@@ -70,7 +71,7 @@ function App() {
         <>
           <ToastContainer />
           <CartButton setOpen={setOpen} open={open} />
-          {/* <Hero /> */}
+        
           <Navbar setOpen={setOpen} open={open} />
           {open && <ShoppingCarts open={open} setOpen={setOpen} />}
         </>
@@ -92,7 +93,7 @@ function App() {
         <Route path="admin" element={<Admin />} />
       </Routes>
 
-      {!location.pathname.includes("admin") && <Footer />}
+     {/*  {!location.pathname.includes("admin") && <Footer />} */}
     </>
   );
 }

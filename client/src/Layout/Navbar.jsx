@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
-import { AiOutlineHome, AiOutlineExclamationCircle } from "react-icons/Ai";
-import { HiOutlineShoppingCart, HiUser } from "react-icons/Hi";
+
+import HomeIcon from '@mui/icons-material/Home';
+import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
+import ContactMailIcon from '@mui/icons-material/ContactMail';
+import InfoIcon from '@mui/icons-material/Info';
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { MdProductionQuantityLimits, MdOutlineContacts } from "react-icons/Md";
+
 import { logout, reset } from "../features/auth/authSlice";
 import Dropdown from "./Dropdown";
 
@@ -29,7 +32,7 @@ function Navbar({ open, setOpen }) {
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4">
           <a href="/" className="flex items-center">
             <img
-              src="https://nurlightllc.com/image/logo2.png"
+              src="/logo2.png"
               className="h-12 mr-3"
               alt="Flowbite Logo"
             />
@@ -59,19 +62,19 @@ function Navbar({ open, setOpen }) {
         <div className=" lg:sticky  xl:sticky md:sticky fixed  lg:top-0  xl:top-0 md:top-0  bottom-0 z-40 w-full h-16  flex bg-white border-t border-gray-200 ">
           <div className=" container mx-auto flex flex-row items-center max-w-screen-xl ">
             <ul className="flex lg:justify-start md:justify-start justify-between  xl:justify-start h-full w-full  font-medium mx-2 p-2 lg:space-x-10">
-              <li className="inline-flex flex-col items-center justify-center  p-3  rounded-lg  hover:bg-gray-50  group">
+              <li className="inline-flex flex-col items-center justify-center text-center  p-3  rounded-lg  hover:bg-gray-50  group">
                 <NavLink
                   to="/"
                   className={({ isActive, isPending }) =>
                     isPending
-                      ? "text-red-400"
+                      ? "text-red-400 text-center"
                       : isActive
                       ? " text-green-500 text-center "
-                      : "text-black"
+                      : "text-black text-center"
                   }
                 >
-                  <AiOutlineHome className="text-center w-full text-2xl" />
-                  <span className="text-sm mb-2">Home</span>
+                  <HomeIcon className="text-center w-full text-2xl" />
+                  <span className="text-sm mb-2"> Home</span>
 
                   <hr
                     className={`${
@@ -88,14 +91,14 @@ function Navbar({ open, setOpen }) {
                   to="/product"
                   className={({ isActive, isPending }) =>
                     isPending
-                      ? "text-red-400"
+                      ? "text-red-400 text-center"
                       : isActive
-                      ? " text-green-500 "
-                      : "text-gray-800"
+                      ? " text-green-500 text-center "
+                      : "text-gray-800 text-center"
                   }
                 >
-                  <MdProductionQuantityLimits className="text-center w-full text-2xl" />
-                  <span className="text-sm mb-2">Product</span>
+                  <ProductionQuantityLimitsIcon className="text-center w-full text-2xl" />
+                  <span className="text-sm mb-2"> Product</span>
 
                   <hr
                     className={`${
@@ -111,14 +114,14 @@ function Navbar({ open, setOpen }) {
                   to="/about"
                   className={({ isActive, isPending }) =>
                     isPending
-                      ? "text-red-400"
+                      ? "text-red-400 text-center"
                       : isActive
-                      ? " text-green-500 "
-                      : "text-gray-800"
+                      ? " text-green-500 text-center"
+                      : "text-gray-800 text-center"
                   }
                 >
-                  <AiOutlineExclamationCircle className="text-center w-full text-2xl" />
-                  <span className="text-sm mb-2">About</span>
+                  <InfoIcon   className="text-center w-full text-2xl" />
+                  <span className="text-sm mb-2"> About</span>
 
                   <hr
                     className={`${
@@ -134,14 +137,14 @@ function Navbar({ open, setOpen }) {
                   to="/contact"
                   className={({ isActive, isPending }) =>
                     isPending
-                      ? "text-red-400"
+                      ? "text-red-400 text-center"
                       : isActive
-                      ? " text-green-500 "
-                      : "text-gray-800"
+                      ? " text-green-500 text-center "
+                      : "text-gray-800 text-center"
                   }
                 >
-                  <MdOutlineContacts className="text-center w-full text-2xl" />
-                  <span className="text-sm mb-2">Contact</span>
+                  <ContactMailIcon   className="text-center w-full text-2xl" />
+                  <span className="text-sm mb-2"> Contact</span>
 
                   <hr
                     className={`${
@@ -173,85 +176,7 @@ function Navbar({ open, setOpen }) {
           </div>
         </div>
 
-        {/* <div className="max-w-screen-xl px-4 py-3 mx-auto">
-                    <div className="flex flex-row  lg:justify-between justify-center items-center">
-                        <ul className="flex flex-row font-medium mt-0 mr-6   lg:space-x-8 space-x-4 text-sm">
-                            <li >
 
-                                <NavLink
-                                    to="/"
-                                    className={({ isActive, isPending }) =>
-                                        isPending ? "text-red-400" : isActive ? " text-green-500 " : "text-gray-800"
-                                    }
-                                >
-                                    <span className='text-lg'>Home</span>
-
-                                    <hr className={`${location.pathname == '/' ? 'w-full h-1  bg-green-500 border-0 rounded ' : 'w-full h-1 hidden '}  `} />
-                                </NavLink>
-                            </li>
-                            <li>
-
-                                <NavLink
-                                    to="/product"
-                                    className={({ isActive, isPending }) =>
-                                        isPending ? "text-red-400" : isActive ? " text-green-500 " : "text-black"
-                                    }
-                                >
-                                    <span className='text-lg'>Product</span>
-
-                                    <hr className={`${location.pathname == '/product' ? 'w-full h-1  bg-green-500 border-0 rounded ' : 'w-full h-1 hidden '}  `} />
-                                </NavLink>
-                            </li>
-
-                            <li>
-                                <NavLink
-                                    to="/about"
-                                    className={({ isActive, isPending }) =>
-                                        isPending ? "text-red-400" : isActive ? " text-green-500 " : "text-black"
-                                    }
-                                >
-                                    <span className='text-lg'>About</span>
-
-                                    <hr className={`${location.pathname == '/about' ? 'w-full h-1  bg-green-500 border-0 rounded ' : 'w-full h-1 hidden '}  `} />
-                                </NavLink>
-                            </li>
-                            <li>
-                                <NavLink
-                                    to="/contact"
-                                    className={({ isActive, isPending }) =>
-                                        isPending ? "text-red-400" : isActive ? " text-green-500 " : "text-black"
-                                    }
-                                >
-                                    <span className='text-lg'>Contact</span>
-
-                                    <hr className={`${location.pathname == '/contact' ? 'w-full h-1  bg-green-500 border-0 rounded ' : 'w-full h-1 hidden '}  `} />
-                                </NavLink>
-                            </li>
-                        </ul>
-                        <ul className='flex flex-row font-medium mt-0 mr-6 space-x-8 justify-center items-center text-sm' >
-                            <li>
-
-
-                                <button onClick={() => setOpen(!open)}>
-                                    <div className="  flex ju ">
-                                        <div className="relative">
-                                            <div className=" -top-2 absolute left-5">
-                                                <p className="flex h-2 w-2 items-center justify-center rounded-full bg-green-500 p-3 text-xs text-white">3</p>
-                                            </div>
-
-                                            <HiOutlineShoppingCart className='h-8 w-8  ' />
-                                        </div>
-                                    </div>
-                                </button>
-
-                            </li>
-                            <li>
-                                
-                            </li>
-
-                        </ul>
-                    </div>
-                </div> */}
       </nav>
     </div>
   );

@@ -1,12 +1,12 @@
 import React from 'react'
-import { AiOutlineSearch } from 'react-icons/Ai';
+
 function HomeAbout() {
     return (
         <>
             <section className="  lg:my-16 bg-white shadow ">
                 <div className="items-center flex lg:flex-row flex-col  ">
                     <div className=" md:w-1/3 py-16  ml-auto mr-auto ">
-                        <img alt="..." className="max-w-full rounded-lg shadow-lg" src="https://nurlightllc.com/image/blog4.jpeg"/>
+                        <img alt="..." className="max-w-full rounded-lg shadow-lg" src="/blog4.jpeg"/>
                     </div>
                     <div className="w-full md:w-5/12 ml-auto mr-auto px-4">
                         <div className="md:pr-12">

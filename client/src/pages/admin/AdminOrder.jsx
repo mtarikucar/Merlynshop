@@ -1,14 +1,17 @@
 import React from "react";
-
 import { Link } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
-import { getOrders, getUser } from "../../api";
-import { ToastContainer } from "react-toastify";
 import axios from "axios";
+import LoadingPage from "../../components/LoadingPage";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function AdminOrder() {
-  const queryClient = useQueryClient();
+
   const { user } = useSelector((state) => state.auth);
+
+
 
   const {
     isLoading,
@@ -17,7 +20,7 @@ function AdminOrder() {
     error,
   } = useQuery({
     queryKey: ["orders"],
-    queryFn: () => axios.get(`http://localhost:3000/api/order/`, {
+    queryFn: () => axios.get(`https://whale-app-952oz.ondigitalocean.app/api/order/`, {
       headers: {
         Authorization: `Bearer ${user.token}`,
 
@@ -25,10 +28,45 @@ function AdminOrder() {
     }),
   });
 
-  if (isLoading) return "Loading...";
+
+  const handleDeleteOrder = async (orderId) => {
+    try {
+      await axios.delete(`https://whale-app-952oz.ondigitalocean.app/api/order/${orderId}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+
+      // Invalidate the 'orders' query to trigger a refetch and update the UI
+
+
+      // Optional: Show a success message or perform any action after deletion
+    } catch (error) {
+      console.error('Error deleting order:', error);
+      // Optional: Show an error message or perform any error handling
+    }
+  };
+  const queryClient = useQueryClient();
+
+  const deleteMutation = useMutation(handleDeleteOrder, {
+    onSuccess: () => {
+      // Optional: Perform any action after the order is deleted successfully
+      console.log("seradsbdrbab");
+      toast.info(`Order canceled`, {
+        position: "bottom-left",
+      });
+      queryClient.invalidateQueries("orders");
+    },
+  });
+
+  const handleDeleteButtonClick = (orderId) => {
+    deleteMutation.mutate(orderId);
+  };
+
+  if (isLoading) return <LoadingPage />;
 
   if (error) return "An error has occurred: " + error.message;
-console.log(orders,"orders");
+  console.log(orders, "orders");
   return (
 
     <div className="h-full ml-14 mt-14 mb-10 md:ml-64">
@@ -96,7 +134,7 @@ console.log(orders,"orders");
                   Name
                 </th>
                 <th scope="col" className="px-6 py-3">
-                 Address
+                  Address
                 </th>
                 <th scope="col" className="px-6 py-3">
                   total price
@@ -130,81 +168,45 @@ console.log(orders,"orders");
                       </div>
                     </th>
                     <td className="px-6 py-4 w-1/2">{order.location.address}</td>
-                    <td className="px-6 py-4">{order.total_price}</td>
+                    <td className="px-6 py-4">${order.total_price / 100}.00</td>
                     <td className="px-6 py-4">
                       <div className="flex items-center">
                         <div
-                          className={`h-2.5 w-2.5 rounded-full bg-green-500 mr-2`}
+                          className={`h-2.5 w-2.5 rounded-full ${order.status == "canceled" ? "bg-red-500" : "bg-green-500 "} bg-green-500 mr-2`}
                         ></div>
                         {order.status}
                       </div>
                     </td>
-                    <td className="px-6 py-4">
-                      <Link
-                        to={`/admin/order/${order.id}`}
-                        className="font-medium text-green-500  hover:underline"
-                      >
-                        Order Details
-                      </Link>
-                    </td>
+                    {
+                      order.status == "canceled" ? (
+                        <td className="px-6 py-4">
+
+                          <button
+                            onClick={() => handleDeleteButtonClick(order.id)}
+                            className="font-medium text-red-500  hover:underline"
+                          >
+                            Delete Order
+                          </button>
+                        </td>
+                      ) : (
+                        <td className="px-6 py-4">
+
+                          <Link
+                            to={`/admin/order/${order.id}`}
+                            className="font-medium text-green-500  hover:underline"
+                          >
+                            Order Details
+                          </Link>
+                        </td>
+                      )
+                    }
                   </tr>
                 ))}
             </tbody>
           </table>
         </div>
-      </div>
-      {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 p-4 gap-4">
-
-                    {
-                        orders &&
-                        orders?.data.map((order) => (
-
-
-                            <Link
-                            key={order.id}
-                                to={`/admin/order/${order.id}`}
-                                className="relative flex items-start justify-between rounded-xl border border-gray-100 p-4 shadow-xl sm:p-6 lg:p-8"
-
-                            >
-                                <div className="pt-4 text-gray-500">
-                                    <svg
-                                        className="h-8 w-8 sm:h-10 sm:w-10"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth="2"
-                                            d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"
-                                        ></path>
-                                    </svg>
-
-                                    <h3 className="mt-4 text-lg font-bold text-gray-900 sm:text-xl">
-                                        Science of Chemistry
-                                    </h3>
-
-                                    <p className="mt-2 hidden text-sm sm:block">
-                                        You can manage phone, email and chat conversations all from a single
-                                        mailbox.
-                                    </p>
-                                </div>
-
-                                <span
-                                    className="rounded-full bg-green-100 px-3 py-1.5 text-xs font-medium text-green-600"
-                                >
-                                    4.3
-                                </span>
-                            </Link>
-
-                        ))
-                    }
-
-
-                </div> */}
-    </div>
+      </div >
+    </div >
 
   );
 }

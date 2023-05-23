@@ -21,25 +21,22 @@ const cartSlice = createSlice({
       if (itemIndex >= 0) {
         state.cartItems[itemIndex].cartQuantity += action.payload.cartQuantity;
 
-        toast.info(`added ${state.cartItems[itemIndex].name} Cart Quantity`, {
-          position: "bottom-left",
-        });
-      } else {
-        const tempProduct = {
-          ...action.payload,
-          cartQuantity: action.payload.cartQuantity,
-        };
-        state.cartItems.push(tempProduct);
-        toast.success(` ${action.payload.title} Added To Cart`, {
-          position: "bottom-left",
-        });
-      }
-      localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
-    },
-    increaseCart(state, action) {
-      const itemIndex = state.cartItems.findIndex(
-        (item) => item.id === action.payload.id
-      );
+                toast.info(`added ${state.cartItems[itemIndex].name} Cart Quantity`, {
+                    position: "bottom-left",
+                });
+            } else {
+                const tempProduct = { ...action.payload, cartQuantity: action.payload.cartQuantity ? action.payload.cartQuantity :1 };
+                state.cartItems.push(tempProduct);
+                toast.success(` ${action.payload.title} Added To Cart`, {
+                    position: "bottom-left",
+                });
+            }
+            localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+        },
+        increaseCart(state, action) {
+            const itemIndex = state.cartItems.findIndex(
+                (item) => item.id === action.payload.id
+            );
 
       console.log(action.payload);
       if (itemIndex >= 0) {

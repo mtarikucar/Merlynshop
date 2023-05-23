@@ -30,7 +30,7 @@ function AdminAddProduct({ open, setOpen }) {
 
   const postProductMutation = useMutation(
     (product) =>
-      axios.post("http://localhost:3000/api/product", product, {
+      axios.post("https://whale-app-952oz.ondigitalocean.app/api/product", product, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
@@ -44,10 +44,11 @@ function AdminAddProduct({ open, setOpen }) {
         });
       },
       onError: (err) => {
-        toast.success(`${err} product error`, {
+        console.log(err);
+        /* toast.success(`${err} product error`, {
           position: "bottom-left",
           type: "error",
-        });
+        }); */
       },
     }
   );
@@ -64,7 +65,7 @@ function AdminAddProduct({ open, setOpen }) {
     setThumbnailPreview('');
   }, [open]);
   const fetchCategories = async () => {
-    const res = await axios.get("http://localhost:3000/api/category");
+    const res = await axios.get("https://whale-app-952oz.ondigitalocean.app/api/category");
     return res.data;
   };
 
@@ -72,7 +73,7 @@ function AdminAddProduct({ open, setOpen }) {
     data: categories,
     isLoading,
     isError,
-  } = useQuery("categories", fetchCategories);
+  } = useQuery(["categories"], fetchCategories);
 
   const formik = useFormik({
     initialValues: {

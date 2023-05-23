@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import { useQuery } from "react-query";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart, decreaseCart } from "../features/cartSlice";
+import LoadingPage from "../components/LoadingPage";
 function ProductDetail() {
   
   const [quantity, setQuatity] = useState(1);
@@ -19,12 +20,12 @@ function ProductDetail() {
   const [activeImage, setActiveImage] = useState();
 
   const { isLoading, error, data } = useQuery("product", () => {
-    return fetch(`http://localhost:3000/api/product/${id}`).then((res) =>
+    return fetch(`https://whale-app-952oz.ondigitalocean.app/api/product/${id}`).then((res) =>
       res.json()
     );
   });
 
-  if (isLoading) return "Loading...";
+  if (isLoading) return <LoadingPage/>;
 
   if (error) return "An error has occurred: " + error.message;
 
@@ -32,7 +33,7 @@ function ProductDetail() {
 
   console.log(data);
   return (
-    <section className="py-12 sm:py-16">
+    <section className="py-4 sm:py-4">
       <div className="container mx-auto px-4">
         <div className="lg:col-gap-12 xl:col-gap-16 mt-8 grid grid-cols-1 gap-12 lg:mt-12 lg:grid-cols-5 lg:gap-16">
           <div className="lg:col-span-3 lg:row-end-1">

@@ -91,8 +91,8 @@ router.post("/create-checkout-session", async (req, res) => {
     line_items,
     mode: "payment",
     customer: customer.id,
-    success_url: `http://127.0.0.1:5173/checkout-success`,
-    cancel_url: `http://127.0.0.1:5173/`,
+    success_url: `https://nurlightllc.com/checkout-success`,
+    cancel_url: `https://nurlightllc.com/`,
 
   });
 

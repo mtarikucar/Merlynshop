@@ -9,6 +9,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { Audio } from "react-loader-spinner";
+import LoadingPage from "../../components/LoadingPage";
 
 function AdminProduct() {
   const [openAddProduct, setOpenAddProduct] = useState(false);
@@ -40,7 +41,7 @@ function AdminProduct() {
 
   const deleteProductMutation = useMutation(
     async (id) =>
-      await axios.delete(`http://localhost:3000/api/product/${id}`, {
+      await axios.delete(`https://whale-app-952oz.ondigitalocean.app/api/product/${id}`, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
@@ -147,18 +148,7 @@ function AdminProduct() {
                 </tr>
               </thead>
               {isLoading && (
-                <div className="flex justify-center items-center text-center w-full">
-                  <Audio
-                    height="80"
-                    width="80"
-                    radius="9"
-                    color="green"
-                    ariaLabel="three-dots-loading"
-                    wrapperStyle
-                    wrapperClass
-                    className="flex justify-center items-center text-center"
-                  />
-                </div>
+               <LoadingPage/>
               )}
 
               <tbody>
