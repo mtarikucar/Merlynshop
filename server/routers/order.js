@@ -17,7 +17,7 @@ router.get("/:id", getOrderById);
 router.get("/user/:id", getOrderByUserId);
 
 // Update order (only accessible by admin)
-router.patch("/:id", verifyTokenAndAdmin, updateOrder);
+router.patch("/:id", updateOrder);
 
 
 module.exports = router;

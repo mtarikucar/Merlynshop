@@ -1,7 +1,10 @@
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { clearCart } from "../features/cartSlice";
 
 const PayButton = ({ cartItems }) => {
+
+  const dispatch = useDispatch()
   const user = useSelector((state) => state.auth.user.user);
 console.log(user);
   const handleCheckout = () => {
@@ -14,7 +17,10 @@ console.log(user);
         console.log(response);
         if (response.data.url) {
           
+          dispatch(clearCart)
           window.location.href = response.data.url;
+
+
         }
       })
       .catch((err) => console.log(err.message));

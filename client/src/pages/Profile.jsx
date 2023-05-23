@@ -9,6 +9,7 @@ function Profile() {
 
     const [createdAt, setCreatedAt] = useState("");
     const [onClose, setOnClose] = useState(false);
+    const [onOrderClose, setOrderOnClose] = useState(false);
     const dispatch = useDispatch();
     const user = useSelector((state) => state.auth.user.user);
     const { token } = useSelector((state) => state.auth.user);
@@ -198,7 +199,7 @@ function Profile() {
                                                 <button
                                                     type="submit"
                                                     id={`${product.id}`}
-
+                                                    onClick={() => setOnClose(true)}
                                                     className="font-medium bg-red-600 px-2 py-1 rounded-lg text-white"
                                                 >
                                                     Censel Order
