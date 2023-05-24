@@ -68,7 +68,7 @@ function App() {
   const [open, setOpen] = useState(false);
   return (
     <>
-     {/*  {!location.pathname.includes("admin") && (
+      {!location.pathname.includes("admin") && (
         <>
           <ToastContainer />
           <CartButton setOpen={setOpen} open={open} />
@@ -76,10 +76,10 @@ function App() {
           <Navbar setOpen={setOpen} open={open} />
           {open && <ShoppingCarts open={open} setOpen={setOpen} />}
         </>
-      )} */}
+      )}
       <Routes>
         <Route path="/" element={<LandingPage />} />
-       {/*  <Route path="/product" element={<ProductPage />} />
+        <Route path="/product" element={<ProductPage />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/profile" element={<Profile />} />
@@ -91,10 +91,10 @@ function App() {
         <Route path="/signup" element={<Signup />} />
 
         <Route path="admin/*" element={<Admin />} />
-        <Route path="admin" element={<Admin />} /> */}
+        <Route path="admin" element={<Admin />} />
       </Routes>
 
-      {/* {!location.pathname.includes("admin") && <Footer />} */}
+      {!location.pathname.includes("admin") && <Footer />}
     </>
   );
 }
