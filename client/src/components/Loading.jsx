@@ -1,6 +1,6 @@
 import React from 'react'
 import { ThreeDots } from 'react-loader-spinner'
-function LoadingPage() {
+function Loading() {
     return (
         <div className=' lg:w-[100%] h-[50vh]  text-center flex justify-center items-center'>
             <ThreeDots
@@ -17,4 +17,4 @@ function LoadingPage() {
     )
 }
 
-export default LoadingPage
+export default Loading

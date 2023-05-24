@@ -1,7 +1,7 @@
 import {useEffect} from 'react'
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import { useSelector,useDispatch } from 'react-redux';
-import { getTotals } from '../features/cartSlice';
+import { getTotals } from '../store/cartSlice';
 function CartButton({ setOpen, open }) {
     const dispatch = useDispatch();
     const cart = useSelector(state => state.cart)

@@ -15,7 +15,7 @@ import CloseIcon from "@mui/icons-material/Close";
 function AdminUpdateProduct({ open, setOpen, oldProduct }) {
   const cancelButtonRef = useRef(null);
 
-  const { user } = useSelector((state) => state.auth);
+  const { user, token } = useSelector((state) => state.auth);
 
   
   const [openCategory, setOpenCategory] = useState(false);
@@ -27,6 +27,7 @@ function AdminUpdateProduct({ open, setOpen, oldProduct }) {
     thumbnail: "",
     description: "",
     price: 0,
+    discountedPrice:0,
     quantity: 0,
     categoryId: "",
   });
@@ -45,6 +46,7 @@ function AdminUpdateProduct({ open, setOpen, oldProduct }) {
     formik.setFieldValue('thumbnail', oldProduct.thumbnail);
     formik.setFieldValue('description', oldProduct.description);
     formik.setFieldValue('price', oldProduct.price);
+    formik.setFieldValue('discountedPrice', oldProduct.discountedPrice);
     formik.setFieldValue('quantity', oldProduct.quantity);
     formik.setFieldValue('categoryId', oldProduct.categoryId);
     setPreviews(oldProduct.photos.map((photo) => photo.imgpath));
@@ -64,7 +66,7 @@ function AdminUpdateProduct({ open, setOpen, oldProduct }) {
     (product) =>
       axios.put(`https://whale-app-952oz.ondigitalocean.app/api/product/${oldProduct.id}`, product, {
         headers: {
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${token}`,
         },
       }),
     {
@@ -223,6 +225,23 @@ function AdminUpdateProduct({ open, setOpen, oldProduct }) {
                             step="0.01"
                             onChange={formik.handleChange}
                             value={formik.values.price}
+                            className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-indigo-500"
+                          />
+                        </div>
+                        <div className="mb-4">
+                          <label
+                            htmlFor="discountedPrice"
+                            className="block mb-2 text-sm font-medium text-gray-600"
+                          >
+                            Discounted price:
+                          </label>
+                          <input
+                            id="discountedPrice"
+                            name="discountedPrice"
+                            type="number"
+                            step="0.01"
+                            onChange={formik.handleChange}
+                            value={formik.values.discountedPrice}
                             className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-indigo-500"
                           />
                         </div>

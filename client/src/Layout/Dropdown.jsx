@@ -2,9 +2,11 @@ import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useSelector, useDispatch } from 'react-redux'
-import { logout, reset } from '../features/auth/authSlice';
+import { logoutSuccess } from '../store/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
+
+
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
@@ -16,17 +18,13 @@ function Dropdown() {
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const onLogout = () => {
-        dispatch(logout())
-        dispatch(reset())
-        navigate('/')
-    }
+    
 
     return (
         <Menu as="div" className="relative inline-block text-left">
             <div>
                 <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                    {user.user?.name}
+                    {user?.name}
                     <ExpandMoreIcon className="-mr-1 h-5 w-5 text-gray-400" />
                 </Menu.Button>
             </div>
@@ -45,7 +43,7 @@ function Dropdown() {
 
                         {
 
-                            user.user?.role == 'admin' && (
+                            user?.role == 'admin' && (
                                 <Menu.Item>
                                     {({ active }) => (
                                         <NavLink
@@ -76,12 +74,12 @@ function Dropdown() {
                                     )}
                                 </Menu.Item>
 
-                        <form method="POST" action="#">
+                        
                             <Menu.Item>
                                 {({ active }) => (
                                     <button
-                                        type="submit"
-                                        onClick={onLogout}
+                                        
+                                        onClick={()=>dispatch(logoutSuccess())}
                                         className={classNames(
                                             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                                             'block w-full px-4 py-2 text-left text-sm'
@@ -91,7 +89,7 @@ function Dropdown() {
                                     </button>
                                 )}
                             </Menu.Item>
-                        </form>
+                        
                     </div>
                 </Menu.Items>
             </Transition>

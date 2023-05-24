@@ -2,7 +2,7 @@ import React from 'react'
 import AboutCard from '../components/about/AboutCard'
 import AboutImageGallery from '../components/about/AboutImageGallery'
 import { useQuery } from "react-query";
-import LoadingPage from '../components/LoadingPage';
+import Loading from '../components/Loading';
 function About() {
 
 
@@ -12,7 +12,7 @@ function About() {
     );
   });
 
-  if (isLoading) return <LoadingPage />;
+  if (isLoading) return <Loading />;
 
   if (error) return "An error has occurred: " + error.message;
 

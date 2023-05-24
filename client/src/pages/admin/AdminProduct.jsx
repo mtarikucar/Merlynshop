@@ -9,7 +9,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { Audio } from "react-loader-spinner";
-import LoadingPage from "../../components/LoadingPage";
+import Loading from "../../components/Loading";
 
 function AdminProduct() {
   const [openAddProduct, setOpenAddProduct] = useState(false);
@@ -43,7 +43,7 @@ function AdminProduct() {
     async (id) =>
       await axios.delete(`https://whale-app-952oz.ondigitalocean.app/api/product/${id}`, {
         headers: {
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${token}`,
         },
       }),
     {
@@ -148,7 +148,7 @@ function AdminProduct() {
                 </tr>
               </thead>
               {isLoading && (
-               <LoadingPage/>
+               <Loading/>
               )}
 
               <tbody>

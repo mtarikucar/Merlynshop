@@ -3,53 +3,58 @@ import { Link } from 'react-router-dom'
 import { fetchLogin } from '../api';
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux'
-import { reset, login } from '../features/auth/authSlice';
+import { useDispatch } from 'react-redux'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import LoadingPage from '../components/LoadingPage';
+import Loading from '../components/Loading';
+import axios from "axios"
+import { useQueryClient, useMutation } from "react-query";
+import { loginSuccess } from '../store/auth/authSlice';
+
 function Login() {
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const queryClient = useQueryClient();
 
-    const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
     const notify = () => toast("giriş başarılı");
-    useEffect(() => {
-        if (isError) {
-            toast.error(message)
+
+    const mutation = useMutation(
+        (values) => axios.post("https://whale-app-952oz.ondigitalocean.app/api/auth/login", values),
+        {
+          onSuccess: (data) => {
+            console.log(data.data);
+            toast.success("Başarıyla giriş yaptınız");
+            queryClient.invalidateQueries("user");
+            dispatch(loginSuccess({user: data.data.data.user,token: data.data.data.token}));
+            navigate("/")
+          },
+          onError: (err) => {
+    
+            toast.error("Bir hata oluştu, lütfen daha sonra tekrar deneyin", err);
+          },
         }
+      );
 
-        if (isSuccess || user) {
-            navigate('/')
-
-        }
-
-        dispatch(reset())
-    }, [user, isError, isSuccess, message, navigate, dispatch])
-
+      
     const formik = useFormik({
         initialValues: {
             email: '',
             password: '',
         },
-        onSubmit: (values, bag) => {
+        onSubmit: async (values) => {
             try {
-                const registerResponse = dispatch(login(values))
-
-            } catch (e) {
-
+              await mutation.mutate(values);
+            } catch (err) {
+              toast.error("error at login");
             }
-        },
+          },
     });
 
-    if (isLoading) {
+    if (mutation.isLoading) {
         return notify;
-        
     }
-    /* 
-     username: 'kminchelle',
-        password: '0lelplR', */
+
     return (
 
         <div className="flex h-screen w-screen py-20 items-start z-40  px-2">
@@ -102,3 +107,5 @@ function Login() {
 }
 
 export default Login
+
+

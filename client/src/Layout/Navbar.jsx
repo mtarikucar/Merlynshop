@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import { logout, reset } from "../features/auth/authSlice";
 import Dropdown from "./Dropdown";
 
 function Navbar({ open, setOpen }) {

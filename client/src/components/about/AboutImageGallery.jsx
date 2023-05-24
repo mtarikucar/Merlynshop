@@ -4,7 +4,7 @@ function AboutImageGallery({ product }) {
     return (
 
         <div className="">
-            <Link to={`/products/${product.id}`}>
+            <Link to={`/products/Products/${product.id}`}>
             
                     <img className="h-auto max-w-full rounded-lg" src={product.thumbnail} alt={product.name} />
               

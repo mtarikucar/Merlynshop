@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import { useFormik } from 'formik';
-import { register, reset } from '../features/auth/authSlice'
-import { fetchRegister } from '../api';
+import { useQueryClient, useMutation } from "react-query";
 import * as Yup from 'yup';
+import axios from "axios"
 
 const validationSchema = Yup.object({
     name: Yup.string().required('Name is required'),
@@ -30,12 +29,20 @@ function Signup() {
 
     const notify = () => toast("Wow so easy!");
     const navigate = useNavigate()
-    const dispatch = useDispatch()
-    const { user, isLoading, isError, isSuccess, message } = useSelector(
-        (state) => state.auth
-    )
 
-
+    const mutation = useMutation(
+        (userData) =>
+          axios.post("https://whale-app-952oz.ondigitalocean.app/api/auth/register", userData),
+        {
+          onSuccess: () => {
+            toast.success("Hesap başarıyla oluşturuldu!");
+            navigate('/login')
+          },
+          onError: () => {
+            toast.error("Hesap oluşturulurken bir hata oluştu.");
+          },
+        }
+      );
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -44,29 +51,13 @@ function Signup() {
         },
         validationSchema,
         onSubmit: (values) => {
-            try {
-                const registerResponse = dispatch(register(values))
-
-            } catch (e) {
-                console.log(e.message);
-            }
-        },
+            mutation.mutate(values);
+            console.log(values);
+          },
     });
-    useEffect(() => {
-        if (isError) {
-            toast.error(message)
-        }
 
-        if (isSuccess) {
-            navigate('/login')
-        }
 
-        dispatch(reset())
-    }, [user, isError, isSuccess, message, navigate, dispatch])
 
-    if (isLoading) {
-        return notify;
-    }
     return (
         <div className="flex h-screen w-screen py-20 items-start z-40  px-2">
             <ToastContainer />

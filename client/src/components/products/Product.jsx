@@ -1,5 +1,5 @@
 import { React } from "react";
-import { addToCart } from "../features/cartSlice";
+import { addToCart } from "../../store/cartSlice";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 function Product({ product }) {
@@ -11,7 +11,7 @@ function Product({ product }) {
   return (
     <>
       <div className="mx-auto m-6 max-h-[450px] w-44  md:w-72 lg:w-80 transform overflow-hidden rounded-lg bg-white  shadow-md duration-300 hover:scale-105 hover:shadow-lg">
-        <Link to={`/products/${product.id}`}>
+        <Link to={`/products/Products/${product.id}`}>
           <img
             src={product.thumbnail}
             alt=""
@@ -19,7 +19,7 @@ function Product({ product }) {
           />
         </Link>
 
-        <div className="relative gap-1 flex-col  justify-between border-gray-100 bg-white p-3">
+        <div className="relative gap-1 flex-col  justify-between border-gray-100 bg-white px-3 ">
           <h3 className=" text-lg font-medium text-gray-900">{product.name}</h3>
           <p className="mb-2 text-base text-gray-700  truncate  ">
             {product.description}
@@ -27,19 +27,20 @@ function Product({ product }) {
           <div className="flex justify-start flex-row">
             {product.discountedPrice ? (
               <>
-                <p className="mr-2 text-lg font-semibold text-gray-900 ">
-                  {product.price}
-                </p>
-                <p className="text-base  font-medium text-gray-500 line-through dark:text-gray-300">
-                  {product.discountedPrice}
-                </p>
+                <h1 className="text-xl font-bold">
+                  ${product.discountedPrice}.00
+                </h1>
+                <span className="text-base">/</span>
+                <span
+                  className={`text-base font-medium text-gray-500 line-through dark:text-gray-300`}
+                >
+                  ${product.price}.00
+                </span>
               </>
             ) : (
-              <>
-                <p className="mr-2 mb-2 text-lg font-semibold text-gray-900 ">
-                  ${product.price}.00
-                </p>  
-              </>
+              <><h1 className="text-xl font-bold">
+                ${product.price}.00
+              </h1></>
             )}
           </div>
 

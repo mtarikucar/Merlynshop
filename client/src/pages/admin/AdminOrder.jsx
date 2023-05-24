@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import LoadingPage from "../../components/LoadingPage";
+import Loading from "../../components/Loading";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function AdminOrder() {
 
-  const { user } = useSelector((state) => state.auth);
+  const { user, token } = useSelector((state) => state.auth);
 
 
 
@@ -22,7 +22,7 @@ function AdminOrder() {
     queryKey: ["orders"],
     queryFn: () => axios.get(`https://whale-app-952oz.ondigitalocean.app/api/order/`, {
       headers: {
-        Authorization: `Bearer ${user.token}`,
+        Authorization: `Bearer ${token}`,
 
       },
     }),
@@ -33,7 +33,7 @@ function AdminOrder() {
     try {
       await axios.delete(`https://whale-app-952oz.ondigitalocean.app/api/order/${orderId}`, {
         headers: {
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -63,7 +63,7 @@ function AdminOrder() {
     deleteMutation.mutate(orderId);
   };
 
-  if (isLoading) return <LoadingPage />;
+  if (isLoading) return <Loading />;
 
   if (error) return "An error has occurred: " + error.message;
   console.log(orders, "orders");
@@ -160,10 +160,10 @@ function AdminOrder() {
                     >
                       <div className="pl-3">
                         <div className="text-base font-semibold">
-                          {order.user.name}
+                          {order.user?.name}
                         </div>
                         <div className="font-normal text-gray-500">
-                          {order.user.email}
+                          {order.user?.email}
                         </div>
                       </div>
                     </th>

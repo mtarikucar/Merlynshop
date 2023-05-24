@@ -1,11 +1,11 @@
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { clearCart } from "../features/cartSlice";
+import { clearCart } from "../store/cartSlice";
 
 const PayButton = ({ cartItems }) => {
 
   const dispatch = useDispatch()
-  const user = useSelector((state) => state.auth.user.user);
+  const user = useSelector((state) => state.auth.user);
 console.log(user);
   const handleCheckout = () => {
     axios

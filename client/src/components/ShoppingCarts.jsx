@@ -2,8 +2,8 @@ import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { useSelector, useDispatch } from 'react-redux'
-import { removeFromCart, decreaseCart, getTotals, increaseCart } from '../features/cartSlice'
-import store from '../app/store'
+import { removeFromCart, decreaseCart, getTotals, increaseCart } from '../store/cartSlice'
+import store from '../store'
 import { Link } from 'react-router-dom'
 
 function ShoppingCarts({ open, setOpen }) {
@@ -91,7 +91,7 @@ function ShoppingCarts({ open, setOpen }) {
                                                                     <div>
                                                                         <div className="flex justify-between text-base font-medium text-gray-900">
                                                                             <h3>
-                                                                                <a href={`/products/${product.id}`}>{product.name}</a>
+                                                                                <a href={`/products/Products/${product.id}`}>{product.name}</a>
                                                                             </h3>
                                                                             <div className='flex flex-col justify-center items-center'>
 

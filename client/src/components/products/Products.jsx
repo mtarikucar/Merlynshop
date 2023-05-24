@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
 import { useQuery } from 'react-query'
-import LoadingPage from './LoadingPage';
+import Loading from '../Loading';
 import Carousel from "nuka-carousel"
 
 function getProduct(categoryId, minPrice, maxPrice) {
@@ -41,7 +41,7 @@ function Products({ categoryId, minPrice, maxPrice, maxProduct }) {
   /* if (maxProduct) {
     const products = products ? products.slice(0, maxProduct) : [];
   } */
-  if (isLoading) return <LoadingPage />;
+  if (isLoading) return <Loading />;
   if (isError) return 'An error has occurred: ' + error.message;
 
 

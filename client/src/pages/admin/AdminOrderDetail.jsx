@@ -6,13 +6,13 @@ import { useParams } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import LoadingPage from '../../components/LoadingPage';
+import Loading from '../../components/Loading';
 function AdminOrderDetail() {
     const [status, setStatus] = useState("");
     const statusRef = useRef()
     const notify = () => toast("giriş başarılı");
     const { id } = useParams()
-    const { user } = useSelector((state) => state.auth);
+    const { user, token } = useSelector((state) => state.auth);
     const { isLoading, error, data } = useQuery('order', () => {
 
         return fetch(`https://whale-app-952oz.ondigitalocean.app/api/order/${id}`).then(res =>
@@ -29,7 +29,7 @@ function AdminOrderDetail() {
             const response = await axios.patch(`https://whale-app-952oz.ondigitalocean.app/api/order/${id}`, status, {
 
                 headers: {
-                    Authorization: `Bearer ${user.token}`,
+                    Authorization: `Bearer ${token}`,
 
                 },
 
@@ -77,7 +77,7 @@ function AdminOrderDetail() {
         updateStatus.mutate({ status: status });
     };
 
-    if (isLoading) return <LoadingPage/>
+    if (isLoading) return <Loading/>
 
     if (error) return 'An error has occurred: ' + error.message
 

@@ -4,9 +4,9 @@ import { useQuery } from "react-query";
 import { getUsers, deleteUsers } from "../../api";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import LoadingPage from "../../components/LoadingPage";
+import Loading from "../../components/Loading";
 function AdminUser() {
-  const { user } = useSelector((state) => state.auth);
+  const { user, token } = useSelector((state) => state.auth);
 
   const {
     isLoading,
@@ -17,12 +17,12 @@ function AdminUser() {
     queryKey: ["users"],
     queryFn: () =>  axios.get(`https://whale-app-952oz.ondigitalocean.app/api/user/`,{
         headers:{
-            Authorization: `Bearer ${user.token}`
+            Authorization: `Bearer ${token}`
         }
     }),
   });
 
-  if (isLoading) return <LoadingPage/>;
+  if (isLoading) return <Loading/>;
 
   if (error) return "An error has occurred: " + error.message;
 

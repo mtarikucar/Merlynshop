@@ -22,7 +22,7 @@ function ContactForm() {
         <section className="text-gray-600 body-font relative">
             <div className="absolute inset-0 bg-gray-300">
                 {/* <iframe width="100%" height="100%" frameBorder="0" marginHeight="0" marginWidth="0" title="map" scrolling="no" src="https://maps.google.com/maps?width=100%&height=600&hl=en&q=%C4%B0zmir+(My%20Business%20Name)&ie=UTF8&t=&z=14&iwloc=B&output=embed"></iframe> */}
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6912.980791267054!2d-77.03238489368542!3d38.6681076043325!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89b7a8ba0dcf4ed7%3A0x9cd827144a90866d!2s16200%20Livingston%20Rd%2C%20Accokeek%2C%20MD%2020607%2C%20Amerika%20Birle%C5%9Fik%20Devletleri!5e0!3m2!1str!2str!4v1684743958663!5m2!1str!2str" width="100%" height="100%"  allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6912.980791267054!2d-77.03238489368542!3d38.6681076043325!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89b7a8ba0dcf4ed7%3A0x9cd827144a90866d!2s16200%20Livingston%20Rd%2C%20Accokeek%2C%20MD%2020607%2C%20Amerika%20Birle%C5%9Fik%20Devletleri!5e0!3m2!1str!2str!4v1684743958663!5m2!1str!2str" width="100%" height="100%"  allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
             </div>
             <div className="container px-5 py-20 mx-auto flex">
                 <div className="lg:w-1/3 md:w-1/2 bg-white rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0 relative z-10 shadow-md">

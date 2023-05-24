@@ -30,12 +30,12 @@ import Checkout from "./pages/Checkout";
 import { useSelector } from "react-redux";
 import CheckoutSuccess from "./pages/Checkout-success";
 import LandingPage from "./pages/LandingPage";
-import LoadingPage from "./components/LoadingPage";
+import Loading from "./components/Loading";
 
 function Admin() {
   const { user } = useSelector((store) => store.auth);
   console.log(user);
-  return user?.user.role === "admin" ? (
+  return user?.role === "admin" ? (
     <div>
       <div className="min-h-screen flex flex-col w-full flex-auto flex-shrink-0 antialiased bg-white  text-black">
         <AdminNavbar />
@@ -86,7 +86,7 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/checkout-success" element={<CheckoutSuccess />} />
 
-        <Route path="/products/:id" element={<ProductDetail />} />
+        <Route path="/products/Products/:id" element={<ProductDetail />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
 

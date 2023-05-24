@@ -5,9 +5,9 @@ import './index.css'
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
-import { store } from './app/store';
+import { store } from './store';
 import { Provider } from 'react-redux';
-import { getTotals } from './features/cartSlice'
+import { getTotals } from './store/cartSlice'
 const queryClient = new QueryClient()
 
 ReactDOM.createRoot(document.getElementById('root')).render(

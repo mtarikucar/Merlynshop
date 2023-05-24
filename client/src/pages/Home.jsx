@@ -4,9 +4,9 @@ import Banner from '../components/home/Banner'
 
 import LogoSlider from '../Layout/LogoSlider'
 
-import Products from '../components/Products'
+import Products from '../components/products/Products'
 import Review from '../components/home/Review'
-import LoadingPage from '../components/LoadingPage'
+import Loading from '../components/Loading'
 
 function Home() {
   

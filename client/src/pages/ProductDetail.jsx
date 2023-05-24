@@ -3,8 +3,8 @@ import { useParams } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useQuery } from "react-query";
 import { useSelector, useDispatch } from "react-redux";
-import { addToCart, decreaseCart } from "../features/cartSlice";
-import LoadingPage from "../components/LoadingPage";
+import { addToCart } from "../store/cartSlice";
+import Loading from "../components/Loading";
 function ProductDetail() {
   
   const [quantity, setQuatity] = useState(1);
@@ -25,7 +25,7 @@ function ProductDetail() {
     );
   });
 
-  if (isLoading) return <LoadingPage/>;
+  if (isLoading) return <Loading/>;
 
   if (error) return "An error has occurred: " + error.message;
 
@@ -135,7 +135,7 @@ function ProductDetail() {
                 {data.discountedPrice ? (
                   <>
                     <h1 className="text-3xl font-bold">
-                      {data.discountedPrice}
+                      ${data.discountedPrice}.00
                     </h1>
                     <span className="text-base">/</span>
                     <span

@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 function AdminCategoryForm({ openCategory, setOpenCategory }) {
 
-  const { user } = useSelector((state) => state.auth);
+  const { user, token } = useSelector((state) => state.auth);
   const queryClient = useQueryClient();
 
   const [newCategoryName, setNewCategoryName] = useState("");
@@ -16,7 +16,7 @@ function AdminCategoryForm({ openCategory, setOpenCategory }) {
       newCategory
       , {
         headers: {
-          Authorization: `Bearer ${user.token}`
+          Authorization: `Bearer ${token}`
         }
       });
     return res.data;

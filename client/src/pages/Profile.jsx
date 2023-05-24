@@ -6,7 +6,7 @@ import UpdateUserModal from "../components/UpdateUserModal";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import axios from "axios";
 import DeleteOrderModal from "../components/DeleteOrderModal";
-import LoadingPage from "../components/LoadingPage";
+import Loading from "../components/Loading";
 function Profile() {
   const [orderId, setOrderId] = useState();
   const [close, setClose] = useState(false);
@@ -14,7 +14,7 @@ function Profile() {
   const [onClose, setOnClose] = useState(false);
   const [onOrderClose, setOrderOnClose] = useState(false);
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.user.user);
+  const user = useSelector((state) => state.auth.user);
 
   useEffect(() => {
     const givenDate = new Date(user.createdAt);
@@ -102,7 +102,7 @@ function Profile() {
         ) : null}
       </div>
 
-      {isLoading ? (<LoadingPage />) : (
+      {isLoading ? (<Loading />) : (
         <div className="lg:col-span-9 md:col-span-9 z-10 my-10 max-h-[60vh] w-full overflow-y-scroll  scrollbar scrollbar-thumb-green-400 scrollbar-track-gray-100  overflow-hidden">
           <div className="grid px-8">
             {isSuccess ? (
