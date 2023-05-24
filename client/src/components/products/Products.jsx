@@ -58,10 +58,10 @@ function Products({ categoryId, minPrice, maxPrice, maxProduct }) {
           dragging={true}
           
         >
-          <img src="/src/assets/m1.png" />
-          <img src="/src/assets/m2.png" />
-          <img src="/src/assets/m3.png" />
-          <img src="/src/assets/m4.png" />
+          
+          <img src="/m2.png" />
+          <img src="/m3.png" />
+          <img src="/m4.png" />
         </Carousel>
 
       </div>

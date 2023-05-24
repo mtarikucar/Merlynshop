@@ -19,8 +19,8 @@ app.set('view engine', 'ejs');
 var allowlist = [
   "http://localhost:5173",
   "http://127.0.0.1:5173",
-  "https://nurlightllc.com",
-  "https://www.nurlightllc.com",
+  "https://walrus-app-bhffu.ondigitalocean.app",
+  "https://walrus-app-bhffu.ondigitalocean.app",
 ];
 var corsOptionsDelegate = function (req, callback) {
   var corsOptions;

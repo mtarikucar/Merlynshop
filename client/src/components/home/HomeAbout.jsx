@@ -9,7 +9,7 @@ function HomeAbout() {
             <img
               alt="..."
               className="max-w-full rounded-lg shadow-lg"
-              src="../src/assets/m4.png"
+              src="/m4.png"
             />
           </div>
           <div className="w-full md:w-5/12 ml-auto mr-auto px-4">
