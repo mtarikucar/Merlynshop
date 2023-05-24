@@ -3,6 +3,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import FaxIcon from '@mui/icons-material/Fax';
+import { Link } from 'react-router-dom';
 function Footer() {
     return (
 
@@ -109,33 +110,33 @@ function Footer() {
                                 <ul className="space-y-4 text-sm">
                                     <li >
 
-                                        <a href="#" className="text-gray-700 transition hover:text-green-400">
+                                        <Link  to={"/"} className="text-gray-700 transition hover:text-green-400">
                                             Home
-                                        </a>
+                                        </Link>
                                     </li>
 
                                     <li>
-                                        <a href="#" className="text-gray-700 transition hover:text-green-400">
+                                        <Link to={"/product"} className="text-gray-700 transition hover:text-green-400">
                                             Product
-                                        </a>
+                                        </Link>
                                     </li>
 
                                     <li>
-                                        <a href="#" className="text-gray-700 transition hover:text-green-400">
+                                        <Link to={"/about"}  className="text-gray-700 transition hover:text-green-400">
                                             About
-                                        </a>
+                                        </Link>
                                     </li>
 
                                     <li>
-                                        <a href="#" className="text-gray-700 transition hover:text-green-400">
+                                        <Link to={"/contact"} className="text-gray-700 transition hover:text-green-400">
                                             Contact
-                                        </a>
+                                        </Link>
                                     </li>
 
                                     <li>
-                                        <a href="#" className="text-gray-700 transition hover:text-green-400">
+                                        <Link href="/" className="text-gray-700 transition hover:text-green-400">
                                             SEO Optimisation
-                                        </a>
+                                        </Link>
                                     </li>
                                 </ul>
                             </nav>

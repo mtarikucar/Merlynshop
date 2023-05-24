@@ -9,11 +9,12 @@ import Review from '../components/home/Review'
 import LoadingPage from '../components/LoadingPage'
 
 function Home() {
+  
   return (
     <div className='h-fit bg-[#eaeff6]'>
 
       <Banner />
-      <Products />
+      <Products maxProduct={2} />
 
       <HomeAbout />
 

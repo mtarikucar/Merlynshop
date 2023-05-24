@@ -157,7 +157,7 @@ function ShoppingCarts({ open, setOpen }) {
                                                             onClick={() => setOpen(!open)}
                                                             className="flex items-center justify-center rounded-md border border-transparent bg-green-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-green-700"
                                                         >
-                                                            Please Login 
+                                                            Please Login for checkout 
                                                         </Link>
                                                     </div>
                                                 )

@@ -1,4 +1,4 @@
-import {  useState } from 'react'
+import { useState } from 'react'
 
 import Products from '../components/Products'
 import axios from 'axios'
@@ -26,12 +26,10 @@ function ProductPage() {
     isError,
   } = useQuery("categories", fetchCategories);
 
-  const hundleCategory = (category) => {
-    if (categoryFilter == null) {
+  const handleCategory = (category) => {
+ 
       setCategoryFilter(category)
-    } else {
-      setCategoryFilter(null)
-    }
+  
   }
 
 
@@ -41,20 +39,14 @@ function ProductPage() {
 
   const handleResetFilter = () => {
     setMinPrice(null),
-    setMaxPrice(null),
-    setCategoryFilter(null)
+      setMaxPrice(null),
+      setCategoryFilter(null)
 
 
   };
 
-  const productsData = [
-    { id: 1, name: 'Product 1', category: 'Category 1' },
-    { id: 2, name: 'Product 2', category: 'Category 2' },
-    { id: 3, name: 'Product 3', category: 'Category 1' },
-    // Add more product data as needed
-  ];
 
-  if (isLoading) return <LoadingPage/>;
+  if (isLoading) return <LoadingPage />;
   if (isError) return 'An error has occurred: '
 
 
@@ -94,7 +86,7 @@ function ProductPage() {
                       type="range"
                       id="minPrice"
                       min={0}
-                      max={100}
+                      max={1000}
                       value={minPrice}
                       onChange={(e) => setMinPrice(Number(e.target.value))}
                       className="w-60 mr-2"
@@ -109,7 +101,7 @@ function ProductPage() {
                       type="range"
                       id="maxPrice"
                       min={0}
-                      max={100}
+                      max={1000}
                       value={maxPrice}
                       onChange={(e) => setMaxPrice(Number(e.target.value))}
                       className="w-60 mr-2"
@@ -122,31 +114,36 @@ function ProductPage() {
 
 
               </div>
+
+
               <div className="w-full">
                 <div className="block w-full bg-gray-50 px-5 py-3 text-xs font-medium">Category</div>
                 <div className="space-y-2 px-5 py-6">
                   {
                     categories.map((category) => (
-                      <div key={category.id} className="flex items-center">
-
+                      <div key={category.id} className="flex c items-center">
                         <input
+                        
                           id={category.id}
-                          type="checkbox"
-                          name={category.name}
-                          defaultValue={category.id}
-                          onClick={(e) => hundleCategory(e.target.value)}
+                          type="radio" 
+                          name="category"
                           value={category.id}
-                          className="h-5 w-5 rounded border-gray-300" />
-                        <label for={category.id} className="ml-3 text-sm font-medium">{category.name}</label>
+                          className="h-5 w-5 rounded checked:text-green-500 border-gray-300"
+                          onChange={(e) => handleCategory(e.target.value)}
+                        />
+                        <label htmlFor={category.id} className="ml-3 text-sm font-medium">{category.name}</label> 
                       </div>
                     ))
                   }
 
                   <div className="pt-2">
-                    <button onClick={handleResetFilter} type="button" className="text-xs p-2 text-gray-500 hover:text-green-600 ">Reset Price</button>
+                    <button onClick={handleResetFilter} type="button" className="text-xs p-2 text-gray-500 hover:text-green-600">Reset Price</button>
                   </div>
                 </div>
               </div>
+
+
+
             </div>
           </div>
           <div className="lg:w-4/5">

@@ -20,10 +20,10 @@ function Profile() {
     const givenDate = new Date(user.createdAt);
     setCreatedAt(
       givenDate.getDate() +
-        "/" +
-        (givenDate.getMonth() + 1) +
-        "/" +
-        givenDate.getFullYear()
+      "/" +
+      (givenDate.getMonth() + 1) +
+      "/" +
+      givenDate.getFullYear()
     );
   }, []);
 
@@ -31,6 +31,7 @@ function Profile() {
     isLoading,
     isError,
     data: orders,
+    isSuccess,
     error,
   } = useQuery({
     queryKey: ["orders"],
@@ -101,109 +102,113 @@ function Profile() {
         ) : null}
       </div>
 
-      {isLoading && <LoadingPage />}
-      <div className="lg:col-span-9 md:col-span-9 z-10 my-10 max-h-[60vh] w-full overflow-y-scroll overflow-x-scroll scrollbar scrollbar-thumb-green-400 scrollbar-track-gray-100  overflow-hidden">
-        <div className="grid px-8">
-          {!isError ? (
-            <table className="w-full text-sm text-left text-gray-500 ">
-              <thead className="text-xs text-gray-700 uppercase bg-gray-50  ">
-                <tr>
-                  <th scope="col" className="px-6 py-3">
-                    image
-                  </th>
+      {isLoading ? (<LoadingPage />) : (
+        <div className="lg:col-span-9 md:col-span-9 z-10 my-10 max-h-[60vh] w-full overflow-y-scroll  scrollbar scrollbar-thumb-green-400 scrollbar-track-gray-100  overflow-hidden">
+          <div className="grid px-8">
+            {isSuccess ? (
+              <table className="w-full text-sm text-left text-gray-500 ">
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50  ">
+                  <tr>
+                    <th scope="col" className="px-6 py-3">
+                      image
+                    </th>
 
-                  <th scope="col" className="px-6 py-3">
-                    adress
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    status
-                  </th>
+                    <th scope="col" className="px-6 py-3">
+                      adress
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      status
+                    </th>
 
-                  <th scope="col" className="px-6 py-3">
-                    total price
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-center">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
+                    <th scope="col" className="px-6 py-3">
+                      total price
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-center">
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
 
-              <tbody>
-                {orders &&
-                  orders?.data.map((order) => (
-                    <tr
-                      key={order.id}
-                      className="bg-white border-b  hover:bg-gray-50 "
-                    >
-                      <th
-                        scope="row"
-                        className="flex items-center px-6 py-4whitespace-nowrap"
+                <tbody>
+                  {orders &&
+                    orders?.data.map((order) => (
+                      <tr
+                        key={order.id}
+                        className="bg-white border-b  hover:bg-gray-50 "
                       >
-                        {order.products.map((product, key) => (
-                          <div>
+                        <th
+                          scope="row"
+                          className="flex items-center px-6 py-4whitespace-nowrap"
+                        >
+                          {order.products.map((product, key) => (
                             <div>
-                              <img
-                                className="w-20 px-1 h-20 rounded"
-                                src={product.thumbnail}
-                                alt="Jese image"
-                              />
-                            </div>
-                            <td>
-                              <div className="text-center w-full">
-                                <div className=" text-sm font-semibold">
-                                  quantity: {product.order_product.quantity}
-                                </div>
+                              <div>
+                                <img
+                                  className="w-20 px-1 h-20 rounded"
+                                  src={product.thumbnail}
+                                  alt="Jese image"
+                                />
                               </div>
-                            </td>
+                              <td>
+                                <div className="text-center w-full">
+                                  <div className=" text-sm font-semibold">
+                                    quantity: {product.order_product.quantity}
+                                  </div>
+                                </div>
+                              </td>
+                            </div>
+                          ))}
+                        </th>
+                        <td>
+                          <div className="pl-3">
+                            <div className="text-base font-semibold">
+                              {order.location.address}
+                            </div>
                           </div>
-                        ))}
-                      </th>
-                      <td>
-                        <div className="pl-3">
-                          <div className="text-base font-semibold">
-                            {order.location.address}
-                          </div>
-                        </div>
-                      </td>
+                        </td>
 
-                      <td className="px-6 py-4">
-                        <div className="flex items-center">
-                          <div
-                            className={`h-2.5 w-2.5 rounded-ful mr-2 rounded-full ${
-                              order.status == "canceled"
+                        <td className="px-6 py-4">
+                          <div className="flex items-center">
+                            <div
+                              className={`h-2.5 w-2.5 rounded-ful mr-2 rounded-full ${order.status == "canceled"
                                 ? "bg-red-500"
                                 : "bg-green-500 "
-                            }`}
-                          ></div>
-                          {order.status}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="flex items-center">
-                          ${order.total_price / 100}.00
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 space-x-2 text-center">
-                        
-                        {order.status != "canceled" ? (
-                          <button
-                            type="submit"
-                            id={`${order.id}`}
-                            onClick={() => cancelHandle(order)}
-                            className="font-medium bg-red-600 px-2 py-1 rounded-lg text-white"
-                          >
-                            Cancel Order
-                          </button>
-                        ):
-                        <p>order is cancelled</p>}
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-          ) : null}
+                                }`}
+                            ></div>
+                            {order.status}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4">
+                          <div className="flex items-center">
+                            ${order.total_price / 100}.00
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 space-x-2 text-center">
+
+                          {order.status != "canceled" ? (
+                            <button
+                              type="submit"
+                              id={`${order.id}`}
+                              onClick={() => cancelHandle(order)}
+                              className="font-medium bg-red-600 px-2 py-1 rounded-lg text-white"
+                            >
+                              Cancel Order
+                            </button>
+                          ) :
+                            <p>order is cancelled</p>}
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            ) : (
+              <div className=" w-full uppercase text-center">
+                Come on place an order
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

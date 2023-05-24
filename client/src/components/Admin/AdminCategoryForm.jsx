@@ -3,7 +3,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import axios from "axios";
 import { useSelector } from "react-redux";
-
+import { toast } from "react-toastify";
 function AdminCategoryForm({ openCategory, setOpenCategory }) {
 
   const { user } = useSelector((state) => state.auth);
@@ -25,7 +25,11 @@ function AdminCategoryForm({ openCategory, setOpenCategory }) {
   const createCategoryMutation = useMutation(createCategory, {
     onSuccess: () => {
       queryClient.invalidateQueries("categories");
-      setOpenCategory(false)
+      setOpenCategory(false),
+        toast.success(` Category Added`, {
+          position: "bottom-left",
+        });
+
     },
   });
 
@@ -74,7 +78,7 @@ function AdminCategoryForm({ openCategory, setOpenCategory }) {
                 <div className="bg-white px-4 pb-4 pt-5 sm:p-6 text-center sm:pb-4">
                   <h1 className="text-xl">Add Category</h1>
                   <div className=" w-full">
-                    <form onSubmit={handleSubmit}>
+                    <form >
                       <div className="mb-6 w-full">
                         <input
                           type="text"
@@ -87,9 +91,9 @@ function AdminCategoryForm({ openCategory, setOpenCategory }) {
                       </div>
                       <div className="px-4 py-3 flex gap-3 sm:flex-row-col w-full justify-between ">
                         <button
-                          type="submit"
-                          className="flex mt-2 w-full justify-center rounded-md bg-green-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-700 "
 
+                          className="flex mt-2 w-full justify-center rounded-md bg-green-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-700 "
+                          onClick={handleSubmit}
                         >
                           add
                         </button>

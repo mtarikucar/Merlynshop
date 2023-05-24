@@ -84,9 +84,9 @@ async function getProductById(req, res, next) {
 }
 
 async function updateProductById(req, res, next) {
+  console.log(req.body);
   const productId = req.params.id;
-  const { photos, thumbnail, name, description, price, quantity, size, categoryId, discountedPrice } =
-    req.body;
+  const { photos, thumbnail, name, description, price, quantity, size, categoryId, discountedPrice } =req.body;
   try {
     const updatedProduct = await models.product.findOne({
       where: { id: productId },

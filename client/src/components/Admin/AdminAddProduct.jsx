@@ -45,10 +45,10 @@ function AdminAddProduct({ open, setOpen }) {
       },
       onError: (err) => {
         console.log(err);
-        /* toast.success(`${err} product error`, {
+        toast.success(`${err} product error`, {
           position: "bottom-left",
           type: "error",
-        }); */
+        });
       },
     }
   );
@@ -270,12 +270,12 @@ function AdminAddProduct({ open, setOpen }) {
                               openCategory={openCategory}
                               setOpenCategory={setOpenCategory}
                             />
-                            <button
+                            <a
                               onClick={() => setOpenCategory(true)}
-                              className="py-2 px-4 text-white bg-green-500 rounded-r hover:bg-white hover:text-black text-xl"
+                              className="py-2 px-4 cursor-pointer text-white bg-green-500 rounded-r hover:bg-white hover:text-black text-xl"
                             >
                               +
-                            </button>
+                            </a>
                           </div>
                         </div>
                         <div className="mb-4">

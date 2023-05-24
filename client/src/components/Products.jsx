@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 
 import { useQuery } from 'react-query'
 import LoadingPage from './LoadingPage';
-
+import Carousel from "nuka-carousel"
 
 function getProduct(categoryId, minPrice, maxPrice) {
   let base = 'https://whale-app-952oz.ondigitalocean.app/api/product';
@@ -30,7 +30,7 @@ function getProduct(categoryId, minPrice, maxPrice) {
 }
 
 
-function Products({ categoryId, minPrice, maxPrice }) {
+function Products({ categoryId, minPrice, maxPrice, maxProduct }) {
 
   const { isLoading, isError, data: products, error } = useQuery(
     ['products', { categoryId, minPrice, maxPrice }],
@@ -38,41 +38,30 @@ function Products({ categoryId, minPrice, maxPrice }) {
       getProduct(queryKey[1].categoryId, queryKey[1].minPrice, queryKey[1].maxPrice)
   );
 
+  /* if (maxProduct) {
+    const products = products ? products.slice(0, maxProduct) : [];
+  } */
   if (isLoading) return <LoadingPage />;
   if (isError) return 'An error has occurred: ' + error.message;
 
 
+
   return (
-    < div className={`${location.pathname == '/' ? 'grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-4 lg:px-12' : 'grid grid-cols-2   md:grid-cols-2 lg:grid-cols-2  xl:grid-cols-3 '} gap-4 `} >
-      <div className={`${location.pathname == '/product' ? ' hidden  ' : ' lg:grid md:grid hidden  col-span-2 mt-6'} gap-4`}>
+    < div className={`${location.pathname == '/' ? 'grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-4 lg:px-12' : 'grid grid-cols-2   md:grid-cols-2 lg:grid-cols-2  xl:grid-cols-3 '} lg:gap-2 `} >
+      <div className={`${location.pathname == '/product' ? ' hidden  ' : ' lg:grid md:grid grid p-2  col-span-2 lg:mt-6'} gap-4`}>
 
-
-        <a href="#" className="group relative block ">
-          <div className="relative h-[350px] lg:h-[450px]  ">
-            <img
-              src="/about.jpg"
-              alt=""
-              className="absolute inset-0 h-full w-full rounded-lg object-cover opacity-100 group-hover:opacity-0"
-            />
-
-            <img
-              alt=""
-              src="/12.jpeg"
-              className="absolute inset-0 h-full w-full rounded-lg object-cover opacity-0 group-hover:opacity-100"
-            />
-          </div>
-
-          <div className="absolute inset-0 flex flex-col items-start justify-end p-6 " >
-
-            <Link to={"/product"}>
-              <span
-                className="mt-3 inline-block bg-green-500 hover:bg-green-500 px-5 py-3 text-xs font-medium uppercase tracking-wide text-white"
-              >
-                Shop Now
-              </span>
-            </Link>
-          </div>
-        </a>
+        <Carousel
+        
+          autoplay={true}
+          autoplayInterval={1000}
+          className='rounded-lg max-h-[480px]'
+          dragging={true}
+        >
+          <img src="/about.jpg" />
+          <img src="/12.jpeg" />
+          <img src="/12.jpeg" />
+          <img src="/about.jpg" />
+        </Carousel>
 
       </div>
       {
