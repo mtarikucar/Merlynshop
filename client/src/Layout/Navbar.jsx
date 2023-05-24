@@ -51,7 +51,7 @@ function Navbar({ open, setOpen }) {
                 to="/login"
                 className="text-white bg-[#008037] hover:bg-white hover:text-[#008037] hover:border focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0"
               >
-                Login
+                Giriş yap
               </NavLink>
             )}
           </div>
@@ -73,7 +73,7 @@ function Navbar({ open, setOpen }) {
                   }
                 >
                   <HomeIcon className="text-center w-full text-2xl" />
-                  <span className="text-sm mb-2"> Home</span>
+                  <span className="text-sm mb-2"> Anasayafa</span>
 
                   <hr
                     className={`${
@@ -97,7 +97,7 @@ function Navbar({ open, setOpen }) {
                   }
                 >
                   <ProductionQuantityLimitsIcon className="text-center w-full text-2xl" />
-                  <span className="text-sm mb-2"> Product</span>
+                  <span className="text-sm mb-2"> Ürünler</span>
 
                   <hr
                     className={`${
@@ -120,7 +120,7 @@ function Navbar({ open, setOpen }) {
                   }
                 >
                   <InfoIcon   className="text-center w-full text-2xl" />
-                  <span className="text-sm mb-2"> About</span>
+                  <span className="text-sm mb-2"> Hakkımızda</span>
 
                   <hr
                     className={`${
@@ -143,7 +143,7 @@ function Navbar({ open, setOpen }) {
                   }
                 >
                   <ContactMailIcon   className="text-center w-full text-2xl" />
-                  <span className="text-sm mb-2"> Contact</span>
+                  <span className="text-sm mb-2"> İletişim</span>
 
                   <hr
                     className={`${
@@ -158,17 +158,7 @@ function Navbar({ open, setOpen }) {
             <div className=" lg:flex w-full justify-end hidden  ">
               <ul className="lg:flex hidden   flex-row font-medium mt-0 mr-6 space-x-8 justify-start items-center text-sm">
                 <li>
-                  {/* <button onClick={() => setOpen(!open)}>
-                                        <div className="  flex ">
-                                            <div className="relative">
-                                                <div className=" -top-2 absolute left-5">
-                                                    <p className="flex h-2 w-2 items-center justify-center rounded-full bg-green-500 p-3 text-xs text-white">{cartTotalQuantity}</p>
-                                                </div>
 
-                                                <HiOutlineShoppingCart className='h-8 w-8  ' />
-                                            </div>
-                                        </div>
-                                    </button> */}
                 </li>
               </ul>
             </div>

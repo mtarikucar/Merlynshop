@@ -2,13 +2,13 @@ import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { useSelector, useDispatch } from 'react-redux'
-import { removeFromCart, decreaseCart, getTotals, increaseCart } from '../store/cartSlice'
+import { removeFromCart, decreaseCart, addToCart, getTotals } from '../store/cartSlice'
 import store from '../store'
 import { Link } from 'react-router-dom'
 
 function ShoppingCarts({ open, setOpen }) {
 
-    const { user } = useSelector((state) => state.auth);
+    
     store.dispatch(getTotals())
 
     const dispatch = useDispatch()
@@ -17,17 +17,18 @@ function ShoppingCarts({ open, setOpen }) {
         dispatch(getTotals())
     }, [cart])
 
-
-    const handleRemoveFromCart = (product) => {
+    
+    const hundleRemoveFromCart = (product) => {
         dispatch(removeFromCart(product))
     }
 
-    const handleDecreaseCart = (product) => {
+    const hundleDecreaseCart = (product) => {
         dispatch(decreaseCart(product))
     }
 
-    const handleIncreaseCart = (product) => {
-        dispatch(increaseCart(product))
+
+    const hundleIncreaseCart = (product) => {
+        dispatch(addToCart(product))
     }
     return (
         <Transition.Root show={open} as={Fragment}>
@@ -59,14 +60,14 @@ function ShoppingCarts({ open, setOpen }) {
                                 <Dialog.Panel className="pointer-events-auto w-screen max-w-md">
                                     <div className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
                                         <div className="flex items-center p-5  justify-between">
-                                            <Dialog.Title className="text-lg font-medium text-gray-900">Shopping cart</Dialog.Title>
+                                            <Dialog.Title className="text-lg font-medium text-gray-900">Sepet</Dialog.Title>
                                             <div className="ml-3 flex h-7 items-center">
                                                 <button
                                                     type="button"
                                                     className="-m-2 p-2 text-gray-400 hover:text-gray-500"
                                                     onClick={() => setOpen(false)}
                                                 >
-                                                    <span className="sr-only">Close panel</span>
+                                                    <span className="sr-only">Paneli kapat</span>
                                                     <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                                                 </button>
                                             </div>
@@ -91,11 +92,11 @@ function ShoppingCarts({ open, setOpen }) {
                                                                     <div>
                                                                         <div className="flex justify-between text-base font-medium text-gray-900">
                                                                             <h3>
-                                                                                <a href={`/products/Products/${product.id}`}>{product.name}</a>
+                                                                                <a href={`/products/${product.id}`}>{product.name}</a>
                                                                             </h3>
                                                                             <div className='flex flex-col justify-center items-center'>
 
-                                                                                <p className="ml-4">${product.price}</p>
+                                                                                <p className="ml-4">₺{product.price}</p>
                                                                                 <p className="font-light ml-4">{product.cartQuantity} x ${product.price * product.cartQuantity}</p>
                                                                             </div>
                                                                         </div>
@@ -104,21 +105,21 @@ function ShoppingCarts({ open, setOpen }) {
                                                                     <div className="flex flex-1 items-center justify-between text-sm">
                                                                         <div className="flex">
                                                                             <button
-                                                                                onClick={() => handleRemoveFromCart(product)}
+                                                                                onClick={() => hundleRemoveFromCart(product)}
                                                                                 type="button"
                                                                                 className="font-medium text-green-600 hover:text-green-500"
                                                                             >
-                                                                                Remove
+                                                                                Sil
                                                                             </button>
                                                                         </div>
                                                                         <div className="sm:order-1 ">
                                                                             <div className="flex h-8  text-gray-600">
                                                                                 <button
-                                                                                    onClick={() => handleDecreaseCart(product)}
+                                                                                    onClick={() => hundleDecreaseCart(product)}
                                                                                     className="flex items-center justify-center rounded-l-md bg-gray-200 px-4 transition hover:bg-green-500 hover:text-white">-</button>
                                                                                 <div className="flex  items-center justify-center bg-gray-100 px-4 text-xs uppercase transition">{product.cartQuantity}</div>
                                                                                 <button
-                                                                                    onClick={() => handleIncreaseCart(product)}
+                                                                                    onClick={() => hundleIncreaseCart(product)}
                                                                                     className="flex items-center justify-center rounded-r-md bg-gray-200 px-4 transition hover:bg-green-500 hover:text-white">+</button>
                                                                             </div>
                                                                         </div>
@@ -134,34 +135,19 @@ function ShoppingCarts({ open, setOpen }) {
 
                                         <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                                             <div className="flex justify-between text-base font-medium text-gray-900">
-                                                <p>Subtotal</p>
-                                                <p>${cart.cartTotalAmount}</p>
+                                                <p>Toplam</p>
+                                                <p>₺{cart.cartTotalAmount}</p>
                                             </div>
-                                            <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
-                                            {
-                                                user ? (
-
-                                                    <div className="mt-6">
-                                                        <Link
-                                                            to='/checkout'
-                                                            onClick={() => setOpen(!open)}
-                                                            className="flex items-center justify-center rounded-md border border-transparent bg-green-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-green-700"
-                                                        >
-                                                            Checkout
-                                                        </Link>
-                                                    </div>
-                                                ):(
-                                                    <div className="mt-6">
-                                                        <Link
-                                                            to='/login'
-                                                            onClick={() => setOpen(!open)}
-                                                            className="flex items-center justify-center rounded-md border border-transparent bg-green-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-green-700"
-                                                        >
-                                                            Please Login for checkout 
-                                                        </Link>
-                                                    </div>
-                                                )
-                                            }
+                                            <p className="mt-0.5 text-sm text-gray-500">kargo ve taksitlendirme ödeme sayfasında hesaplanacaktır.</p>
+                                            <div className="mt-6">
+                                                <Link
+                                                    to='checkout'
+                                                    onClick={() => setOpen(!open)}
+                                                    className="flex items-center justify-center rounded-md border border-transparent bg-green-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-green-700"
+                                                >
+                                                    Ödeme
+                                                </Link>
+                                            </div>
                                             <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                                                 <p>
                                                     or
@@ -170,7 +156,7 @@ function ShoppingCarts({ open, setOpen }) {
                                                         className="font-medium text-green-600 hover:text-green-500"
                                                         onClick={() => setOpen(!open)}
                                                     >
-                                                        Continue Shopping
+                                                        Alışverişe devam et
                                                         <span aria-hidden="true"> &rarr;</span>
                                                     </button>
                                                 </p>

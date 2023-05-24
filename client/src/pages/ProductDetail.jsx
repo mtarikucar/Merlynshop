@@ -1,31 +1,40 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import {FaHandshake} from "react-icons/fa"
 import { useQuery } from "react-query";
 import { useSelector, useDispatch } from "react-redux";
-import { addToCart } from "../store/cartSlice";
-import Loading from "../components/Loading";
+import { addToCart, decreaseCart } from "../store/cartSlice";
+import OfferModal from "../components/products/OfferModal"
+
 function ProductDetail() {
   
+  
+  const [openOffer, setOpenOffer] = useState(false);
   const [quantity, setQuatity] = useState(1);
   const dispatch = useDispatch();
   const hundleAddToCart = (product) => {
     dispatch(addToCart({...product,cartQuantity:quantity}));
-    setQuatity(1)
+    setQuatity(0)
   };
 
+  const hundleDecreaseCart = (product) => {
+    dispatch(decreaseCart(product));
+  };
 
+  const hundleIncreaseCart = (product) => {
+    dispatch(addToCart(product));
+  };
   const { id } = useParams();
 
   const [activeImage, setActiveImage] = useState();
 
   const { isLoading, error, data } = useQuery("product", () => {
-    return fetch(`https://whale-app-952oz.ondigitalocean.app/api/product/${id}`).then((res) =>
+    return fetch(`http://localhost:3000/api/product/${id}`).then((res) =>
       res.json()
     );
   });
 
-  if (isLoading) return <Loading/>;
+  if (isLoading) return "Loading...";
 
   if (error) return "An error has occurred: " + error.message;
 
@@ -33,11 +42,12 @@ function ProductDetail() {
 
   console.log(data);
   return (
-    <section className="py-4 sm:py-4">
+    <section className="py-12 sm:py-16">
+      <OfferModal openOffer={openOffer} setOpenOffer={setOpenOffer} price={data.price}/>
       <div className="container mx-auto px-4">
         <div className="lg:col-gap-12 xl:col-gap-16 mt-8 grid grid-cols-1 gap-12 lg:mt-12 lg:grid-cols-5 lg:gap-16">
           <div className="lg:col-span-3 lg:row-end-1">
-            <div className="lg:flex lg:items-center gap-24">
+            <div className="lg:flex lg:items-center gap-4">
               <div className="lg:order-2 lg:ml-5">
                 <div className="max-w-xl overflow-hidden rounded-lg">
                   <img
@@ -105,7 +115,7 @@ function ProductDetail() {
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" className=""></path>
                 </svg>
               </div>
-              <p className="ml-2 text-sm font-medium text-gray-500">1,209 Reviews</p>
+              <p className="ml-2 text-sm font-medium text-gray-500">1,209 geri dönüş</p>
             </div>
 
             <h2 className=" text-base text-gray-900">{data.description}</h2>
@@ -135,18 +145,18 @@ function ProductDetail() {
                 {data.discountedPrice ? (
                   <>
                     <h1 className="text-3xl font-bold">
-                      ${data.discountedPrice}.00
+                      {data.discountedPrice}
                     </h1>
                     <span className="text-base">/</span>
                     <span
                       className={`text-base font-medium text-gray-500 line-through dark:text-gray-300`}
                     >
-                      ${data.price}.00
+                      ₺{data.price}.00
                     </span>
                   </>
                 ) : (
                   <><h1 className="text-3xl font-bold">
-                    ${data.price}.00
+                    ₺{data.price}.00
                   </h1></>
                 )}
               </div>
@@ -154,7 +164,7 @@ function ProductDetail() {
               <button
                 onClick={() => hundleAddToCart(data)}
                 type="button"
-                className="inline-flex items-center justify-center rounded-md border-2 border-transparent bg-green-500 bg-none px-12 py-3 text-center text-base font-bold text-white hover:border-green-500 hover:text-green-500 transition-all duration-200 ease-in-out focus:shadow hover:bg-white"
+                className="m-2 inline-flex items-center justify-center rounded-md border-2 border-transparent bg-green-500 bg-none px-12 py-3 text-center text-base font-bold text-white hover:border-green-500 hover:text-green-500 transition-all duration-200 ease-in-out focus:shadow hover:bg-white"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -170,7 +180,16 @@ function ProductDetail() {
                     d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
                   />
                 </svg>
-                Add to cart
+                sepete ekle
+              </button>
+
+              <button
+                onClick={() => setOpenOffer(!openOffer)}
+                type="button"
+                className="m-2 inline-flex items-center justify-center rounded-md border-2 border-transparent bg-green-500 bg-none px-12 py-3 text-center text-base font-bold text-white hover:border-green-500 hover:text-green-500 transition-all duration-200 ease-in-out focus:shadow hover:bg-white"
+              >
+                <FaHandshake className="mr-2 block h-7 w-7 align-middle "/>
+                pazarlık yap
               </button>
             </div>
 
@@ -191,7 +210,7 @@ function ProductDetail() {
                     className=""
                   ></path>
                 </svg>
-                Free shipping worldwide
+                Bedava kargo
               </li>
 
               <li className="flex items-center text-left text-sm font-medium text-gray-600">
@@ -210,7 +229,7 @@ function ProductDetail() {
                     className=""
                   ></path>
                 </svg>
-                Cancel Anytime
+                kolay iade
               </li>
             </ul>
           </div>
@@ -223,8 +242,7 @@ function ProductDetail() {
                   title=""
                   className="border-b-2 border-gray-900 py-4 text-sm font-medium text-gray-900 hover:border-gray-400 hover:text-gray-800"
                 >
-                  {" "}
-                  Description{" "}
+                  açılamalar
                 </a>
 
                 <a
@@ -232,23 +250,21 @@ function ProductDetail() {
                   title=""
                   className="inline-flex items-center border-b-2 border-transparent py-4 text-sm font-medium text-gray-600"
                 >
-                  Reviews
+                  geri dönüşler
                   <span className="ml-2 block rounded-full bg-gray-500 px-2 py-px text-xs font-bold text-gray-100">
-                    {" "}
-                    1,209{" "}
+                    1,209
                   </span>
                 </a>
               </nav>
             </div>
 
             <div className="mt-8 flow-root sm:mt-12">
-              <h1 className="text-3xl font-bold">Delivered To Your Door</h1>
+              <h1 className="text-3xl font-bold">kapına kadar teslim</h1>
               <p className="mt-4">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia
-                accusantium nesciunt fuga.
+                Türkiye'nin 81 iline kapına kadar teslim, kolay iade 
               </p>
               <h1 className="mt-8 text-3xl font-bold">
-                From the Fine Farms of Brazil
+                hakiki deri erkek ayakkabı
               </h1>
               <p className="mt-4">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio

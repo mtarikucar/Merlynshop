@@ -16,7 +16,7 @@ function ProductPage() {
   const [maxPrice, setMaxPrice] = useState(100);
 
   const fetchCategories = async () => {
-    const res = await axios.get("https://whale-app-952oz.ondigitalocean.app/api/category");
+    const res = await axios.get("http://localhost:3000/api/category");
     return res.data;
   };
 

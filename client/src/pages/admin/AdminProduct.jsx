@@ -18,7 +18,7 @@ function AdminProduct() {
   const [searchQuery, setSearchQuery] = useState("");
   const queryClient = useQueryClient();
 
-  const { user } = useSelector((state) => state.auth);
+  const { user, token } = useSelector((state) => state.auth);
 
   const sortByCreatedAt = (a, b) => {
     if (a.createdAt < b.createdAt) return 1;
@@ -41,7 +41,7 @@ function AdminProduct() {
 
   const deleteProductMutation = useMutation(
     async (id) =>
-      await axios.delete(`https://whale-app-952oz.ondigitalocean.app/api/product/${id}`, {
+      await axios.delete(`http://localhost:3000/api/product/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

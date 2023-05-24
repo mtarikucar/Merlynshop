@@ -3,17 +3,22 @@
 const express = require("express");
 var cors = require("cors");
 const app = express();
-
+var path = require('path');
 require("dotenv").config();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
+// Şablon motorunu EJS olarak belirtin
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+
+
 var allowlist = [
   "http://localhost:5173",
   "http://127.0.0.1:5173",
-  "http://localhost:8080",
-  "http://127.0.0.1:8080",
   "https://nurlightllc.com",
   "https://www.nurlightllc.com",
 ];
@@ -59,14 +64,16 @@ const categoryRouter = require("./routers/category");
 const authRouter = require("./routers/auth");
 const userRouter = require("./routers/user");
 const orderRouter = require("./routers/order");
-const stripeRouter = require("./routers/stripe");
+const paytrRouter = require("./routers/paytr");
 
 app.use("/api/product", productRouter);
 app.use("/api/category", categoryRouter);
 app.use("/api/user", userRouter)
 app.use("/api/auth", authRouter)
 app.use("/api/order", orderRouter)
-app.use("/api/stripe", stripeRouter)
+app.use("/api/paytr", paytrRouter)
+
+
 app.listen(process.env.PORT, () => {
   console.log(
     process.env.NODE_ENV && process.env.NODE_ENV === "development"

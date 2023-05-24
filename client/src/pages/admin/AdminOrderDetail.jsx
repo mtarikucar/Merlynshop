@@ -15,7 +15,7 @@ function AdminOrderDetail() {
     const { user, token } = useSelector((state) => state.auth);
     const { isLoading, error, data } = useQuery('order', () => {
 
-        return fetch(`https://whale-app-952oz.ondigitalocean.app/api/order/${id}`).then(res =>
+        return fetch(`http://localhost:3000/api/order/${id}`).then(res =>
             res.json()
         )
     }
@@ -26,7 +26,7 @@ function AdminOrderDetail() {
 
     const updateStatus = useMutation(async (status) => {
         try {
-            const response = await axios.patch(`https://whale-app-952oz.ondigitalocean.app/api/order/${id}`, status, {
+            const response = await axios.patch(`http://localhost:3000/api/order/${id}`, status, {
 
                 headers: {
                     Authorization: `Bearer ${token}`,

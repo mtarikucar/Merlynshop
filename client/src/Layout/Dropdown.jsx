@@ -69,7 +69,7 @@ function Dropdown() {
                                                 'block px-4 py-2 text-sm'
                                             )}
                                         >
-                                            Profile
+                                            Profil
                                         </NavLink>
                                     )}
                                 </Menu.Item>
@@ -85,7 +85,7 @@ function Dropdown() {
                                             'block w-full px-4 py-2 text-left text-sm'
                                         )}
                                     >
-                                        Sign out
+                                        Çıkış yap
                                     </button>
                                 )}
                             </Menu.Item>

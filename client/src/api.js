@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const baseAPI = axios.create({
-  baseURL: "https://whale-app-952oz.ondigitalocean.app/api",
+  baseURL: "http://localhost:3000/api",
 });
 
 
@@ -15,7 +15,7 @@ export const getProducts = async () => {
 };
 
 export const deleteProduct = async (id, token) => {
-  const data = await axios.delete(`https://whale-app-952oz.ondigitalocean.app/api/product/${id}`, {
+  const data = await axios.delete(`http://localhost:3000/api/product/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -24,17 +24,17 @@ export const deleteProduct = async (id, token) => {
 };
 
 export const getUser = async (id) => {
-  const { data } = await axios.get(`https://whale-app-952oz.ondigitalocean.app/api/user/${id}`);
+  const { data } = await axios.get(`http://localhost:3000/api/user/${id}`);
   return data;
 };
 
 export const getUsers = async () => {
-  const { data } = await axios.get(`https://whale-app-952oz.ondigitalocean.app/api/user/`);
+  const { data } = await axios.get(`http://localhost:3000/api/user/`);
   return data;
 };
 
 export const deleteUsers = async (id) => {
-  const { data } = await axios.delete(`https://whale-app-952oz.ondigitalocean.app/api/user/${id}`);
+  const { data } = await axios.delete(`http://localhost:3000/api/user/${id}`);
   return data;
 };
 
@@ -53,6 +53,6 @@ export const fetchLogin = async (input) => {
 };
 
 export const getOrders = async () => {
-  const data = await axios.get(`https://whale-app-952oz.ondigitalocean.app/api/order/`);
+  const data = await axios.get(`http://localhost:3000/api/order/`);
   return data;
 };

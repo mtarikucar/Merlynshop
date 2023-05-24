@@ -9,7 +9,7 @@ import Loading from '../Loading';
 import Carousel from "nuka-carousel"
 
 function getProduct(categoryId, minPrice, maxPrice) {
-  let base = 'https://whale-app-952oz.ondigitalocean.app/api/product';
+  let base = 'http://localhost:3000/api/product';
   let queryParams = [];
 
   if (categoryId) {
@@ -53,14 +53,15 @@ function Products({ categoryId, minPrice, maxPrice, maxProduct }) {
         <Carousel
         
           autoplay={true}
-          autoplayInterval={1000}
+          autoplayInterval={2500}
           className='rounded-lg max-h-[480px]'
           dragging={true}
+          
         >
-          <img src="/about.jpg" />
-          <img src="/12.jpeg" />
-          <img src="/12.jpeg" />
-          <img src="/about.jpg" />
+          <img src="/src/assets/m1.png" />
+          <img src="/src/assets/m2.png" />
+          <img src="/src/assets/m3.png" />
+          <img src="/src/assets/m4.png" />
         </Carousel>
 
       </div>

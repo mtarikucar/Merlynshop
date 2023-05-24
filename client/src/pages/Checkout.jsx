@@ -7,25 +7,22 @@ function Checkout() {
   const cart = useSelector((state) => state.cart);
 
   return (
-    <div>
-      <section>
-        <h1 className="sr-only">Checkout</h1>
+    <div className="min-h-[80vh]">
+      <section className="flex items-center justify-center">
+        <h1 className="sr-only">sepet detayları</h1>
 
-        <div className="mx-auto grid max-w-screen-2xl grid-cols-1 md:grid-cols-2">
-          <div className="bg-gray-50 py-8 md:py-8">
+        <div className="m-auto mt-24 grid max-w-screen-2xl grid-cols-1 md:grid-cols-2 items-center">
+          <div className="bg-gray-50 py-8 md:py-8 flex items-center justify-center">
             <div className="mx-auto max-w-lg space-y-2 px-4 lg:px-8">
               <div className="flex items-center ">
-                <h2 className="font-medium text-xl text-gray-900">orders</h2>
+                <h2 className="font-medium text-xl text-gray-900">siparişler</h2>
               </div>
 
               <div>
                 <p className="text-2xl font-medium tracking-tight text-gray-900">
-                  Total Price : ${cart.cartTotalAmount}
+                  toplam tutar : ${cart.cartTotalAmount}
                 </p>
 
-                <p className="mt-1 text-sm text-gray-600">
-                  Total Quantity: {cart.cartTotalQuantity}
-                </p>
               </div>
 
               <div>
@@ -52,16 +49,16 @@ function Checkout() {
                               <div>
                                 <dl className="mt-0.5 space-y-px text-sm text-gray-600">
                                   <div>
-                                    <dt className="inline">Size:</dt>
+                                    <dt className="inline">Boyut:</dt>
                                     <dd className="inline">{product.size}</dd>
                                   </div>
                                 </dl>
                               </div>
                               <div className="text-sm  text-center">
-                                <p>quantity: {product.cartQuantity}</p>
-                                <p>price: ${product.price}</p>
+                                <p>adet: {product.cartQuantity}</p>
+                                <p>adet fiyatı: ${product.price}</p>
                                 <span>
-                                  {product.cartQuantity}x ${product.price}{" "}
+                                  {product.cartQuantity} x ${product.price}
                                 </span>
                               </div>
                             </div>

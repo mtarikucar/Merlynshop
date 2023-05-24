@@ -37,7 +37,7 @@ function Profile() {
     queryKey: ["orders"],
     queryFn: () =>
       axios.get(
-        `https://whale-app-952oz.ondigitalocean.app/api/order/user/${user.id}`
+        `http://localhost:3000/api/order/user/${user.id}`
       ),
   });
 
@@ -67,10 +67,10 @@ function Profile() {
               />
             </div>
             <h1 className="my-1 text-center text-xl font-bold leading-8 text-gray-900">
-              {user.name}
+              {user?.name}
             </h1>
             <h3 className="font-lg text-semibold text-center leading-6 text-gray-600">
-              {user.email}
+              {user?.email}
             </h3>
             <p className="text-center text-sm leading-6 text-gray-500 hover:text-gray-600">
               Lorem ipsum dolor sit amet consectetur, adipisicing elit.
@@ -82,7 +82,7 @@ function Profile() {
                 <span>Status</span>
                 <span className="ml-auto">
                   <span className="rounded-full bg-green-200 py-1 px-2 text-xs font-medium text-green-700">
-                    {user.role}
+                    {user?.role}
                   </span>
                 </span>
               </li>

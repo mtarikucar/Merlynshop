@@ -32,7 +32,7 @@ function Signup() {
 
     const mutation = useMutation(
         (userData) =>
-          axios.post("https://whale-app-952oz.ondigitalocean.app/api/auth/register", userData),
+          axios.post("http://localhost:3000/api/auth/register", userData),
         {
           onSuccess: () => {
             toast.success("Hesap başarıyla oluşturuldu!");
@@ -64,8 +64,8 @@ function Signup() {
             <div className="relative flex w-96 flex-col space-y-5 rounded-lg border bg-white px-5 py-10 shadow-xl sm:mx-auto">
                 <div className="-z-10 absolute top-4 left-1/2 h-full w-5/6 -translate-x-1/2 rounded-lg bg-green-600 sm:-right-10 sm:top-auto sm:left-auto sm:w-full sm:translate-x-0"></div>
                 <div className="mx-auto mb-2 space-y-3">
-                    <h1 className="text-center text-3xl font-bold text-gray-700">Sign up</h1>
-                    <p className="text-gray-500">Signup to  your Business Name End Email</p>
+                    <h1 className="text-center text-3xl font-bold text-gray-700">kayıt ol</h1>
+                    <p className="text-gray-500">malini ve şifreni girerek kayıt ol</p>
                 </div>
                 <form action="" onSubmit={formik.handleSubmit}>
                     <div>
@@ -79,7 +79,7 @@ function Signup() {
                                 onBlur={formik.handleBlur}
                                 className="border-1 peer block w-full appearance-none rounded-lg border  border-gray-300 bg-transparent px-2.5 pt-4 pb-2.5 text-sm text-gray-900 focus:border-green-600 focus:outline-none focus:ring-0" placeholder=" " />
                             <label htmlFor="name" className="origin-[0] peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-green-600 absolute left-1 top-2 z-10 -translate-y-4 scale-75 transform cursor-text select-none bg-white px-2 text-sm text-gray-500 duration-300">
-                                Enter Your Business Name
+                                ismini gir
                             </label>
                         </div>
                         {formik.touched.name && formik.errors.name && (
@@ -118,7 +118,7 @@ function Signup() {
                                 htmlFor="password"
                                 className="origin-[0] peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-green-600 absolute left-1 top-2 z-10 -translate-y-4 scale-75 transform cursor-text select-none bg-white px-2 text-sm text-gray-500 duration-300"
                             >
-                                Enter Your Password
+                                şifreni gir
                             </label>
                         </div>
                         {formik.touched.password && formik.errors.password && (
@@ -133,7 +133,7 @@ function Signup() {
                     </div>
                 </form>
                 <p className="text-center text-gray-600">
-                    Do you have an account?
+                    zaten bir hesbaın var mı?
                     <Link to={'/login'} className="whitespace-nowrap font-semibold text-gray-900 hover:underline"> Log in</Link>
                 </p>
             </div>
