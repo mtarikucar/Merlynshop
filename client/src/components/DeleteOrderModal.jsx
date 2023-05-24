@@ -13,7 +13,7 @@ function DeleteOrderModal({ close, setClose,orderId }) {
         async (status) => {
             try {
                 const response = await axios.patch(
-                    `http://localhost:3000/api/order/${orderId.id}`,
+                    `https://squid-app-wtk8l.ondigitalocean.app/api/order/${orderId.id}`,
                     status
                 );
 

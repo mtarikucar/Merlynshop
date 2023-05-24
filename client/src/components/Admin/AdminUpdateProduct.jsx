@@ -64,7 +64,7 @@ function AdminUpdateProduct({ open, setOpen, oldProduct }) {
 
   const postProductMutation = useMutation(
     (product) =>
-      axios.put(`http://localhost:3000/api/product/${oldProduct.id}`, product, {
+      axios.put(`https://squid-app-wtk8l.ondigitalocean.app/api/product/${oldProduct.id}`, product, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -87,7 +87,7 @@ function AdminUpdateProduct({ open, setOpen, oldProduct }) {
   );
 
   const fetchCategories = async () => {
-      const res = await axios.get("http://localhost:3000/api/category");
+      const res = await axios.get("https://squid-app-wtk8l.ondigitalocean.app/api/category");
       return res.data;
   };
 

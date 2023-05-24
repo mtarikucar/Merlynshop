@@ -16,7 +16,7 @@ function ProductPage() {
   const [maxPrice, setMaxPrice] = useState(100);
 
   const fetchCategories = async () => {
-    const res = await axios.get("http://localhost:3000/api/category");
+    const res = await axios.get("https://squid-app-wtk8l.ondigitalocean.app/api/category");
     return res.data;
   };
 

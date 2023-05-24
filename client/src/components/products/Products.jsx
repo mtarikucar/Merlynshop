@@ -9,7 +9,7 @@ import Loading from '../Loading';
 import Carousel from "nuka-carousel"
 
 function getProduct(categoryId, minPrice, maxPrice) {
-  let base = 'http://localhost:3000/api/product';
+  let base = 'https://squid-app-wtk8l.ondigitalocean.app/api/product';
   let queryParams = [];
 
   if (categoryId) {

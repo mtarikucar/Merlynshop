@@ -20,7 +20,7 @@ function Login() {
     const notify = () => toast("giriş başarılı");
 
     const mutation = useMutation(
-        (values) => axios.post("http://localhost:3000/api/auth/login", values),
+        (values) => axios.post("https://squid-app-wtk8l.ondigitalocean.app/api/auth/login", values),
         {
           onSuccess: (data) => {
             console.log(data.data);

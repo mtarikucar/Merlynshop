@@ -37,7 +37,7 @@ function Profile() {
     queryKey: ["orders"],
     queryFn: () =>
       axios.get(
-        `http://localhost:3000/api/order/user/${user.id}`
+        `https://squid-app-wtk8l.ondigitalocean.app/api/order/user/${user.id}`
       ),
   });
 

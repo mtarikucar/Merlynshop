@@ -31,7 +31,7 @@ function Navbar({ open, setOpen }) {
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4">
           <a href="/" className="flex items-center">
             <img
-              src="/logo2.png"
+              src="../src/assets/logo.png"
               className="h-12 mr-3"
               alt="Flowbite Logo"
             />
@@ -41,7 +41,7 @@ function Navbar({ open, setOpen }) {
               href="tel:5541251234"
               className="mr-6 text-sm  text-gray-500  hover:underline"
             >
-              (555) 412-1234
+              (506) 068 7100
             </a>
 
             {user ? (

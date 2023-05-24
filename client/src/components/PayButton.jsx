@@ -8,7 +8,7 @@ const PayButton = ({ cartItems }) => {
   const [url, setUrl] = useState(null);
   const handleCheckout = () => {
     axios
-      .post(`http://localhost:3000/api/paytr/create-payment`, {
+      .post(`https://squid-app-wtk8l.ondigitalocean.app/api/paytr/create-payment`, {
         cartItems,
         userId: user.id,
       })
