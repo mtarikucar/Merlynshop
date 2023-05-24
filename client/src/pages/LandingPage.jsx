@@ -1,6 +1,4 @@
 import React from 'react';
-import { FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
-// Replace with your logo image
 
 function LandingPage() {
     return (
@@ -21,12 +19,12 @@ function LandingPage() {
                     </p>
 
                     <div className="flex items-center justify-center mb-8">
-                        <FaEnvelope className="text-green-600 mr-2" />
+                        
                         <span className="text-gray-700"> merlynshop@gmial.com</span>
                     </div>
 
                     <div className="flex items-center justify-center  mb-8">
-                        <FaPhone className="text-green-600 mr-2" />
+                        
                         <span className="text-gray-700"> + 05060687100</span>
                     </div>
 

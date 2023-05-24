@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import {FaHandshake} from "react-icons/fa"
+import HandshakeIcon from '@mui/icons-material/Handshake';
 import { useQuery } from "react-query";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart, decreaseCart } from "../store/cartSlice";
@@ -188,7 +188,7 @@ function ProductDetail() {
                 type="button"
                 className="m-2 inline-flex items-center justify-center rounded-md border-2 border-transparent bg-green-500 bg-none px-12 py-3 text-center text-base font-bold text-white hover:border-green-500 hover:text-green-500 transition-all duration-200 ease-in-out focus:shadow hover:bg-white"
               >
-                <FaHandshake className="mr-2 block h-7 w-7 align-middle "/>
+                <HandshakeIcon className="mr-2 block h-7 w-7 align-middle "/>
                 pazarlık yap
               </button>
             </div>

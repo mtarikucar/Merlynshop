@@ -1,5 +1,5 @@
 import React from "react";
-import { AiOutlineSearch } from "react-icons/Ai";
+
 function HomeAbout() {
   return (
     <>
