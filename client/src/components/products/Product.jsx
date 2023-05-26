@@ -48,7 +48,7 @@ function Product({ product }) {
             onClick={() => hundleAddToCart(product)}
             className=" w-full text-center  rounded p-2 text-white bg-green-500 lg:p-4  md:p-3 text-sm font-medium transition hover:scale-105"
           >
-            Add to Cart
+            sepete ekle
           </button>
         </div>
       </div>

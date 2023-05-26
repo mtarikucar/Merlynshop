@@ -16,7 +16,7 @@ function Home() {
       {/* <Banner /> */}
       <Products maxProduct={2} />
 
-      <HomeAbout />
+      {/* <HomeAbout /> */}
 
      {/*  <Review /> */}
       <LogoSlider />
