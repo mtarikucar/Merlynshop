@@ -28,18 +28,18 @@ function Product({ product }) {
             {product.discountedPrice ? (
               <>
                 <h1 className="text-xl font-bold">
-                  ${product.discountedPrice}.00
+                  {product.discountedPrice}.00₺
                 </h1>
                 <span className="text-base">/</span>
                 <span
                   className={`text-base font-medium text-gray-500 line-through dark:text-gray-300`}
                 >
-                  ${product.price}.00
+                  {product.price}.00₺
                 </span>
               </>
             ) : (
               <><h1 className="text-xl font-bold">
-                ${product.price}.00
+                {product.price}.00₺
               </h1></>
             )}
           </div>

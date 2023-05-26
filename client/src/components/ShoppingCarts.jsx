@@ -97,7 +97,7 @@ function ShoppingCarts({ open, setOpen }) {
                                                                             <div className='flex flex-col justify-center items-center'>
 
                                                                                 <p className="ml-4">₺{product.price}</p>
-                                                                                <p className="font-light ml-4">{product.cartQuantity} x ${product.price * product.cartQuantity}</p>
+                                                                                <p className="font-light ml-4">{product.cartQuantity} x  {product.price * product.cartQuantity}₺</p>
                                                                             </div>
                                                                         </div>
                                                                         {/*  <p className="mt-1 text-sm text-gray-500">{product.color}</p> */}

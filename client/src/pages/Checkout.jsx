@@ -20,7 +20,7 @@ function Checkout() {
 
               <div>
                 <p className="text-2xl font-medium tracking-tight text-gray-900">
-                  toplam tutar : ${cart.cartTotalAmount}
+                  toplam tutar : {cart.cartTotalAmount}₺
                 </p>
 
               </div>

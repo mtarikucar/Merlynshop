@@ -180,7 +180,7 @@ function Profile() {
                         </td>
                         <td className="px-6 py-4">
                           <div className="flex items-center">
-                            ${order.total_price / 100}.00
+                            {order.total_price / 100}.00₺
                           </div>
                         </td>
                         <td className="px-6 py-4 space-x-2 text-center">
