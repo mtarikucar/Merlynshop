@@ -42,10 +42,10 @@ var user_phone = '05555555555'; // Müşterinizin sitenizde kayıtlı veya form 
 
 // Başarılı ödeme sonrası müşterinizin yönlendirileceği sayfa
 // Bu sayfa siparişi onaylayacağınız sayfa değildir! Yalnızca müşterinizi bilgilendireceğiniz sayfadır!
-var merchant_ok_url = 'http://127.0.0.1:5173/checkout-success';
+var merchant_ok_url = 'merlynclub.com/checkout-success';
 // Ödeme sürecinde beklenmedik bir hata oluşması durumunda müşterinizin yönlendirileceği sayfa
 // Bu sayfa siparişi iptal edeceğiniz sayfa değildir! Yalnızca müşterinizi bilgilendireceğiniz sayfadır!
-var merchant_fail_url = 'http://127.0.0.1:5173/';
+var merchant_fail_url = 'merlynclub.com/';
 var timeout_limit = 30; // İşlem zaman aşımı süresi - dakika cinsinden
 var debug_on = 1; // Hata mesajlarının ekrana basılması için entegrasyon ve test sürecinde 1 olarak bırakın. Daha sonra 0 yapabilirsiniz.
 var lang = 'tr'; // Türkçe için tr veya İngilizce için en gönderilebilir. Boş gönderilirse tr geçerli olur.
@@ -98,7 +98,7 @@ router.post("/create-payment", function (req, res) {
         var res_data = JSON.parse(body);
 
         if (res_data.status == 'success') {
-            /* res.status(200).json({message:"başarılı"}) */
+            
             console.log(res_data.token);
             res.send( {url: res_data.token });
         } else {

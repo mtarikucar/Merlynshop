@@ -10,7 +10,7 @@ const fadeImages = [
 
     },
     {
-        url: './src/assets/logo.png',
+        url: './logo.png',
 
     }
 ];

@@ -1,11 +1,11 @@
 import { React } from "react";
-import { addToCart } from "../../store/cartSlice";
+import { increaseCart } from "../../store/cartSlice";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 function Product({ product }) {
   const dispatch = useDispatch();
   const hundleAddToCart = (product) => {
-    dispatch(addToCart(product));
+    dispatch(increaseCart(product));
   };
 
   return (

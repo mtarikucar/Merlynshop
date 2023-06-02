@@ -30,7 +30,6 @@ const PayButton = ({ cartItems }) => {
           src={url}
           width="600"
           height="800"
-          scrolling="auto"
           frameborder="0"
           allowtransparency="true"
         ></iframe>

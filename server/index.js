@@ -21,6 +21,8 @@ var allowlist = [
   "http://127.0.0.1:5173",
   "https://walrus-app-bhffu.ondigitalocean.app",
   "https://walrus-app-bhffu.ondigitalocean.app",
+  "https://merlynclub.com",
+  "https://www.merlynclub.com",
 ];
 var corsOptionsDelegate = function (req, callback) {
   var corsOptions;
