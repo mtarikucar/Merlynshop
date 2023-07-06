@@ -15,7 +15,7 @@ function AdminUser() {
     error,
   } = useQuery({
     queryKey: ["users"],
-    queryFn: () =>  axios.get(`https://squid-app-wtk8l.ondigitalocean.app/api/user/`,{
+    queryFn: () =>  axios.get(`http://localhost:3000/api/user/`,{
         headers:{
             Authorization: `Bearer ${token}`
         }

@@ -41,7 +41,7 @@ function AdminProduct() {
 
   const deleteProductMutation = useMutation(
     async (id) =>
-      await axios.delete(`https://squid-app-wtk8l.ondigitalocean.app/api/product/${id}`, {
+      await axios.delete(`http://localhost:3000/api/product/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

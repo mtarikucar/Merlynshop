@@ -12,7 +12,7 @@ function AdminCategoryForm({ openCategory, setOpenCategory }) {
   const [newCategoryName, setNewCategoryName] = useState("");
   const createCategory = async (newCategory) => {
     const res = await axios.post(
-      "https://squid-app-wtk8l.ondigitalocean.app/api/category",
+      "http://localhost:3000/api/category",
       newCategory
       , {
         headers: {

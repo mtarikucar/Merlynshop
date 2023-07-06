@@ -45,5 +45,5 @@ module.exports = (sequelize) => {
       updatedAt: true
     }
   );
-   //force: true
+   
 };

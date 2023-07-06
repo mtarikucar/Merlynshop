@@ -20,7 +20,7 @@ function AdminOrder() {
     error,
   } = useQuery({
     queryKey: ["orders"],
-    queryFn: () => axios.get(`https://squid-app-wtk8l.ondigitalocean.app/api/order/`, {
+    queryFn: () => axios.get(`http://localhost:3000/api/order/`, {
       headers: {
         Authorization: `Bearer ${token}`,
 
@@ -31,7 +31,7 @@ function AdminOrder() {
 
   const handleDeleteOrder = async (orderId) => {
     try {
-      await axios.delete(`https://squid-app-wtk8l.ondigitalocean.app/api/order/${orderId}`, {
+      await axios.delete(`http://localhost:3000/api/order/${orderId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
