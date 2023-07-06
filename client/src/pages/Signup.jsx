@@ -32,7 +32,7 @@ function Signup() {
 
     const mutation = useMutation(
         (userData) =>
-          axios.post("https://squid-app-wtk8l.ondigitalocean.app/api/auth/register", userData),
+          axios.post(`${import.meta.env.VITE_BASE_URL}/auth/register`, userData),
         {
           onSuccess: () => {
             toast.success("Hesap başarıyla oluşturuldu!");

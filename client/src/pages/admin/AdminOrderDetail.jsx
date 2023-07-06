@@ -15,7 +15,7 @@ function AdminOrderDetail() {
     const { user, token } = useSelector((state) => state.auth);
     const { isLoading, error, data } = useQuery('order', () => {
 
-        return fetch(`https://squid-app-wtk8l.ondigitalocean.app/api/order/${id}`).then(res =>
+        return fetch(`${import.meta.env.VITE_BASE_URL}/order/${id}`).then(res =>
             res.json()
         )
     }
@@ -26,7 +26,7 @@ function AdminOrderDetail() {
 
     const updateStatus = useMutation(async (status) => {
         try {
-            const response = await axios.patch(`https://squid-app-wtk8l.ondigitalocean.app/api/order/${id}`, status, {
+            const response = await axios.patch(`${import.meta.env.VITE_BASE_URL}/order/${id}`, status, {
 
                 headers: {
                     Authorization: `Bearer ${token}`,

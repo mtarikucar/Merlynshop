@@ -36,7 +36,7 @@ function ProductViewer() {
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
 
     const fetchCategories = async () => {
-        const res = await axios.get("https://squid-app-wtk8l.ondigitalocean.app/api/category");
+        const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/category`);
         return res.data;
     };
 

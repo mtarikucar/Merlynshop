@@ -30,7 +30,7 @@ function AdminAddProduct({ open, setOpen }) {
 
   const postProductMutation = useMutation(
     (product) =>
-      axios.post("https://squid-app-wtk8l.ondigitalocean.app/api/product", product, {
+      axios.post(`${import.meta.env.VITE_BASE_URL}/product`, product, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -66,7 +66,7 @@ function AdminAddProduct({ open, setOpen }) {
     setThumbnailPreview('');
   }, [open]);
   const fetchCategories = async () => {
-    const res = await axios.get("https://squid-app-wtk8l.ondigitalocean.app/api/category");
+    const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/category`);
     return res.data;
   };
 

@@ -14,7 +14,7 @@ function UpdateUserModal({ user, setOnClose, onClose }) {
 
     // Update user mutation using react-query
     const updateUserMutation = useMutation(async (values) => {
-        const response = await fetch(`https://squid-app-wtk8l.ondigitalocean.app/api/user/${user.id}`, {
+        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/user/${user.id}`, {
             method: 'PUT',
            
             body: JSON.stringify(values),

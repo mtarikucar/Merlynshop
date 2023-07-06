@@ -15,7 +15,7 @@ function AdminUser() {
     error,
   } = useQuery({
     queryKey: ["users"],
-    queryFn: () =>  axios.get(`https://squid-app-wtk8l.ondigitalocean.app/api/user/`,{
+    queryFn: () =>  axios.get(`${import.meta.env.VITE_BASE_URL}/user/`,{
         headers:{
             Authorization: `Bearer ${token}`
         }

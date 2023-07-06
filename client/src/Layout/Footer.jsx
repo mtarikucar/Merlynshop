@@ -16,7 +16,6 @@ function Footer() {
             <div className="text-teal-600">
               <img src="/logo2.png" className="h-12" alt="" />
             </div>
-
             <p className="max-w-xs mt-4 text-gray-500">
               Sitemize kayıt olarak ürünlerin fiyatlarını, açıklamalarını ve
               satış fiyatlarını görebiliyorsunuz. Daha sonra ürünleri Instagram,
