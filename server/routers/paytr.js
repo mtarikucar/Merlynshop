@@ -8,6 +8,9 @@ var request = require("request");
 var path = require("path");
 var app = express();
 
+const { models } = require("../database");
+
+
 // Şablon motorunu EJS olarak belirtin
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -53,11 +56,12 @@ const router = express.Router();
 
 router.post("/create-payment", function (req, res) {
   user_ip = req.ip;
+  console.log(req.body);
+  console.log(req.body.cart.cartItems);
   payment_amount = req.body.cart.cartTotalAmount * 100;
-  //user_basket =nodeBase64.encode(JSON.stringify(req.body.cart.cartItems));
 
 
-  email = req.body.values.email;
+  email = req.body.user.email;
   user_name = req.body.values.name;
   user_address = req.body.values.address;
   user_phone = req.body.values.phoneNumber;
@@ -100,11 +104,43 @@ router.post("/create-payment", function (req, res) {
     },
   };
 
-  request(options, function (error, response, body) {
+   request(options, async function (error, response, body) {
     if (error) throw new Error(error);
     var res_data = JSON.parse(body);
 
     if (res_data.status == "success") {
+
+      try {
+        // create an order in the 'order' table
+        const newOrder = await models.order.create({
+          total_price: req.body.cart.cartTotalAmount,
+          userId: req.body.user.id,
+        });
+        /* console.log(newOrder, "newOrder"); */
+        // iterate over the 'products' array and create an entry in the 'orderProduct' table for each product
+        req.body.cart.cartItems.forEach(async (element) => {
+          await models.order_product
+            .create({
+              orderId: newOrder.id,
+              productId: element.id,
+              quantity: element.cartQuantity,
+            })
+    
+            .catch(() => {
+              console.log("err");
+            });
+        });
+    
+        await models.location.create({
+          orderId: newOrder.id,
+          address: req.body.values.address,
+        })
+        /* console.log("lokasyon başarılı"); */
+    
+        // return the newly created order
+      } catch (err) {
+    
+      }
       res.send({ url: res_data.token });
     } else {
       res.end(body);
@@ -112,7 +148,7 @@ router.post("/create-payment", function (req, res) {
   });
 });
 
-router.post("/callback", function (req, res) {
+router.post("/callback", async function (req, res) {
   // ÖNEMLİ UYARILAR!
   // 1) Bu sayfaya oturum (SESSION) ile veri taşıyamazsınız. Çünkü bu sayfa müşterilerin yönlendirildiği bir sayfa değildir.
   // 2) Entegrasyonun 1. ADIM'ında gönderdiğniz merchant_oid değeri bu sayfaya POST ile gelir. Bu değeri kullanarak
@@ -120,10 +156,10 @@ router.post("/callback", function (req, res) {
   // 3) Aynı sipariş için birden fazla bildirim ulaşabilir (Ağ bağlantı sorunları vb. nedeniyle). Bu nedenle öncelikle
   // siparişin durumunu veri tabanınızdan kontrol edin, eğer onaylandıysa tekrar işlem yapmayın. Örneği aşağıda bulunmaktadır.
 
-  console.log("callbakck");
+  console.log("callback");
   var callback = req.body;
 
-  
+  console.log(req.body);
   // POST değerleri ile hash oluştur.
   paytr_token =
     callback.merchant_oid +
@@ -144,6 +180,23 @@ router.post("/callback", function (req, res) {
 
   if (callback.status == "success") {
     console.log("success",req.body);
+    try {
+      // Find the order by orderId
+      const order = await models.order.findByPk(orderId);
+  
+      if (!order) {
+        return res.status(404).json({ error: "Order not found" });
+      }
+  
+      // Set the payment_verify field to true
+      order.payment_verify = true;
+      await order.save();
+  
+      return res.status(200).json({ message: "Order verified successfully" });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ error: "Internal server error" });
+    }
   } else {
     //basarisiz
   }

@@ -9,68 +9,46 @@ function Product({ product }) {
   };
 
   return (
-    <>
-      <div className="mx-auto m-6 max-h-[450px] w-44  md:w-72 lg:w-80 transform overflow-hidden rounded-lg bg-white  shadow-md duration-300 hover:scale-105 hover:shadow-lg">
+    
+      <div className="mx-auto m-6 w-44 md:w-56 lg:w-72 transform overflow-hidden rounded-lg bg-white  shadow-md duration-300 hover:scale-105 hover:shadow-lg flex flex-col  justify-between border-gray-100 p-3">
         <Link to={`/products/Products/${product.id}`}>
           <img
             src={product.thumbnail}
             alt=""
-            className=" h-40 md:h-48 text-center p-3 object-cover w-full transition duration-500 group-hover:scale-105 lg:h-[270px]"
+            className="w-auto h-32 text-center p-3 object-cover transition duration-500 group-hover:scale-105"
           />
         </Link>
 
-        <div className="relative gap-1 flex-col  justify-between border-gray-100 bg-white px-3 ">
-          <h3 className=" text-lg font-medium text-gray-900">{product.name}</h3>
-          <p className="mb-2 text-base text-gray-700  truncate  ">
-            {product.description}
-          </p>
-          <div className="flex justify-start flex-row">
-            {product.discountedPrice ? (
-              <>
-                <h1 className="text-xl font-bold">
-                  {product.discountedPrice}.00₺
-                </h1>
-                <span className="text-base">/</span>
-                <span
-                  className={`text-base font-medium text-gray-500 line-through dark:text-gray-300`}
-                >
-                  {product.price}.00₺
-                </span>
-              </>
-            ) : (
-              <><h1 className="text-xl font-bold">
+        <h3 className=" text-lg font-medium text-gray-900">{product.name}</h3>
+        
+        <div className="flex justify-start flex-row">
+          {product.discountedPrice ? (
+            <>
+              <h1 className="text-xl font-bold">
+                {product.discountedPrice}.00₺
+              </h1>
+              <span className="text-base">/</span>
+              <span
+                className={`text-base font-medium text-gray-500 line-through dark:text-gray-300`}
+              >
                 {product.price}.00₺
-              </h1></>
-            )}
-          </div>
-
-          <button
-            onClick={() => hundleAddToCart(product)}
-            className=" w-full text-center  rounded p-2 text-white bg-green-500 lg:p-4  md:p-3 text-sm font-medium transition hover:scale-105"
-          >
-            sepete ekle
-          </button>
+              </span>
+            </>
+          ) : (
+            <>
+              <h1 className="text-xl font-bold">{product.price}.00₺</h1>
+            </>
+          )}
         </div>
+
+        <button
+          onClick={() => hundleAddToCart(product)}
+          className=" text-center  rounded p-2 text-white bg-green-500 lg:p-4  md:p-3 text-sm font-medium transition hover:scale-105"
+        >
+          sepete ekle
+        </button>
       </div>
-      {/* <div className="mx-auto mt-11 max-h-[400px] w-80 transform overflow-hidden rounded-lg bg-white  shadow-md duration-300 hover:scale-105 hover:shadow-lg">
-      <img className="h-64 relative  object-cover object-center" src="https://nurlightllc.com/image/product_image/8eae085c-68b0-4f34-a85b-234850fcf291.jpg_1180xaf%20(1).jpg" alt="Product Image" />
-      
-      <button className=" absolute top-0 right-0 shadow-xl group flex items-center text-white justify-center bg-green-500  py-2 px-2" >
-        <div className="  inset-0 w-2  bg-green-500 transition-all duration-[0.3s] ease-out group-hover:w-full"></div>
-        <BsBasket className='w-5 h-5 mr-3'/>
-        <span>Add</span>
-      </button>
-      
-      <div className="p-4">
-      <h2 className="mb-2 text-lg font-medium  text-[#008037]">Product Name</h2>
-      <p className="mb-2 text-base text-gray-700  truncate  ">{` ${text ? text : 'Products libero suscipit, vero placeat totam eius nihil! here.'} `}</p>
-      <div className="flex items-center">
-          
-          <p className="ml-auto text-base font-medium text-green-500">20% off</p>
-          </div>
-          </div>
-        </div> */}
-    </>
+    
   );
 }
 

@@ -1,12 +1,9 @@
-import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { fetchLogin } from '../api';
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Loading from '../components/Loading';
 import axios from "axios"
 import { useQueryClient, useMutation } from "react-query";
 import { loginSuccess } from '../store/auth/authSlice';

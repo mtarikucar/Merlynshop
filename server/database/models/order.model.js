@@ -12,17 +12,20 @@ module.exports = (sequelize) => {
       },
       status: {
         type: DataTypes.ENUM("pending", "processing", "delivered", "canceled"),
-        type: DataTypes.ENUM("pending", "processing", "delivered","canceled"),
         defaultValue: "pending",
       },
       total_price: {
         type: DataTypes.FLOAT,
         allowNull: false,
-      }
+      },
+      payment_verify: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
     },
     {
       tableName: "order",
-      createaAt: true,
+      createdAt: true,
       updatedAt: true,
       timestamps: true,
     }

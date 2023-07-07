@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
-import HomeIcon from '@mui/icons-material/Home';
-import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
-import ContactMailIcon from '@mui/icons-material/ContactMail';
-import InfoIcon from '@mui/icons-material/Info';
+import HomeIcon from "@mui/icons-material/Home";
+import ProductionQuantityLimitsIcon from "@mui/icons-material/ProductionQuantityLimits";
+import ContactMailIcon from "@mui/icons-material/ContactMail";
+import InfoIcon from "@mui/icons-material/Info";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
@@ -15,9 +15,27 @@ function Navbar({ open, setOpen }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+  const [scrollUp, setScrollUp] = useState(true);
+
   let location = useLocation();
 
-  useEffect(() => {}, [location]);
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.pageYOffset;
+
+      if (scrollTop > 0 && scrollUp) {
+        setScrollUp(false);
+      } else if (scrollTop === 0 && !scrollUp) {
+        setScrollUp(true);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [scrollUp]);
 
   const onLogout = () => {
     dispatch(logout());
@@ -26,15 +44,17 @@ function Navbar({ open, setOpen }) {
   };
 
   return (
-    <div className=" sticky w-full shadow-lg  z-40 top-0 left-0  ">
+    <div
+  id="navbar"
+  className={`sticky w-full shadow-lg z-40 top-0 left-0 transition-transform ${
+    scrollUp ? 'translate-y-0' : '-translate-y-full'
+  } duration-300`}
+>
+
       <nav className="bg-white  ">
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4">
           <a href="/" className="flex items-center">
-            <img
-              src="/logo.png"
-              className="h-12 mr-3"
-              alt="Flowbite Logo"
-            />
+            <img src="/logo.png" className="h-12 mr-3" alt="Flowbite Logo" />
           </a>
           <div className="flex items-center ">
             <a
@@ -119,7 +139,7 @@ function Navbar({ open, setOpen }) {
                       : "text-gray-800 text-center"
                   }
                 >
-                  <InfoIcon   className="text-center w-full text-2xl" />
+                  <InfoIcon className="text-center w-full text-2xl" />
                   <span className="text-sm mb-2"> Hakkımızda</span>
 
                   <hr
@@ -142,7 +162,7 @@ function Navbar({ open, setOpen }) {
                       : "text-gray-800 text-center"
                   }
                 >
-                  <ContactMailIcon   className="text-center w-full text-2xl" />
+                  <ContactMailIcon className="text-center w-full text-2xl" />
                   <span className="text-sm mb-2"> İletişim</span>
 
                   <hr
@@ -155,17 +175,8 @@ function Navbar({ open, setOpen }) {
                 </NavLink>
               </li>
             </ul>
-            <div className=" lg:flex w-full justify-end hidden  ">
-              <ul className="lg:flex hidden   flex-row font-medium mt-0 mr-6 space-x-8 justify-start items-center text-sm">
-                <li>
-
-                </li>
-              </ul>
-            </div>
           </div>
         </div>
-
-
       </nav>
     </div>
   );

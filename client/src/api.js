@@ -14,45 +14,9 @@ export const getProducts = async () => {
   }
 };
 
-export const deleteProduct = async (id, token) => {
-  const data = await axios.delete(`${import.meta.env.VITE_BASE_URL}/product/${id}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  return data;
-};
-
-export const getUser = async (id) => {
-  const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/user/${id}`);
-  return data;
-};
-
-export const getUsers = async () => {
-  const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/user/`);
-  return data;
-};
-
 export const deleteUsers = async (id) => {
   const { data } = await axios.delete(`${import.meta.env.VITE_BASE_URL}/user/${id}`);
   return data;
 };
 
-/* const { isLoading, error, data } = useQuery(['product', id],()=> getProductId(id)) */
-export const fetchRegister = async (input) => {
-  const { data } = await axios.post(
-    `https://node-fake-api-server.herokuapp.com`,
-    input
-  );
-  return data;
-};
 
-export const fetchLogin = async (input) => {
-  const { data } = await axios.post(`https://dummyjson.com/auth/login`, input);
-  return data;
-};
-
-export const getOrders = async () => {
-  const data = await axios.get(`${import.meta.env.VITE_BASE_URL}/order/`);
-  return data;
-};

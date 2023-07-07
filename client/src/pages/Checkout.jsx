@@ -26,7 +26,7 @@ function Checkout() {
               </div>
 
               <div>
-                <div className="flow-root  ">
+                <div className="flow-root">
                   <ul className="-my-4 divide-y  divide-gray-100">
                     {cart &&
                       cart?.cartItems.map((product) => (
@@ -74,7 +74,7 @@ function Checkout() {
           <div className="bg-white py-12 md:py-24">
             <div className="mx-auto max-w-lg px-4 lg:px-8">
               <div className="col-span-6">
-                <PayButton cartItems={cart?.cartItems} />
+              <PayButton cart={cart} />
               </div>
             </div>
           </div>

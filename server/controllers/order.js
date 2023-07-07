@@ -2,7 +2,7 @@ const { models } = require("../database/");
 
 async function createOrder(prop) {
   const { status, total_price, products, userId, location } = prop;
-  console.log(prop, "body");
+
   try {
     // create an order in the 'order' table
     const newOrder = await models.order.create({
@@ -24,7 +24,6 @@ async function createOrder(prop) {
           console.log("err");
         });
     });
-    console.log("başarılıiiiiiiiiiiiiii");
 
     await models.location.create({
       orderId: newOrder.id,
@@ -37,6 +36,28 @@ async function createOrder(prop) {
 
   }
 }
+async function verifyOrder(req, res) {
+  const { orderId } = req.params;
+
+  try {
+    // Find the order by orderId
+    const order = await models.order.findByPk(orderId);
+
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    // Set the payment_verify field to true
+    order.payment_verify = true;
+    await order.save();
+
+    return res.status(200).json({ message: "Order verified successfully" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+}
+
 
 async function getAllOrders(req, res, next) {
   try {
@@ -132,5 +153,6 @@ module.exports = {
   getOrderById,
   updateOrder,
   getOrderByUserId,
-  deleteOrderById
+  deleteOrderById,
+  verifyOrder
 };
