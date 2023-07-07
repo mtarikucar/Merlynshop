@@ -46,7 +46,7 @@ const sequelize = require("./database");
 sequelize
   .authenticate()
   .then(() => {
-   // sequelize.sync({force:true}) //force: true
+   sequelize.sync({force:true}) //force: true
     console.log("Connection has been established successfully.");
   })
   .catch((err) => {
