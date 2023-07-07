@@ -43,11 +43,11 @@ var user_phone = "05555555555"; // Müşterinizin sitenizde kayıtlı veya form 
 // Başarılı ödeme sonrası müşterinizin yönlendirileceği sayfa
 // Bu sayfa siparişi onaylayacağınız sayfa değildir! Yalnızca müşterinizi bilgilendireceğiniz sayfadır!
 /* var merchant_ok_url = 'https://merlynclub.com/checkout-success'; */
-var merchant_ok_url = "http://127.0.0.1:5173/checkout-success";
+var merchant_ok_url =`${process.env.DOMAIN_ADD}/checkout-success`;
 // Ödeme sürecinde beklenmedik bir hata oluşması durumunda müşterinizin yönlendirileceği sayfa
 // Bu sayfa siparişi iptal edeceğiniz sayfa değildir! Yalnızca müşterinizi bilgilendireceğiniz sayfadır!
 /* var merchant_fail_url = 'https://merlynclub.com/'; */
-var merchant_fail_url = "http://127.0.0.1:5173/";
+var merchant_fail_url = `${process.env.DOMAIN_ADD}`;
 var timeout_limit = 30; // İşlem zaman aşımı süresi - dakika cinsinden
 var debug_on = 1; // Hata mesajlarının ekrana basılması için entegrasyon ve test sürecinde 1 olarak bırakın. Daha sonra 0 yapabilirsiniz.
 var lang = "tr"; // Türkçe için tr veya İngilizce için en gönderilebilir. Boş gönderilirse tr geçerli olur.
