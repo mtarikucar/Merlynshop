@@ -158,8 +158,6 @@ router.post("/callback", async function (req, res) {
 
   console.log("callback");
   var callback = req.body;
-
-  console.log(req.body);
   // POST değerleri ile hash oluştur.
   paytr_token =
     callback.merchant_oid +
@@ -179,7 +177,8 @@ router.post("/callback", async function (req, res) {
   }
 
   if (callback.status == "success") {
-    console.log("success",req.body);
+    console.log("success:",req.body);
+    console.log("token:",token);
     try {
       // Find the order by orderId
       const order = await models.order.findByPk(orderId);
@@ -205,3 +204,29 @@ router.post("/callback", async function (req, res) {
 });
 
 module.exports = router;
+
+
+/* {
+     hash: 'RLBSK9rktptGzQzgbExrfNlel2iQ6IQQsI1XwPjjsNc=',
+     merchant_oid: 'IN1688819003009087',
+     status: 'success',
+     total_amount: '12300',
+     payment_type: 'card',
+     payment_amount: '12300',
+     currency: 'TL',
+     installment_count: '1',
+     merchant_id: '342659',
+     test_mode: '1'
+   }
+   success {
+     hash: 'RLBSK9rktptGzQzgbExrfNlel2iQ6IQQsI1XwPjjsNc=',
+     merchant_oid: 'IN1688819003009087',
+     status: 'success',
+     total_amount: '12300',
+     payment_type: 'card',
+     payment_amount: '12300',
+     currency: 'TL',
+     installment_count: '1',
+     merchant_id: '342659',
+     test_mode: '1'
+   } */
