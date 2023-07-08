@@ -29,7 +29,6 @@ const modelDefiners = [
   require("./models/location.model"),
   require("./models/order.model"),
   require("./models/order_product.model"),
-  require("./models/payment.model"),
   require("./models/product.model"),
   require("./models/user.model"),
   require("./models/photo.model"),

@@ -26,7 +26,7 @@ var basket = JSON.stringify([
 ]);
 
 var user_basket = nodeBase64.encode(basket);
-var merchant_oid = "IN" + microtime.now(); // Sipariş numarası: Her işlemde benzersiz olmalıdır!! Bu bilgi bildirim sayfanıza yapılacak bildirimde geri gönderilir.
+
 // Sayfada görüntülenecek taksit adedini sınırlamak istiyorsanız uygun şekilde değiştirin.
 // Sıfır (0) gönderilmesi durumunda yürürlükteki en fazla izin verilen taksit geçerli olur.
 var max_installment = "0";
@@ -43,11 +43,11 @@ var user_phone = "05555555555"; // Müşterinizin sitenizde kayıtlı veya form 
 // Başarılı ödeme sonrası müşterinizin yönlendirileceği sayfa
 // Bu sayfa siparişi onaylayacağınız sayfa değildir! Yalnızca müşterinizi bilgilendireceğiniz sayfadır!
 /* var merchant_ok_url = 'https://merlynclub.com/checkout-success'; */
-var merchant_ok_url = "http://127.0.0.1:5173/checkout-success";
+var merchant_ok_url =`${process.env.DOMAIN_ADD}/checkout-success`;
 // Ödeme sürecinde beklenmedik bir hata oluşması durumunda müşterinizin yönlendirileceği sayfa
 // Bu sayfa siparişi iptal edeceğiniz sayfa değildir! Yalnızca müşterinizi bilgilendireceğiniz sayfadır!
 /* var merchant_fail_url = 'https://merlynclub.com/'; */
-var merchant_fail_url = "http://127.0.0.1:5173/";
+var merchant_fail_url = `${process.env.DOMAIN_ADD}`;
 var timeout_limit = 30; // İşlem zaman aşımı süresi - dakika cinsinden
 var debug_on = 1; // Hata mesajlarının ekrana basılması için entegrasyon ve test sürecinde 1 olarak bırakın. Daha sonra 0 yapabilirsiniz.
 var lang = "tr"; // Türkçe için tr veya İngilizce için en gönderilebilir. Boş gönderilirse tr geçerli olur.
@@ -55,6 +55,7 @@ var lang = "tr"; // Türkçe için tr veya İngilizce için en gönderilebilir. 
 const router = express.Router();
 
 router.post("/create-payment", function (req, res) {
+  var merchant_oid = "IN" + microtime.now(); // Sipariş numarası: Her işlemde benzersiz olmalıdır!! Bu bilgi bildirim sayfanıza yapılacak bildirimde geri gönderilir.
   user_ip = req.ip;
   console.log(req.body);
   console.log(req.body.cart.cartItems);
@@ -115,6 +116,7 @@ router.post("/create-payment", function (req, res) {
         const newOrder = await models.order.create({
           total_price: req.body.cart.cartTotalAmount,
           userId: req.body.user.id,
+          payment_id: merchant_oid
         });
         /* console.log(newOrder, "newOrder"); */
         // iterate over the 'products' array and create an entry in the 'orderProduct' table for each product
@@ -158,8 +160,6 @@ router.post("/callback", async function (req, res) {
 
   console.log("callback");
   var callback = req.body;
-
-  console.log(req.body);
   // POST değerleri ile hash oluştur.
   paytr_token =
     callback.merchant_oid +
@@ -179,10 +179,11 @@ router.post("/callback", async function (req, res) {
   }
 
   if (callback.status == "success") {
-    console.log("success",req.body);
+    console.log("success:",req.body);
+    console.log("token:",token);
     try {
       // Find the order by orderId
-      const order = await models.order.findByPk(orderId);
+      const order = await models.order.findOne({where:{payment_id:merchant_oid}});
   
       if (!order) {
         return res.status(404).json({ error: "Order not found" });
@@ -192,7 +193,6 @@ router.post("/callback", async function (req, res) {
       order.payment_verify = true;
       await order.save();
   
-      return res.status(200).json({ message: "Order verified successfully" });
     } catch (error) {
       console.log(error);
       return res.status(500).json({ error: "Internal server error" });
@@ -205,3 +205,29 @@ router.post("/callback", async function (req, res) {
 });
 
 module.exports = router;
+
+
+/* {
+     hash: 'RLBSK9rktptGzQzgbExrfNlel2iQ6IQQsI1XwPjjsNc=',
+     merchant_oid: 'IN1688819003009087',
+     status: 'success',
+     total_amount: '12300',
+     payment_type: 'card',
+     payment_amount: '12300',
+     currency: 'TL',
+     installment_count: '1',
+     merchant_id: '342659',
+     test_mode: '1'
+   }
+   success {
+     hash: 'RLBSK9rktptGzQzgbExrfNlel2iQ6IQQsI1XwPjjsNc=',
+     merchant_oid: 'IN1688819003009087',
+     status: 'success',
+     total_amount: '12300',
+     payment_type: 'card',
+     payment_amount: '12300',
+     currency: 'TL',
+     installment_count: '1',
+     merchant_id: '342659',
+     test_mode: '1'
+   } */

@@ -22,6 +22,10 @@ module.exports = (sequelize) => {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
+      payment_id:{
+        type: DataTypes.STRING,
+        defaultValue: null,
+      },
     },
     {
       tableName: "order",

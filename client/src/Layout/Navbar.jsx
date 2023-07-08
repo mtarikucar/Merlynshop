@@ -81,29 +81,7 @@ function Navbar({ open, setOpen }) {
         <div className=" lg:sticky  xl:sticky md:sticky fixed  lg:top-0  xl:top-0 md:top-0  bottom-0 z-40 w-full h-16  flex bg-white border-t border-gray-200 ">
           <div className=" container mx-auto flex flex-row items-center max-w-screen-xl ">
             <ul className="flex lg:justify-start md:justify-start justify-between  xl:justify-start h-full w-full  font-medium mx-2 p-2 lg:space-x-10">
-              <li className="inline-flex flex-col items-center justify-center text-center  p-3  rounded-lg  hover:bg-gray-50  group">
-                <NavLink
-                  to="/"
-                  className={({ isActive, isPending }) =>
-                    isPending
-                      ? "text-red-400 text-center"
-                      : isActive
-                      ? " text-green-500 text-center "
-                      : "text-black text-center"
-                  }
-                >
-                  <HomeIcon className="text-center w-full text-2xl" />
-                  <span className="text-sm mb-2"> Anasayafa</span>
-
-                  <hr
-                    className={`${
-                      location.pathname == "/"
-                        ? "w-full h-0.5  bg-green-500 border-0 rounded "
-                        : "w-full h-1 hidden "
-                    }  `}
-                  />
-                </NavLink>
-              </li>
+              
 
               <li className="inline-flex flex-col items-center justify-center p-3 hover:bg-gray-50 group  rounded-lg  ">
                 <NavLink
@@ -128,52 +106,7 @@ function Navbar({ open, setOpen }) {
                   />
                 </NavLink>
               </li>
-              <li className="inline-flex flex-col items-center justify-center p-3 hover:bg-gray-50 group  rounded-lg ">
-                <NavLink
-                  to="/about"
-                  className={({ isActive, isPending }) =>
-                    isPending
-                      ? "text-red-400 text-center"
-                      : isActive
-                      ? " text-green-500 text-center"
-                      : "text-gray-800 text-center"
-                  }
-                >
-                  <InfoIcon className="text-center w-full text-2xl" />
-                  <span className="text-sm mb-2"> Hakkımızda</span>
-
-                  <hr
-                    className={`${
-                      location.pathname == "/about"
-                        ? "w-full h-0.5  bg-green-500 border-0 rounded "
-                        : "w-full h-1 hidden "
-                    }  `}
-                  />
-                </NavLink>
-              </li>
-              <li className="inline-flex flex-col items-center justify-center p-3 hover:bg-gray-50 group  rounded-lg  ">
-                <NavLink
-                  to="/contact"
-                  className={({ isActive, isPending }) =>
-                    isPending
-                      ? "text-red-400 text-center"
-                      : isActive
-                      ? " text-green-500 text-center "
-                      : "text-gray-800 text-center"
-                  }
-                >
-                  <ContactMailIcon className="text-center w-full text-2xl" />
-                  <span className="text-sm mb-2"> İletişim</span>
-
-                  <hr
-                    className={`${
-                      location.pathname == "/contact"
-                        ? "w-full h-0.5  bg-green-500 border-0 rounded "
-                        : "w-full h-1 hidden "
-                    }  `}
-                  />
-                </NavLink>
-              </li>
+              
             </ul>
           </div>
         </div>
