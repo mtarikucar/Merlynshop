@@ -26,7 +26,7 @@ var basket = JSON.stringify([
 ]);
 
 var user_basket = nodeBase64.encode(basket);
-var merchant_oid = "IN" + microtime.now(); // Sipariş numarası: Her işlemde benzersiz olmalıdır!! Bu bilgi bildirim sayfanıza yapılacak bildirimde geri gönderilir.
+
 // Sayfada görüntülenecek taksit adedini sınırlamak istiyorsanız uygun şekilde değiştirin.
 // Sıfır (0) gönderilmesi durumunda yürürlükteki en fazla izin verilen taksit geçerli olur.
 var max_installment = "0";
@@ -55,6 +55,7 @@ var lang = "tr"; // Türkçe için tr veya İngilizce için en gönderilebilir. 
 const router = express.Router();
 
 router.post("/create-payment", function (req, res) {
+  var merchant_oid = "IN" + microtime.now(); // Sipariş numarası: Her işlemde benzersiz olmalıdır!! Bu bilgi bildirim sayfanıza yapılacak bildirimde geri gönderilir.
   user_ip = req.ip;
   console.log(req.body);
   console.log(req.body.cart.cartItems);
