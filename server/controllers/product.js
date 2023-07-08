@@ -72,7 +72,7 @@ async function getProductById(req, res, next) {
   try {
     const foundProduct = await models.product.findByPk(ProductId, {
 
-      include: [{ model: models.category }, { model: models.photo }],
+      include: [{ model: models.category }, { model: models.photo },{ model: models.comment, include: [models.user] }],
     });
     if (!foundProduct) {
       return res.status(404).json({ message: "Product not found" });

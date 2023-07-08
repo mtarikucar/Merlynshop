@@ -7,13 +7,13 @@ import { addToCart, decreaseCart } from "../store/cartSlice";
 import OfferModal from "../components/products/OfferModal"
 
 function ProductDetail() {
-  
-  
+
+
   const [openOffer, setOpenOffer] = useState(false);
   const [quantity, setQuatity] = useState(1);
   const dispatch = useDispatch();
   const hundleAddToCart = (product) => {
-    dispatch(addToCart({...product,cartQuantity:quantity}));
+    dispatch(addToCart({ ...product, cartQuantity: quantity }));
     setQuatity(0)
   };
 
@@ -42,8 +42,8 @@ function ProductDetail() {
 
   console.log(data);
   return (
-    <section className="py-12 sm:py-16">
-      <OfferModal openOffer={openOffer} setOpenOffer={setOpenOffer} price={data.price}/>
+    <section className="py-4 sm:py-6">
+      <OfferModal openOffer={openOffer} setOpenOffer={setOpenOffer} price={data.price} />
       <div className="container mx-auto px-4">
         <div className="lg:col-gap-12 xl:col-gap-16 mt-8 grid grid-cols-1 gap-12 lg:mt-12 lg:grid-cols-5 lg:gap-16">
           <div className="lg:col-span-3 lg:row-end-1">
@@ -120,19 +120,54 @@ function ProductDetail() {
 
             <h2 className=" text-base text-gray-900">{data.description}</h2>
 
-            <div className="sm:order-1 mt-10">
+            <h2 className="mt-4 text-base text-gray-900">Coffee Type:</h2>
+            <div className="mt-3 flex select-none flex-wrap items-center gap-1">
+              <label className="">
+                <input type="radio" name="type" value="Powder" className="peer sr-only" />
+                <p className="peer-checked:bg-green-500 peer-checked:text-white rounded-lg border border-green-500 px-6 py-2 font-bold">Powder</p>
+              </label>
+              <label className="">
+                <input type="radio" name="type" value="Whole Bean" className="peer sr-only" />
+                <p className="peer-checked:bg-green-500 peer-checked:text-white rounded-lg border border-green-500 px-6 py-2 font-bold">Whole Bean</p>
+              </label>
+              <label className="">
+                <input type="radio" name="type" value="Groud" className="peer sr-only" />
+                <p className="peer-checked:bg-green-500 peer-checked:text-white rounded-lg border border-green-500 px-6 py-2 font-bold">Groud</p>
+              </label>
+            </div>
+
+            <h2 className="mt-2 text-base text-gray-900">Choose subscription:</h2>
+            <div className="mt-3 flex select-none flex-wrap items-center gap-1">
+              <label className="">
+                <input type="radio" name="subscription" value="4 Months" className="peer sr-only" />
+                <p className="peer-checked:bg-green-500 peer-checked:text-white rounded-lg border border-green-500 px-6 py-2 font-bold">4 Months</p>
+
+              </label>
+              <label className="">
+                <input type="radio" name="subscription" value="8 Months" className="peer sr-only" />
+                <p className="peer-checked:bg-green-500 peer-checked:text-white rounded-lg border border-green-500 px-6 py-2 font-bold">8 Months</p>
+
+              </label>
+              <label className="">
+                <input type="radio" name="subscription" value="12 Months" className="peer sr-only" />
+                <p className="peer-checked:bg-green-500 peer-checked:text-white rounded-lg border border-green-500 px-6 py-2 font-bold">12 Months</p>
+
+              </label>
+            </div>
+
+            <div className="sm:order-1 mt-4">
               <div className="flex h-8  text-gray-600">
                 <button
-                  onClick={() => setQuatity(quantity-1)}
+                  onClick={() => setQuatity(quantity - 1)}
                   className="flex items-center justify-center rounded-l-md bg-gray-200 px-4 transition hover:bg-green-500 hover:text-white"
                 >
                   -
                 </button>
                 <div className="flex  items-center justify-center bg-gray-100 px-4 text-xs uppercase transition">
-                {quantity}
+                  {quantity}
                 </div>
                 <button
-                  onClick={() => setQuatity(quantity+1)}
+                  onClick={() => setQuatity(quantity + 1)}
                   className="flex items-center justify-center rounded-r-md bg-gray-200 px-4 transition hover:bg-green-500 hover:text-white"
                 >
                   +
@@ -140,7 +175,7 @@ function ProductDetail() {
               </div>
             </div>
 
-            <div className="mt-10 flex flex-col items-center justify-between space-y-4 border-t border-b py-4 sm:flex-row sm:space-y-0">
+            <div className="mt-4 flex flex-col items-center justify-between space-y-4 border-t border-b py-4 sm:flex-row sm:space-y-0">
               <div className="flex items-end">
                 {data.discountedPrice ? (
                   <>
@@ -188,7 +223,7 @@ function ProductDetail() {
                 type="button"
                 className="m-2 inline-flex items-center justify-center rounded-md border-2 border-transparent bg-green-500 bg-none px-12 py-3 text-center text-base font-bold text-white hover:border-green-500 hover:text-green-500 transition-all duration-200 ease-in-out focus:shadow hover:bg-white"
               >
-                <HandshakeIcon className="mr-2 block h-7 w-7 align-middle "/>
+                <HandshakeIcon className="mr-2 block h-7 w-7 align-middle " />
                 pazarlık yap
               </button>
             </div>
@@ -234,47 +269,80 @@ function ProductDetail() {
             </ul>
           </div>
 
-          <div className="lg:col-span-3">
+
+          <div className="lg:col-span-4 w-full">
             <div className="border-b border-gray-300">
               <nav className="flex gap-4">
-                <a
-                  href="#"
-                  title=""
-                  className="border-b-2 border-gray-900 py-4 text-sm font-medium text-gray-900 hover:border-gray-400 hover:text-gray-800"
-                >
-                  açılamalar
-                </a>
 
                 <a
                   href="#"
                   title=""
                   className="inline-flex items-center border-b-2 border-transparent py-4 text-sm font-medium text-gray-600"
                 >
-                  geri dönüşler
+                  Yorumlar
                   <span className="ml-2 block rounded-full bg-gray-500 px-2 py-px text-xs font-bold text-gray-100">
-                    1,209
+                    {" "}
+                    1,209{" "}
                   </span>
                 </a>
               </nav>
             </div>
 
-            <div className="mt-8 flow-root sm:mt-12">
-              <h1 className="text-3xl font-bold">kapına kadar teslim</h1>
-              <p className="mt-4">
-                Türkiye'nin 81 iline kapına kadar teslim, kolay iade 
-              </p>
-              <h1 className="mt-8 text-3xl font-bold">
-                hakiki deri erkek ayakkabı
-              </h1>
-              <p className="mt-4">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio
-                numquam enim facere.
-              </p>
-              <p className="mt-4">
-                Amet consectetur adipisicing elit. Optio numquam enim facere.
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore
-                rerum nostrum eius facere, ad neque.
-              </p>
+            <div class="flex items-center justify-center max-w-lg">
+              {/* <form
+
+                onSubmit={formik.handleSubmit}
+                class="w-full max-w-xl bg-white rounded-lg px-4 pt-2">
+                <div class="flex flex-wrap -mx-3 mb-6">
+                  <h2 class="px-4 pt-3 pb-2 text-gray-800 text-lg">Yorum ekle</h2>
+                  <div class="w-full md:w-full px-3 mb-2 mt-2">
+
+                    <textarea
+
+                      id="content"
+                      name="content"
+                      type="textarea"
+
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.content}
+
+                      class="bg-gray-100 rounded border border-rose-500 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
+                      placeholder='Yorumunu yaz' required></textarea>
+                  </div>
+                  <div class="w-full md:w-full flex items-start md:w-full px-3">
+
+                    <div class="-mr-1">
+                      <input type='submit' class="bg-white text-gray-700 font-medium py-1 px-4 border border-rose-500 rounded-lg tracking-wide mr-1 hover:text-white hover:bg-rose-500" value='Paylaş' />
+                    </div>
+                  </div>
+                </div>
+              </form> */}
+            </div>
+
+            <div className='mt-3 w-full'>
+              {
+                data?.comments.map((comment, key) => (
+
+
+                  <div key={key} class="flex  items-center w-full ">
+                    <div class="relative w-full grid grid-cols-1 gap-4 p-4 mb-8 border border-green-500 rounded-lg bg-white shadow-lg">
+                      <div class="relative flex gap-4">
+                       
+                        <div class="flex  w-full justify-between">
+                          <div class="flex flex-row justify-between">
+                            <p class="relative text-xl whitespace-nowrap truncate overflow-hidden">{comment.user.name}</p>
+                            <a class="text-gray-500 text-xl" href="#"><i class="fa-solid fa-trash"></i></a>
+                          </div>
+                          <p class="text-gray-400 text-sm">{comment.createdAt}</p>
+                        </div>
+                      </div>
+                      <p class="-mt-4 text-gray-500">{comment.content}</p>
+                    </div>
+                  </div>
+
+                ))
+              }
             </div>
           </div>
         </div>

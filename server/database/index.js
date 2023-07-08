@@ -33,6 +33,7 @@ const modelDefiners = [
   require("./models/product.model"),
   require("./models/user.model"),
   require("./models/photo.model"),
+  require("./models/comment.model")
 ];
 
 // We define all models according to their files.

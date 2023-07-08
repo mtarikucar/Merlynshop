@@ -1,8 +1,9 @@
+
 const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
   sequelize.define(
-    "category",
+    "comment",
     {
       id: {
         allowNull: false,
@@ -10,15 +11,16 @@ module.exports = (sequelize) => {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
       },
-      name: {
-        type: DataTypes.STRING,
+      content: {
         allowNull: false,
+        type: DataTypes.STRING,
       }
     },
     {
-      tableName: "categories",
-      
-      timestamps: true,
+      tableName: "comment",
+      createdAt: true,
+      updatedAt: true
     }
   );
+   
 };

@@ -1,7 +1,5 @@
-
-
 function applyRelationships(sequelize) {
-  const { photo, order, user, payment, product, category, location } =
+  const { photo, order, user, product, feature, category, location, comment } =
     sequelize.models;
 
   //order
@@ -9,15 +7,24 @@ function applyRelationships(sequelize) {
   product.belongsToMany(order, { through: "order_product" });
   user.hasMany(order);
   order.belongsTo(user);
-  payment.belongsTo(order);
-  order.hasOne(payment);
   order.hasOne(location);
 
   //product
   product.belongsTo(category);
   category.hasMany(product);
+
   photo.belongsTo(product);
   product.hasMany(photo);
+
+  comment.belongsTo(product);
+
+  product.hasMany(comment)
+  comment.belongsTo(user)
+  user.hasMany(comment)
+
+
+/*   feature.belongsToMany(product, { through: "product_feature" });
+  product.belongsToMany(feature, { through: "product_feature" }); */
 }
 
 module.exports = { applyRelationships };
