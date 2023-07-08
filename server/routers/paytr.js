@@ -115,6 +115,7 @@ router.post("/create-payment", function (req, res) {
         const newOrder = await models.order.create({
           total_price: req.body.cart.cartTotalAmount,
           userId: req.body.user.id,
+          payment_id: merchant_oid
         });
         /* console.log(newOrder, "newOrder"); */
         // iterate over the 'products' array and create an entry in the 'orderProduct' table for each product
@@ -181,7 +182,7 @@ router.post("/callback", async function (req, res) {
     console.log("token:",token);
     try {
       // Find the order by orderId
-      const order = await models.order.findByPk(orderId);
+      const order = await models.order.findOne({where:{payment_id:merchant_oid}});
   
       if (!order) {
         return res.status(404).json({ error: "Order not found" });
@@ -191,7 +192,6 @@ router.post("/callback", async function (req, res) {
       order.payment_verify = true;
       await order.save();
   
-      return res.status(200).json({ message: "Order verified successfully" });
     } catch (error) {
       console.log(error);
       return res.status(500).json({ error: "Internal server error" });

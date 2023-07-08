@@ -1,13 +1,12 @@
 const { models } = require("../database/");
 
 async function createOrder(prop) {
-  const { status, total_price, products, userId, location } = prop;
+  const { status,  products, userId, location } = prop;
 
   try {
     // create an order in the 'order' table
     const newOrder = await models.order.create({
       status: status,
-      total_price: total_price,
       userId: userId,
     });
     console.log(newOrder, "newOrder");
