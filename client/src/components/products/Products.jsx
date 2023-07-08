@@ -44,14 +44,15 @@ function Products({ categoryId, minPrice, maxPrice, maxProduct }) {
 
 
   return (
-    < div className={`grid gap-2 grid-cols-2 md:grid-cols-3 lg:grid-cols-4  `} >
+    <>
       {
         products &&
         products?.map((product, key) => (
           <Product product={product} key={key} />
         ))
       }
-    </div >
+    </>
+
   )
 }
 

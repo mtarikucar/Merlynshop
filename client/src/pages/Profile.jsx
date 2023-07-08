@@ -49,12 +49,12 @@ function Profile() {
   console.log(orders);
 
   return (
-    <div className="  md:grid lg:grid  lg:grid-cols-12 w-full h-full lg:p-6">
+    <div className="  md:grid lg:grid  lg:grid-cols-12 w-full h-full lg:py-6">
       {close ? (
         <DeleteOrderModal close={close} setClose={setClose} orderId={orderId} />
       ) : null}
       <div className="col-span-3  h-full  ">
-        <div className="m-4 h-full">
+        <div className="my-4 h-full">
           <div className="rounded-lg border bg-white px-4 pt-4 pb-8 shadow-lg">
             <button onClick={() => setOnClose(true)} className="btn ">
               <SettingsIcon />{" "}

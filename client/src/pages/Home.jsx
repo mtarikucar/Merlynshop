@@ -22,7 +22,11 @@ function Home() {
         <img src="/m3.png" />
         <img src="/m4.png" />
       </Carousel>
-      <Products maxProduct={2} />
+      < div className={`grid gap-2 grid-cols-2 md:grid-cols-3 lg:grid-cols-4  `} >
+
+        <Products maxProduct={2} />
+      </div >
+
 
       {/* <HomeAbout /> */}
 

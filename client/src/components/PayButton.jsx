@@ -11,9 +11,9 @@ const PayButton = ({ cart }) => {
   const handleCheckout = (values) => {
     axios
       .post(`${import.meta.env.VITE_BASE_URL}/paytr/create-payment`, {
-        cart:cart,
+        cart: cart,
         user: user,
-        values:values
+        values: values
       })
       .then((response) => {
         console.log(response);
@@ -26,7 +26,7 @@ const PayButton = ({ cart }) => {
 
   const initialValues = {
     name: "",
-  
+
     address: "",
     phoneNumber: ""
   };
@@ -57,64 +57,73 @@ const PayButton = ({ cart }) => {
           allowTransparency="true"
         ></iframe>
       ) : (
-        <form onSubmit={formik.handleSubmit} className="space-y-4">
-          <div className="flex flex-col">
-            <label htmlFor="name" className="mb-1">
-              İsim
-            </label>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              onChange={formik.handleChange}
-              value={formik.values.name}
-              className="border border-gray-300 rounded-md px-3 py-2"
-            />
-            {formik.touched.name && formik.errors.name && (
-              <div className="text-red-500">{formik.errors.name}</div>
-            )}
-          </div>
-         
-          <div className="flex flex-col">
-            <label htmlFor="address" className="mb-1">
-              Adres
-            </label>
-            <input
-              id="address"
-              name="address"
-              type="text"
-              onChange={formik.handleChange}
-              value={formik.values.address}
-              className="border border-gray-300 rounded-md px-3 py-2"
-            />
-            {formik.touched.address && formik.errors.address && (
-              <div className="text-red-500">{formik.errors.address}</div>
-            )}
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="phoneNumber" className="mb-1">
-              Telefon Numarası
-            </label>
-            <input
-              id="phoneNumber"
-              name="phoneNumber"
-              type="text"
-              onChange={formik.handleChange}
-              value={formik.values.phoneNumber}
-              className="border border-gray-300 rounded-md px-3 py-2"
-            />
-            {formik.touched.phoneNumber && formik.errors.phoneNumber && (
-              <div className="text-red-500">{formik.errors.phoneNumber}</div>
-            )}
-          </div>
-          <button
-            type="submit"
-            className="block w-full rounded-md bg-green-500 p-2.5 text-sm text-white transition hover:shadow-lg"
-            disabled={!formik.isValidating && Object.values(formik.values).some((value) => !value)}
-          >
-            Ödemeyi tamamla
-          </button>
-        </form>
+        <div className="mx-auto w-full max-w-lg">
+          <h1 className="relative text-2xl font-medium text-gray-700 sm:text-3xl">Ödeme Bilgileri<span className="mt-2 block h-1 w-10 bg-green-600 sm:w-20"></span></h1>
+          <form onSubmit={formik.handleSubmit} className="mt-10 flex flex-col space-y-4">
+
+            <div >
+              <label for="name" className="text-xs font-semibold text-gray-500">
+                İsim
+              </label>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                onChange={formik.handleChange}
+                value={formik.values.name}
+                className="mt-1 block w-full rounded border-gray-300 bg-gray-50 py-3 px-4 text-sm placeholder-gray-300 shadow-sm outline-none transition focus:ring-2 focus:ring-green-500"
+              />
+
+
+              {formik.touched.name && formik.errors.name && (
+                <div className="text-red-500">{formik.errors.name}</div>
+              )}
+            </div>
+
+            <div className="">
+              <label htmlFor="address" className="text-xs font-semibold text-gray-500">
+                Adres
+              </label>
+              <input
+                id="address"
+                name="address"
+                type="text"
+                onChange={formik.handleChange}
+                value={formik.values.address}
+                className="block w-full rounded border-gray-300 bg-gray-50 py-3 px-4 pr-10 text-sm placeholder-gray-300 shadow-sm outline-none transition focus:ring-2 focus:ring-green-500"
+              />
+              {formik.touched.address && formik.errors.address && (
+                <div className="text-red-500">{formik.errors.address}</div>
+              )}
+            </div>
+            <div className="">
+              <label htmlFor="phoneNumber" className="text-xs font-semibold text-gray-500">
+                Telefon Numarası
+              </label>
+              <input
+                id="phoneNumber"
+                name="phoneNumber"
+                type="text"
+                onChange={formik.handleChange}
+                value={formik.values.phoneNumber}
+                className="block w-full rounded border-gray-300 bg-gray-50 py-3 px-4 pr-10 text-sm placeholder-gray-300 shadow-sm outline-none transition focus:ring-2 focus:ring-green-500"
+              />
+              {formik.touched.phoneNumber && formik.errors.phoneNumber && (
+                <div className="text-red-500">{formik.errors.phoneNumber}</div>
+              )}
+            </div>
+            <p className="mt-10 text-center text-sm font-semibold text-gray-500">Bu siparişi vererek şunları kabul etmiş olursunuz:
+              <a href="#" className="whitespace-nowrap text-green-400 underline hover:text-green-500">Mesafeli Satiş Sözleşmesi</a>
+            </p>
+            <button
+              type="submit"
+              className="mt-4 inline-flex w-full items-center justify-center rounded bg-green-600 py-2.5 px-4 text-base font-semibold tracking-wide text-white text-opacity-80 outline-none ring-offset-2 transition hover:text-opacity-100 focus:ring-2 focus:ring-green-500 sm:text-lg"
+              disabled={!formik.isValidating && Object.values(formik.values).some((value) => !value)}
+            >
+              Ödemeyi tamamla
+            </button>
+          </form>
+        </div>
       )}
     </>
   );

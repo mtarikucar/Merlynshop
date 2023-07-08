@@ -12,8 +12,8 @@ function ProductPage() {
   const [sizeFilter, setSizeFilter] = useState()
   const [isFilterVisible, setIsFilterVisible] = useState(false);
 
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(100);
+  const [minPrice, setMinPrice] = useState();
+  const [maxPrice, setMaxPrice] = useState();
 
   const fetchCategories = async () => {
     const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/category`);
@@ -27,9 +27,9 @@ function ProductPage() {
   } = useQuery("categories", fetchCategories);
 
   const handleCategory = (category) => {
- 
-      setCategoryFilter(category)
-  
+
+    setCategoryFilter(category)
+
   }
 
 
@@ -40,7 +40,7 @@ function ProductPage() {
   const handleResetFilter = () => {
     setMinPrice(null),
       setMaxPrice(null),
-      setCategoryFilter(null)
+      setCategoryFilter()
 
 
   };
@@ -52,7 +52,7 @@ function ProductPage() {
 
   console.log(categories);
   return (
-    <div className="bg-white shadow-xl border-2 lg:m-8 xl:m-8 rounded-lg">
+    <div className="bg-white shadow-xl border-2 lg:my-4 xl:my-6 rounded-lg">
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col lg:flex-row">
           <div className={`lg:w-1/5 pr-4 `}>
@@ -74,7 +74,7 @@ function ProductPage() {
 
             <div className={`lg:flex flex-col border-t border-gray-200 lg:border-t-0 ${!isFilterVisible ? 'flex' : 'hidden'}`}  >
               <div className="w-full">
-                <div className="block w-full bg-gray-50 px-5 py-3 text-xs font-medium">Type</div>
+                <div className="block w-full bg-gray-50 px-5 py-3 text-xs font-medium">Fiyat</div>
 
 
                 <div className="p-4 space-y-4">
@@ -83,30 +83,28 @@ function ProductPage() {
                       Min:
                     </label>
                     <input
-                      type="range"
+                      type="text"
                       id="minPrice"
-                      min={0}
-                      max={1000}
+                      placeholder='0'
                       value={minPrice}
                       onChange={(e) => setMinPrice(Number(e.target.value))}
-                      className="w-60 mr-2"
+                      className="w-full mr-2 rounded-md"
                     />
-                    <span>{minPrice}</span>
+
                   </div>
                   <div className="flex items-center">
                     <label htmlFor="maxPrice" className="mr-2">
                       Max:
                     </label>
                     <input
-                      type="range"
+                      type="text"
                       id="maxPrice"
-                      min={0}
-                      max={1000}
+                      placeholder='100'
                       value={maxPrice}
                       onChange={(e) => setMaxPrice(Number(e.target.value))}
-                      className="w-60 mr-2"
+                      className="w-full mr-2 rounded-md"
                     />
-                    <span>{maxPrice}</span>
+
                   </div>
 
                 </div>
@@ -117,27 +115,40 @@ function ProductPage() {
 
 
               <div className="w-full">
-                <div className="block w-full bg-gray-50 px-5 py-3 text-xs font-medium">Category</div>
+                <div className="block w-full bg-gray-50 px-5 py-3 text-xs font-medium">Kategori</div>
                 <div className="space-y-2 px-5 py-6">
+                  <input
+                  
+                  /* {
+                    categoryFilter && checked
+                  } */
+                    id={"Hepsi"}
+                    type="radio"
+                    name="category"
+                    value={""}
+                    className="h-5 w-5 rounded checked:text-green-500  border-gray-300"
+                    onChange={(e) => handleCategory(e.target.value)}
+                  />
+                   <label htmlFor={"Hepsi"} className="ml-3 text-sm font-medium">Hepsi</label>
                   {
                     categories.map((category) => (
-                      <div key={category.id} className="flex c items-center">
+                      <div key={category.id} className="flex  items-center">
                         <input
-                        
+
                           id={category.id}
-                          type="radio" 
+                          type="radio"
                           name="category"
                           value={category.id}
-                          className="h-5 w-5 rounded checked:text-green-500 border-gray-300"
+                          className="h-5 w-5 rounded checked:text-green-500  border-gray-300"
                           onChange={(e) => handleCategory(e.target.value)}
                         />
-                        <label htmlFor={category.id} className="ml-3 text-sm font-medium">{category.name}</label> 
+                        <label htmlFor={category.id} className="ml-3 text-sm font-medium">{category.name}</label>
                       </div>
                     ))
                   }
 
                   <div className="pt-2">
-                    <button onClick={handleResetFilter} type="button" className="text-xs p-2 text-gray-500 hover:text-green-600">Reset Price</button>
+                    <button onClick={handleResetFilter} type="button" className="text-xs p-2 text-gray-500 hover:text-green-600">Filtreyi temizle</button>
                   </div>
                 </div>
               </div>
@@ -147,7 +158,11 @@ function ProductPage() {
             </div>
           </div>
           <div className="lg:w-4/5">
-            <Products categoryId={categoryFilter} size={sizeFilter} minPrice={minPrice} maxPrice={maxPrice} />
+            < div className={`grid gap-2 grid-cols-2 md:grid-cols-3 lg:grid-cols-3  `} >
+
+              <Products categoryId={categoryFilter} size={sizeFilter} minPrice={minPrice} maxPrice={maxPrice} />
+            </div >
+
           </div>
         </div>
       </div>
