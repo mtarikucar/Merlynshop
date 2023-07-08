@@ -183,7 +183,7 @@ router.post("/callback", async function (req, res) {
     console.log("token:",token);
     try {
       // Find the order by orderId
-      const order = await models.order.findOne({where:{payment_id:merchant_oid}});
+      const order = await models.order.findOne({where:{payment_id:callback.merchant_oid}});
   
       if (!order) {
         return res.status(404).json({ error: "Order not found" });
