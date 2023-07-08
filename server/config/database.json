@@ -14,10 +14,10 @@
       "dialect": "postgres"
     },
     "production": {
-      "username": "your-username",
-      "password": "your-password",
-      "database": "your-database-name",
-      "host": "your-host",
+      "username": "doadmin",
+      "password": "AVNS_gh6RFrPS9rxVLhMSrkW",
+      "database": "defaultdb",
+      "host": "merlynshop-do-user-12431554-0.b.db.ondigitalocean.com",
       "dialect": "postgres"
     }
   }
