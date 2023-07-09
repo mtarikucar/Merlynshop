@@ -183,20 +183,30 @@ router.post("/callback", async function (req, res) {
     console.log("token:",token);
     try {
       // Find the order by orderId
-      const order = await models.order.findOne({where:{payment_id:callback.merchant_oid}});
-  
+      const order = await models.order.findOne({ where: { payment_id: callback.merchant_oid } });
+    
       if (!order) {
         return res.status(404).json({ error: "Order not found" });
       }
-  
+    
+      // Decrease quantity for each product in the order
+      const products = await order.getProducts();
+      for (const product of products) {
+        if (product.order_product.quantity > 1) {
+          product.order_product.quantity -= 1;
+          await product.order_product.save();
+        }
+      }
+    
       // Set the payment_verify field to true
       order.payment_verify = true;
       await order.save();
-  
+    
     } catch (error) {
       console.log(error);
       return res.status(500).json({ error: "Internal server error" });
     }
+    
   } else {
     //basarisiz
   }

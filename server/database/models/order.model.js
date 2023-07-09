@@ -29,8 +29,6 @@ module.exports = (sequelize) => {
     },
     {
       tableName: "order",
-      createdAt: true,
-      updatedAt: true,
       timestamps: true,
     }
   );

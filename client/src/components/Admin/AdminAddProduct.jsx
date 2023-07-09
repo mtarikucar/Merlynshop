@@ -9,7 +9,8 @@ import { storage } from "../../firebase"; // Firebase yapılandırmanızı içer
 import axios from "axios";
 // Firebase sürüm 9.0.0 ve üzeri için güncellenmiş import
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import AdminCategoryForm from "./AdminCategoryForm";
+import AdminCategory from "./AdminCategory";
+import AdminFeature from "./AdminFeature";
 import { useSelector } from "react-redux";
 
 function AdminAddProduct({ open, setOpen }) {
@@ -18,6 +19,7 @@ function AdminAddProduct({ open, setOpen }) {
   const { user, token } = useSelector((state) => state.auth);
 
   const [openCategory, setOpenCategory] = useState(false);
+  const [openFeature, setOpenFeature] = useState(false);
   const queryClient = useQueryClient();
 
   const uploadToFirebase = async (image) => {
@@ -62,19 +64,38 @@ function AdminAddProduct({ open, setOpen }) {
     formik.setFieldValue('discountedPrice','');
     formik.setFieldValue('quantity', '');
     formik.setFieldValue('categoryId', '');
+    formik.setFieldValue('featureId', '');
     setPreviews([]);
     setThumbnailPreview('');
   }, [open]);
-  const fetchCategories = async () => {
-    const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/category`);
-    return res.data;
-  };
 
+  const fetchCategoriesAndFeatures = async () => {
+    try {
+      const categoryPromise = axios.get(`${import.meta.env.VITE_BASE_URL}/category`);
+      const featurePromise = axios.get(`${import.meta.env.VITE_BASE_URL}/feature`);
+  
+      const [categoryResponse, featureResponse] = await axios.all([categoryPromise, featurePromise]);
+  
+      const categories = categoryResponse.data;
+      const features = featureResponse.data;
+  
+      // İşlemlerinizi burada gerçekleştirin
+  
+      return {
+        categories,
+        features,
+      };
+    } catch (error) {
+      // Hata yönetimini burada gerçekleştirin
+    }
+  };
+  
   const {
-    data: categories,
+    data: categoriesAndFeatures,
     isLoading,
     isError,
-  } = useQuery(["categories"], fetchCategories);
+  } = useQuery([" "], fetchCategoriesAndFeatures);
+  
 
   const formik = useFormik({
     initialValues: {
@@ -278,19 +299,59 @@ function AdminAddProduct({ open, setOpen }) {
                                 className="w-full p-2 border border-gray-300 rounded-l focus:outline-none focus:border-indigo-500"
                               >
                                 <option value="">Select a category</option>
-                                {categories.map((category) => (
+                                {categoriesAndFeatures.categories.map((category) => (
                                   <option key={category.id} value={category.id}>
                                     {category.name}
                                   </option>
                                 ))}
                               </select>
                             )}
-                            <AdminCategoryForm
+                            <AdminCategory
                               openCategory={openCategory}
                               setOpenCategory={setOpenCategory}
                             />
                             <a
                               onClick={() => setOpenCategory(true)}
+                              className="py-2 px-4 cursor-pointer text-white bg-green-500 rounded-r hover:bg-white hover:text-black text-xl"
+                            >
+                              +
+                            </a>
+                          </div>
+                        </div>
+                        <div className="mb-4">
+                          <label
+                            htmlFor="featureId"
+                            className="block mb-2 text-sm font-medium text-gray-600"
+                          >
+                            Features:
+                          </label>
+                          <div className="flex flex-row">
+                            {isLoading ? (
+                              <p>Loading features...</p>
+                            ) : isError ? (
+                              <p>Error loading features</p>
+                            ) : (
+                              <select
+                                id="featureId"
+                                name="featureId"
+                                value={formik.values.featureId}
+                                onChange={formik.handleChange}
+                                className="w-full p-2 border border-gray-300 rounded-l focus:outline-none focus:border-indigo-500"
+                              >
+                                <option value="">Select a feature</option>
+                                {categoriesAndFeatures.features.map((feature) => (
+                                  <option key={feature.id} value={feature.id}>
+                                    {feature.name}
+                                  </option>
+                                ))}
+                              </select>
+                            )}
+                            <AdminFeature
+                             openFeature={openFeature}
+                             setOpenFeature={setOpenFeature}
+                           />
+                           <a
+                              onClick={() => setOpenFeature(true)}
                               className="py-2 px-4 cursor-pointer text-white bg-green-500 rounded-r hover:bg-white hover:text-black text-xl"
                             >
                               +

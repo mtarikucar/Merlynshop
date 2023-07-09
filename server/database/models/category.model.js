@@ -17,9 +17,6 @@ module.exports = (sequelize) => {
     },
     {
       tableName: "categories",
-      createaAt: true,
-      updatedAt: true,
-      timestamps: true,
     }
   );
 };

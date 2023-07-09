@@ -1,9 +1,19 @@
 const { models } = require("../database/");
-const { Op } = require('sequelize');
+const { Op } = require("sequelize");
+
 // Create a new Product
 async function createProduct(req, res, next) {
-  const { photos, thumbnail, name, description, price, quantity, size, categoryId, discountedPrice } =
-    req.body;
+  const {
+    photos,
+    thumbnail,
+    name,
+    description,
+    price,
+    features,
+    size,
+    categoryId,
+    discountedPrice,
+  } = req.body;
   try {
     await models.product
       .create({
@@ -11,10 +21,9 @@ async function createProduct(req, res, next) {
         thumbnail: thumbnail,
         description: description,
         price: price,
-        quantity: quantity,
         categoryId: categoryId,
         size: size,
-        discountedPrice: discountedPrice
+        discountedPrice: discountedPrice,
       })
       .then((newProduct) => {
         photos.forEach(async (element) => {
@@ -23,7 +32,17 @@ async function createProduct(req, res, next) {
             productId: newProduct.id,
           });
         });
-        res.status(201).json(newProduct);
+      })
+      .then((newProduct) => {
+        features.forEach(async (element) => {
+          await models.product_feature.create({
+            featureId: elment.feaetureId,
+            productId: newProduct.id,
+            value: element.value,
+            quantity: element.quantity,
+          });
+          res.status(201).json(newProduct);
+        });
       });
   } catch (err) {
     next(err);
@@ -42,15 +61,15 @@ async function getAllProducts(req, res, next) {
   }
   if (minPrice && maxPrice) {
     where.price = {
-      [Op.between]: [minPrice, maxPrice]
+      [Op.between]: [minPrice, maxPrice],
     };
   } else if (minPrice) {
     where.price = {
-      [Op.gte]: minPrice
+      [Op.gte]: minPrice,
     };
   } else if (maxPrice) {
     where.price = {
-      [Op.lte]: maxPrice
+      [Op.lte]: maxPrice,
     };
   }
 
@@ -71,8 +90,11 @@ async function getProductById(req, res, next) {
   const ProductId = req.params.id;
   try {
     const foundProduct = await models.product.findByPk(ProductId, {
-
-      include: [{ model: models.category }, { model: models.photo }],
+      include: [
+        { model: models.category },
+        { model: models.photo },
+        { model: models.product_feature, include: [models.feature] }, // Include product features and related features
+      ],
     });
     if (!foundProduct) {
       return res.status(404).json({ message: "Product not found" });
@@ -83,10 +105,21 @@ async function getProductById(req, res, next) {
   }
 }
 
+
 async function updateProductById(req, res, next) {
   console.log(req.body);
   const productId = req.params.id;
-  const { photos, thumbnail, name, description, price, quantity, size, categoryId, discountedPrice } =req.body;
+  const {
+    photos,
+    thumbnail,
+    name,
+    description,
+    price,
+    quantity,
+    size,
+    categoryId,
+    discountedPrice,
+  } = req.body;
   try {
     const updatedProduct = await models.product.findOne({
       where: { id: productId },
@@ -104,7 +137,7 @@ async function updateProductById(req, res, next) {
       quantity: quantity || updatedProduct.quantity,
       categoryId: categoryId || updatedProduct.categoryId,
       size: size || updatedProduct.size,
-      discountedPrice: discountedPrice || updatedProduct.discountedPrice
+      discountedPrice: discountedPrice || updatedProduct.discountedPrice,
     });
 
     // Update product photos

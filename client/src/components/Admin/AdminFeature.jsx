@@ -1,19 +1,22 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-function AdminCategoryForm({ openCategory, setOpenCategory }) {
+
+
+function AdminFeature({ openFeature, setOpenFeature }) {
 
   const { user, token } = useSelector((state) => state.auth);
   const queryClient = useQueryClient();
 
-  const [newCategoryName, setNewCategoryName] = useState("");
-  const createCategory = async (newCategory) => {
+  const [newFeatureName, setNewFeatureName] = useState("");
+  
+  const createFeature = async (newFeature) => {
     const res = await axios.post(
-      `${import.meta.env.VITE_BASE_URL}/category`,
-      newCategory
+      `${import.meta.env.VITE_BASE_URL}/feature`,
+      newFeature
       , {
         headers: {
           Authorization: `Bearer ${token}`
@@ -22,11 +25,11 @@ function AdminCategoryForm({ openCategory, setOpenCategory }) {
     return res.data;
   };
 
-  const createCategoryMutation = useMutation(createCategory, {
+  const createFeatureMutation = useMutation(createFeature, {
     onSuccess: () => {
-      queryClient.invalidateQueries("categories");
-      setOpenCategory(false),
-        toast.success(` Category Added`, {
+      queryClient.invalidateQueries("features");
+      setOpenFeature(false),
+        toast.success(` Feature Added`, {
           position: "bottom-left",
         });
 
@@ -36,20 +39,20 @@ function AdminCategoryForm({ openCategory, setOpenCategory }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createCategoryMutation.mutate({ name: newCategoryName });
-    setNewCategoryName("");
-    setOpenCategory(false);
+    createFeatureMutation.mutate({ name: newFeatureName });
+    setNewFeatureName("");
+    setOpenFeature(false);
   };
 
   const cancelButtonRef = useRef(null);
 
   return (
-    <Transition.Root show={openCategory} as={Fragment}>
+    <Transition.Root show={openFeature} as={Fragment}>
       <Dialog
         as="div"
         className="relative z-10"
         initialFocus={cancelButtonRef}
-        onClose={setOpenCategory}
+        onClose={setOpenFeature}
       >
         <Transition.Child
           as={Fragment}
@@ -76,16 +79,16 @@ function AdminCategoryForm({ openCategory, setOpenCategory }) {
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <div className="bg-white px-4 pb-4 pt-5 sm:p-6 text-center sm:pb-4">
-                  <h1 className="text-xl">Add Category</h1>
+                  <h1 className="text-xl">Add Feature</h1>
                   <div className=" w-full">
                     <form >
                       <div className="mb-6 w-full">
                         <input
                           type="text"
                           id="default-input"
-                          value={newCategoryName}
-                          placeholder="new category name"
-                          onChange={(e) => setNewCategoryName(e.target.value)}
+                          value={newFeatureName}
+                          placeholder="new feature name"
+                          onChange={(e) => setNewFeatureName(e.target.value)}
                           className="mt-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
                         />
                       </div>
@@ -102,7 +105,7 @@ function AdminCategoryForm({ openCategory, setOpenCategory }) {
                     <button
 
                       className="mt-3 flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 "
-                      onClick={() => setOpenCategory(false)}
+                      onClick={() => setOpenFeature(false)}
 
                     >
                       Cancel
@@ -117,4 +120,4 @@ function AdminCategoryForm({ openCategory, setOpenCategory }) {
     </Transition.Root>
   );
 }
-export default AdminCategoryForm;
+export default AdminFeature;

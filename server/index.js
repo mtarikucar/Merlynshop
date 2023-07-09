@@ -46,7 +46,7 @@ const sequelize = require("./database");
 sequelize
   .authenticate()
   .then(() => {
-   //sequelize.sync({force:true}) //force: true
+    //sequelize.sync({force:true}) //force: true
     console.log("Connection has been established successfully.");
   })
   .catch((err) => {
@@ -67,6 +67,7 @@ const authRouter = require("./routers/auth");
 const userRouter = require("./routers/user");
 const orderRouter = require("./routers/order");
 const paytrRouter = require("./routers/paytr");
+const featureRouter = require("./routers/feature");
 
 app.use("/api/product", productRouter);
 app.use("/api/category", categoryRouter);
@@ -74,6 +75,7 @@ app.use("/api/user", userRouter)
 app.use("/api/auth", authRouter)
 app.use("/api/order", orderRouter)
 app.use("/api/paytr", paytrRouter)
+app.use("/api/feature", featureRouter)
 
 
 app.listen(process.env.PORT, () => {

@@ -24,8 +24,6 @@ module.exports = (sequelize) => {
     },
     {
       tableName: "location",
-      createaAt: true,
-      updatedAt: true,
       timestamps: true,
     }
   );

@@ -8,7 +8,7 @@ import { storage } from "../../firebase"; // Firebase yapılandırmanızı içer
 import axios from "axios";
 // Firebase sürüm 9.0.0 ve üzeri için güncellenmiş import
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import AdminCategoryForm from "./AdminCategoryForm";
+import AdminCategoryForm from "./AdminCategory";
 import { useSelector } from "react-redux";
 import CloseIcon from "@mui/icons-material/Close";
 

@@ -12,6 +12,7 @@ import { Audio } from "react-loader-spinner";
 import Loading from "../../components/Loading";
 
 function AdminProduct() {
+  
   const [openAddProduct, setOpenAddProduct] = useState(false);
   const [openUpdateProduct, setOpenUpdateProduct] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -80,6 +81,7 @@ function AdminProduct() {
    
       <div className="h-full ml-14 mt-14 mb-10 md:ml-64 ">
       <ToastContainer />
+      <AdminAddProduct open={openAddProduct} setOpen={setOpenAddProduct} />
       <AdminAddProduct open={openAddProduct} setOpen={setOpenAddProduct} />
       {selectedProduct && (
         <AdminUpdateProduct

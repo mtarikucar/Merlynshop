@@ -18,11 +18,6 @@ module.exports = (sequelize) => {
         allowNull: false,
         type: DataTypes.STRING,
       },
-      size: {
-        type: DataTypes.ENUM("xs", "s","m","l","xl","xxl"),
-        defaultValue: "m",
-        allowNull: false,
-      },
       description: {
         allowNull: false,
         type: DataTypes.STRING,
@@ -34,15 +29,16 @@ module.exports = (sequelize) => {
       discountedPrice: {
         type: DataTypes.SMALLINT,
       },
-      quantity: {
-        allowNull: false,
+      
+      brand: {
         type: DataTypes.STRING,
-      }
+        defaultValue: "merlyn",
+        allowNull: false,
+      },
     },
     {
       tableName: "products",
-      createdAt: true,
-      updatedAt: true
+      timestamps: true,
     }
   );
    

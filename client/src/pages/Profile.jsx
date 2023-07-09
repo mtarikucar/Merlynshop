@@ -59,23 +59,23 @@ function Profile() {
             <button onClick={() => setOnClose(true)} className="btn ">
               <SettingsIcon />{" "}
             </button>
-            <div className="relative mx-auto w-36 rounded-full">
+            {/* <div className="relative mx-auto w-36 rounded-full">
               <img
                 className="mx-auto h-auto w-full rounded-full"
                 src="https://therminic2018.eu/wp-content/uploads/2018/07/dummy-avatar.jpg"
                 alt=""
               />
-            </div>
+            </div> */}
             <h1 className="my-1 text-center text-xl font-bold leading-8 text-gray-900">
               {user?.name}
             </h1>
             <h3 className="font-lg text-semibold text-center leading-6 text-gray-600">
               {user?.email}
             </h3>
-            <p className="text-center text-sm leading-6 text-gray-500 hover:text-gray-600">
+            {/* <p className="text-center text-sm leading-6 text-gray-500 hover:text-gray-600">
               Lorem ipsum dolor sit amet consectetur, adipisicing elit.
               Architecto, placeat!
-            </p>
+            </p> */}
 
             <ul className="mt-3 divide-y rounded bg-gray-100 py-2 px-3 text-gray-600 shadow-sm hover:text-gray-700 hover:shadow">
               <li className="flex items-center py-3 text-sm">
@@ -180,7 +180,7 @@ function Profile() {
                         </td>
                         <td className="px-6 py-4">
                           <div className="flex items-center">
-                            {order.total_price / 100}.00₺
+                            {order.total_price}₺
                           </div>
                         </td>
                         <td className="px-6 py-4 space-x-2 text-center">

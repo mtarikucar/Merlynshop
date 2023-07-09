@@ -1,8 +1,8 @@
-const { DataTypes, STRING } = require("sequelize");
+const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
   sequelize.define(
-    "photo",
+    "feature",
     {
       id: {
         allowNull: false,
@@ -10,13 +10,13 @@ module.exports = (sequelize) => {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
       },
-      imgpath: {
-        type: STRING,
-        allowNull: false
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
       },
     },
     {
-      tableName: "photos",
+      tableName: "feature",
     }
   );
 };

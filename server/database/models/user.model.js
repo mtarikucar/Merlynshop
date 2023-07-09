@@ -41,8 +41,6 @@ module.exports = (sequelize) => {
     },
     {
       tableName: "users",
-      createaAt: true,
-      updatedAt: true,
       timestamps: true,
     }
   );

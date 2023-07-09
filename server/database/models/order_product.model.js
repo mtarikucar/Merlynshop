@@ -11,8 +11,6 @@ module.exports = (sequelize) => {
     },
     {
       tableName: "order_product",
-      createaAt: true,
-      updatedAt: true,
       timestamps: true,
     }
   );
