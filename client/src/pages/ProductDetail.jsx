@@ -1,95 +1,78 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import HandshakeIcon from '@mui/icons-material/Handshake';
-import { useQuery } from "react-query";
+import HandshakeIcon from "@mui/icons-material/Handshake";
+import { useQuery,useMutation } from "react-query";
+import axios from 'axios';
 import { useSelector, useDispatch } from "react-redux";
+
 import { addToCart, decreaseCart } from "../store/cartSlice";
-import OfferModal from "../components/products/OfferModal"
+
+
+import OfferModal from "../components/products/OfferModal";
+import ImageExhibiton from "../components/ImageExhibiton";
+
 
 function ProductDetail() {
-  
-  
   const [openOffer, setOpenOffer] = useState(false);
   const [quantity, setQuatity] = useState(1);
+  
   const dispatch = useDispatch();
+const {token,user} =useSelector(store=>store.auth)
+
   const hundleAddToCart = (product) => {
-    dispatch(addToCart({...product,cartQuantity:quantity}));
-    setQuatity(0)
+    dispatch(addToCart({ ...product, cartQuantity: quantity }));
+    setQuatity(0);
   };
 
-  const hundleDecreaseCart = (product) => {
-    dispatch(decreaseCart(product));
-  };
-
-  const hundleIncreaseCart = (product) => {
-    dispatch(addToCart(product));
-  };
   const { id } = useParams();
 
-  const [activeImage, setActiveImage] = useState();
+
+  const addCommentMutation = useMutation((commentData) =>
+    axios.post(`${import.meta.env.VITE_BASE_URL}/comment`, commentData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+  );
 
   const { isLoading, error, data } = useQuery("product", () => {
-    return fetch(`${import.meta.env.VITE_BASE_URL}/product/${id}`).then((res) =>
-      res.json()
+    return axios.get(`${import.meta.env.VITE_BASE_URL}/product/${id}`).then((res) =>
+      res.data
     );
   });
+  
+
+  const [newComment, setNewComment] = useState('');
+
+  const handleCommentChange = (e) => {
+    setNewComment(e.target.value);
+  };
+
+  const handleCommentSubmit = () => {
+    addCommentMutation.mutate({
+      userId: user.id,
+      productId: data.id,
+      content: newComment,
+    });
+    setNewComment('');
+  };
 
   if (isLoading) return "Loading...";
 
   if (error) return "An error has occurred: " + error.message;
 
-  console.log(quantity);
-
-  console.log(data);
+  
   return (
-    <section className="py-12 sm:py-16">
-      <OfferModal openOffer={openOffer} setOpenOffer={setOpenOffer} price={data.price}/>
+    <section className="py-4 sm:py-6">
+      <OfferModal
+        openOffer={openOffer}
+        setOpenOffer={setOpenOffer}
+        price={data.price}
+      />
       <div className="container mx-auto px-4">
         <div className="lg:col-gap-12 xl:col-gap-16 mt-8 grid grid-cols-1 gap-12 lg:mt-12 lg:grid-cols-5 lg:gap-16">
           <div className="lg:col-span-3 lg:row-end-1">
-            <div className="lg:flex lg:items-center gap-4">
-              <div className="lg:order-2 lg:ml-5">
-                <div className="max-w-xl overflow-hidden rounded-lg">
-                  <img
-                    className="h-full w-full max-w-full object-cover"
-                    src={activeImage ? activeImage : data.thumbnail}
-                    alt=""
-                  />
-                </div>
-              </div>
-
-
-              <div className="mt-2 w-full lg:order-1 lg:w-32 lg:flex-shrink-0">
-                <div className="flex flex-row items-start lg:flex-col">
-                  <button
-                    onClick={() => setActiveImage(data.thumbnail)}
-
-                    type="button"
-                    className="flex-0 aspect-square mb-3 h-20 overflow-hidden rounded-lg border-2 border-gray-900 text-center"
-                  >
-                    <img
-                      className="h-full w-full object-cover"
-                      src={data.thumbnail}
-                      alt=""
-                    />
-                  </button>
-                  {data.photos?.map((image, i) => (
-                    <button
-                      onClick={() => setActiveImage(image.imgpath)}
-                      key={i}
-                      type="button"
-                      className="flex-0 aspect-square mb-3 h-20 overflow-hidden rounded-lg border-2 border-gray-900 text-center"
-                    >
-                      <img
-                        className="h-full w-full object-cover"
-                        src={image.imgpath}
-                        alt=""
-                      />
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
+            <ImageExhibiton thumbnail={data.thumbnail} photos={data.photos}/>
           </div>
 
           <div className="lg:col-span-2 lg:row-span-2 lg:row-end-2">
@@ -97,42 +80,160 @@ function ProductDetail() {
               {data.name}
             </h1>
 
-            <div className="mt-5 flex items-center">
+            {/* <div className="mt-5 flex items-center">
               <div className="flex items-center">
-                <svg className="block h-4 w-4 align-middle text-yellow-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" className=""></path>
+                <svg
+                  className="block h-4 w-4 align-middle text-yellow-500"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                    className=""
+                  ></path>
                 </svg>
-                <svg className="block h-4 w-4 align-middle text-yellow-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" className=""></path>
+                <svg
+                  className="block h-4 w-4 align-middle text-yellow-500"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                    className=""
+                  ></path>
                 </svg>
-                <svg className="block h-4 w-4 align-middle text-yellow-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" className=""></path>
+                <svg
+                  className="block h-4 w-4 align-middle text-yellow-500"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                    className=""
+                  ></path>
                 </svg>
-                <svg className="block h-4 w-4 align-middle text-yellow-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" className=""></path>
+                <svg
+                  className="block h-4 w-4 align-middle text-yellow-500"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                    className=""
+                  ></path>
                 </svg>
-                <svg className="block h-4 w-4 align-middle text-yellow-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" className=""></path>
+                <svg
+                  className="block h-4 w-4 align-middle text-yellow-500"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                    className=""
+                  ></path>
                 </svg>
               </div>
-              <p className="ml-2 text-sm font-medium text-gray-500">1,209 geri dönüş</p>
+              <p className="ml-2 text-sm font-medium text-gray-500">
+                1,209 geri dönüş
+              </p>
             </div>
 
             <h2 className=" text-base text-gray-900">{data.description}</h2>
 
-            <div className="sm:order-1 mt-10">
+            <h2 className="mt-4 text-base text-gray-900">Coffee Type:</h2>
+            <div className="mt-3 flex select-none flex-wrap items-center gap-1">
+              <label className="">
+                <input
+                  type="radio"
+                  name="type"
+                  value="Powder"
+                  className="peer sr-only"
+                />
+                <p className="peer-checked:bg-green-500 peer-checked:text-white rounded-lg border border-green-500 px-6 py-2 font-bold">
+                  Powder
+                </p>
+              </label>
+              <label className="">
+                <input
+                  type="radio"
+                  name="type"
+                  value="Whole Bean"
+                  className="peer sr-only"
+                />
+                <p className="peer-checked:bg-green-500 peer-checked:text-white rounded-lg border border-green-500 px-6 py-2 font-bold">
+                  Whole Bean
+                </p>
+              </label>
+              <label className="">
+                <input
+                  type="radio"
+                  name="type"
+                  value="Groud"
+                  className="peer sr-only"
+                />
+                <p className="peer-checked:bg-green-500 peer-checked:text-white rounded-lg border border-green-500 px-6 py-2 font-bold">
+                  Groud
+                </p>
+              </label>
+            </div>
+
+            <h2 className="mt-2 text-base text-gray-900">
+              Choose subscription:
+            </h2>
+            <div className="mt-3 flex select-none flex-wrap items-center gap-1">
+              <label className="">
+                <input
+                  type="radio"
+                  name="subscription"
+                  value="4 Months"
+                  className="peer sr-only"
+                />
+                <p className="peer-checked:bg-green-500 peer-checked:text-white rounded-lg border border-green-500 px-6 py-2 font-bold">
+                  4 Months
+                </p>
+              </label>
+              <label className="">
+                <input
+                  type="radio"
+                  name="subscription"
+                  value="8 Months"
+                  className="peer sr-only"
+                />
+                <p className="peer-checked:bg-green-500 peer-checked:text-white rounded-lg border border-green-500 px-6 py-2 font-bold">
+                  8 Months
+                </p>
+              </label>
+              <label className="">
+                <input
+                  type="radio"
+                  name="subscription"
+                  value="12 Months"
+                  className="peer sr-only"
+                />
+                <p className="peer-checked:bg-green-500 peer-checked:text-white rounded-lg border border-green-500 px-6 py-2 font-bold">
+                  12 Months
+                </p>
+              </label> 
+            </div>*/}
+
+            <div className="sm:order-1 mt-4">
               <div className="flex h-8  text-gray-600">
                 <button
-                  onClick={() => setQuatity(quantity-1)}
+                  onClick={() => setQuatity(quantity - 1)}
                   className="flex items-center justify-center rounded-l-md bg-gray-200 px-4 transition hover:bg-green-500 hover:text-white"
                 >
                   -
                 </button>
                 <div className="flex  items-center justify-center bg-gray-100 px-4 text-xs uppercase transition">
-                {quantity}
+                  {quantity}
                 </div>
                 <button
-                  onClick={() => setQuatity(quantity+1)}
+                  onClick={() => setQuatity(quantity + 1)}
                   className="flex items-center justify-center rounded-r-md bg-gray-200 px-4 transition hover:bg-green-500 hover:text-white"
                 >
                   +
@@ -140,7 +241,7 @@ function ProductDetail() {
               </div>
             </div>
 
-            <div className="mt-10 flex flex-col items-center justify-between space-y-4 border-t border-b py-4 sm:flex-row sm:space-y-0">
+            <div className="mt-4 flex flex-col items-center justify-between space-y-4 border-t border-b py-4 sm:flex-row sm:space-y-0">
               <div className="flex items-end">
                 {data.discountedPrice ? (
                   <>
@@ -155,9 +256,9 @@ function ProductDetail() {
                     </span>
                   </>
                 ) : (
-                  <><h1 className="text-3xl font-bold">
-                    ₺{data.price}.00
-                  </h1></>
+                  <>
+                    <h1 className="text-3xl font-bold">₺{data.price}.00</h1>
+                  </>
                 )}
               </div>
 
@@ -188,7 +289,7 @@ function ProductDetail() {
                 type="button"
                 className="m-2 inline-flex items-center justify-center rounded-md border-2 border-transparent bg-green-500 bg-none px-12 py-3 text-center text-base font-bold text-white hover:border-green-500 hover:text-green-500 transition-all duration-200 ease-in-out focus:shadow hover:bg-white"
               >
-                <HandshakeIcon className="mr-2 block h-7 w-7 align-middle "/>
+                <HandshakeIcon className="mr-2 block h-7 w-7 align-middle " />
                 pazarlık yap
               </button>
             </div>
@@ -234,48 +335,64 @@ function ProductDetail() {
             </ul>
           </div>
 
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-4 w-full">
             <div className="border-b border-gray-300">
               <nav className="flex gap-4">
                 <a
                   href="#"
                   title=""
-                  className="border-b-2 border-gray-900 py-4 text-sm font-medium text-gray-900 hover:border-gray-400 hover:text-gray-800"
-                >
-                  açılamalar
-                </a>
-
-                <a
-                  href="#"
-                  title=""
                   className="inline-flex items-center border-b-2 border-transparent py-4 text-sm font-medium text-gray-600"
                 >
-                  geri dönüşler
-                  <span className="ml-2 block rounded-full bg-gray-500 px-2 py-px text-xs font-bold text-gray-100">
+                  Yorumlar
+                  {/* <span className="ml-2 block rounded-full bg-gray-500 px-2 py-px text-xs font-bold text-gray-100">                    
                     1,209
-                  </span>
+                  </span> */}
                 </a>
               </nav>
             </div>
 
-            <div className="mt-8 flow-root sm:mt-12">
-              <h1 className="text-3xl font-bold">kapına kadar teslim</h1>
-              <p className="mt-4">
-                Türkiye'nin 81 iline kapına kadar teslim, kolay iade 
-              </p>
-              <h1 className="mt-8 text-3xl font-bold">
-                hakiki deri erkek ayakkabı
-              </h1>
-              <p className="mt-4">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio
-                numquam enim facere.
-              </p>
-              <p className="mt-4">
-                Amet consectetur adipisicing elit. Optio numquam enim facere.
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore
-                rerum nostrum eius facere, ad neque.
-              </p>
+            
+
+            <div className="mt-3 w-full">
+              {data?.comments.map((comment, key) => (
+                <div key={key} className="flex  items-center w-full ">
+                  <div className="relative w-full grid grid-cols-1 gap-4 p-4 mb-8 border border-green-500 rounded-lg bg-white shadow-lg">
+                    <div className="relative flex gap-4">
+                      <div className="flex  w-full justify-between">
+                        <div className="flex flex-row justify-between">
+                          <p className="relative text-xl whitespace-nowrap truncate overflow-hidden">
+                            {comment.user.name}
+                          </p>
+                          <a className="text-gray-500 text-xl" href="#">
+                            <i className="fa-solid fa-trash"></i>
+                          </a>
+                        </div>
+                        <p className="text-gray-400 text-sm">{comment.createdAt}</p>
+                      </div>
+                    </div>
+                    <p className="-mt-4 text-gray-500">{comment.content}</p>
+                  </div>
+                </div>
+              ))}
             </div>
+            <form
+              className="flex items-center w-full"
+              onSubmit={handleCommentSubmit}
+            >
+              <textarea
+                className="w-full p-4 mb-4 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-green-500"
+                placeholder="Yorumunuzu buraya girin"
+                value={newComment}
+                onChange={handleCommentChange}
+              ></textarea>
+              <button
+                className="px-4 py-2 ml-4 h-full text-white bg-green-500 rounded-lg hover:bg-green-600 focus:outline-none disabled:bg-gray-500 hover:disabled:bg-gray-200"
+                type="submit"
+                disabled={!newComment}
+              >
+                ekle
+              </button>
+            </form>
           </div>
         </div>
       </div>

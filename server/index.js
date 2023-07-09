@@ -68,6 +68,7 @@ const userRouter = require("./routers/user");
 const orderRouter = require("./routers/order");
 const paytrRouter = require("./routers/paytr");
 const featureRouter = require("./routers/feature");
+const commentRouter = require("./routers/comment");
 
 app.use("/api/product", productRouter);
 app.use("/api/category", categoryRouter);
@@ -76,6 +77,7 @@ app.use("/api/auth", authRouter)
 app.use("/api/order", orderRouter)
 app.use("/api/paytr", paytrRouter)
 app.use("/api/feature", featureRouter)
+app.use("/api/comment", commentRouter)
 
 
 app.listen(process.env.PORT, () => {

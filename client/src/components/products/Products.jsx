@@ -45,12 +45,15 @@ function Products({ categoryId, minPrice, maxPrice, maxProduct }) {
 
   return (
     <>
-      {
-        products &&
-        products?.map((product, key) => (
-          <Product product={product} key={key} />
-        ))
-      }
+      
+
+        {
+          products &&
+          products?.map((product, key) => (
+            <Product product={product} key={key} />
+          ))
+        }
+      
     </>
 
   )

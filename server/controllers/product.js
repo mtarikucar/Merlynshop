@@ -87,13 +87,19 @@ async function getAllProducts(req, res, next) {
 
 // Get a specific Product by ID
 async function getProductById(req, res, next) {
-  const ProductId = req.params.id;
+  const productId = req.params.id;
   try {
-    const foundProduct = await models.product.findByPk(ProductId, {
+    const foundProduct = await models.product.findByPk(productId, {
       include: [
-        { model: models.category },
         { model: models.photo },
-        { model: models.product_feature, include: [models.feature] }, // Include product features and related features
+        { 
+          model: models.comment,
+          include: [models.user]
+        },
+        {
+          model: models.product_feature,
+          include: [models.feature]
+        }
       ],
     });
     if (!foundProduct) {
@@ -104,6 +110,7 @@ async function getProductById(req, res, next) {
     next(err);
   }
 }
+
 
 
 async function updateProductById(req, res, next) {
