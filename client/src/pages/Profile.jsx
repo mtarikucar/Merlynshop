@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import SettingsIcon from "@mui/icons-material/Settings";
-import UpdateUserModal from "../components/UpdateUserModal";
+import UpdateUserModal from "../components/modals/UpdateUserModal";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import axios from "axios";
-import DeleteOrderModal from "../components/DeleteOrderModal";
+import DeleteOrderModal from "../components/modals/DeleteOrderModal";
 import Loading from "../components/Loading";
 function Profile() {
   const [orderId, setOrderId] = useState();

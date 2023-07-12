@@ -26,23 +26,23 @@ async function createProduct(req, res, next) {
         discountedPrice: discountedPrice,
       })
       .then((newProduct) => {
+        features.forEach(async (element) => {
+          await models.product_feature.create({
+            featureId: element.featureId,
+            productId: newProduct.id,
+            value: element.value,
+            quantity: element.quantity,
+          });
+        });
+
         photos.forEach(async (element) => {
           await models.photo.create({
             imgpath: element.imgpath,
             productId: newProduct.id,
           });
         });
-      })
-      .then((newProduct) => {
-        features.forEach(async (element) => {
-          await models.product_feature.create({
-            featureId: elment.feaetureId,
-            productId: newProduct.id,
-            value: element.value,
-            quantity: element.quantity,
-          });
-          res.status(201).json(newProduct);
-        });
+
+        res.status(201).json(newProduct);
       });
   } catch (err) {
     next(err);
@@ -92,14 +92,16 @@ async function getProductById(req, res, next) {
     const foundProduct = await models.product.findByPk(productId, {
       include: [
         { model: models.photo },
-        { 
+        {
           model: models.comment,
-          include: [models.user]
+          include: [models.user],
         },
         {
           model: models.product_feature,
-          include: [models.feature]
-        }
+          include: [models.feature],
+          group: ['featureId'], // features ID'lerine göre gruplama yapılıyor
+          attributes: ['featureId', "quantity", "value"], // sadece featureId'leri alınıyor
+        },
       ],
     });
     if (!foundProduct) {
@@ -107,11 +109,9 @@ async function getProductById(req, res, next) {
     }
     res.status(200).json(foundProduct);
   } catch (err) {
-    next(err);
+    console.log(err);
   }
 }
-
-
 
 async function updateProductById(req, res, next) {
   console.log(req.body);

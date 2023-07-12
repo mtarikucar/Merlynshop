@@ -2,7 +2,7 @@ import React from 'react'
 
 function AdminNavbar() {
     return (
-        <div className="sticky top-0 z-50 w-full flex items-center justify-between h-14 text-white ">
+        <div className="sticky top-0 z-10 w-full flex items-center justify-between h-14 text-white ">
             <div className="flex items-center justify-start md:justify-start px-3  w-14 md:w-64 h-14 bg-gray-700  border-none">
                 <img className="w-7 h-7 md:w-10 md:h-10 mr-2 rounded-md overflow-hidden" src="https://therminic2018.eu/wp-content/uploads/2018/07/dummy-avatar.jpg" />
                 <span className="hidden md:block">ADMIN</span>

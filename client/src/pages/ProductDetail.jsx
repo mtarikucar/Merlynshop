@@ -1,23 +1,21 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import HandshakeIcon from "@mui/icons-material/Handshake";
-import { useQuery,useMutation } from "react-query";
-import axios from 'axios';
+import { useQuery, useMutation } from "react-query";
+import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 
 import { addToCart, decreaseCart } from "../store/cartSlice";
 
-
-import OfferModal from "../components/products/OfferModal";
+import OfferModal from "../components/modals/OfferModal";
 import ImageExhibiton from "../components/ImageExhibiton";
-
 
 function ProductDetail() {
   const [openOffer, setOpenOffer] = useState(false);
   const [quantity, setQuatity] = useState(1);
-  
+
   const dispatch = useDispatch();
-const {token,user} =useSelector(store=>store.auth)
+  const { token, user } = useSelector((store) => store.auth);
 
   const hundleAddToCart = (product) => {
     dispatch(addToCart({ ...product, cartQuantity: quantity }));
@@ -25,7 +23,6 @@ const {token,user} =useSelector(store=>store.auth)
   };
 
   const { id } = useParams();
-
 
   const addCommentMutation = useMutation((commentData) =>
     axios.post(`${import.meta.env.VITE_BASE_URL}/comment`, commentData, {
@@ -36,13 +33,12 @@ const {token,user} =useSelector(store=>store.auth)
   );
 
   const { isLoading, error, data } = useQuery("product", () => {
-    return axios.get(`${import.meta.env.VITE_BASE_URL}/product/${id}`).then((res) =>
-      res.data
-    );
+    return axios
+      .get(`${import.meta.env.VITE_BASE_URL}/product/${id}`)
+      .then((res) => res.data);
   });
-  
 
-  const [newComment, setNewComment] = useState('');
+  const [newComment, setNewComment] = useState("");
 
   const handleCommentChange = (e) => {
     setNewComment(e.target.value);
@@ -54,14 +50,15 @@ const {token,user} =useSelector(store=>store.auth)
       productId: data.id,
       content: newComment,
     });
-    setNewComment('');
+    setNewComment("");
   };
 
   if (isLoading) return "Loading...";
 
   if (error) return "An error has occurred: " + error.message;
 
-  
+  console.log(data);
+
   return (
     <section className="py-4 sm:py-6">
       <OfferModal
@@ -72,7 +69,7 @@ const {token,user} =useSelector(store=>store.auth)
       <div className="container mx-auto px-4">
         <div className="lg:col-gap-12 xl:col-gap-16 mt-8 grid grid-cols-1 gap-12 lg:mt-12 lg:grid-cols-5 lg:gap-16">
           <div className="lg:col-span-3 lg:row-end-1">
-            <ImageExhibiton thumbnail={data.thumbnail} photos={data.photos}/>
+            <ImageExhibiton thumbnail={data.thumbnail} photos={data.photos} />
           </div>
 
           <div className="lg:col-span-2 lg:row-span-2 lg:row-end-2">
@@ -80,146 +77,21 @@ const {token,user} =useSelector(store=>store.auth)
               {data.name}
             </h1>
 
-            {/* <div className="mt-5 flex items-center">
-              <div className="flex items-center">
-                <svg
-                  className="block h-4 w-4 align-middle text-yellow-500"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    className=""
-                  ></path>
-                </svg>
-                <svg
-                  className="block h-4 w-4 align-middle text-yellow-500"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    className=""
-                  ></path>
-                </svg>
-                <svg
-                  className="block h-4 w-4 align-middle text-yellow-500"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    className=""
-                  ></path>
-                </svg>
-                <svg
-                  className="block h-4 w-4 align-middle text-yellow-500"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    className=""
-                  ></path>
-                </svg>
-                <svg
-                  className="block h-4 w-4 align-middle text-yellow-500"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    className=""
-                  ></path>
-                </svg>
-              </div>
-              <p className="ml-2 text-sm font-medium text-gray-500">
-                1,209 geri dönüş
-              </p>
-            </div>
-
-            <h2 className=" text-base text-gray-900">{data.description}</h2>
-
-            <h2 className="mt-4 text-base text-gray-900">Coffee Type:</h2>
-            <div className="mt-3 flex select-none flex-wrap items-center gap-1">
-              <label className="">
-                <input
-                  type="radio"
-                  name="type"
-                  value="Powder"
-                  className="peer sr-only"
-                />
-                <p className="peer-checked:bg-green-500 peer-checked:text-white rounded-lg border border-green-500 px-6 py-2 font-bold">
-                  Powder
-                </p>
-              </label>
-              <label className="">
-                <input
-                  type="radio"
-                  name="type"
-                  value="Whole Bean"
-                  className="peer sr-only"
-                />
-                <p className="peer-checked:bg-green-500 peer-checked:text-white rounded-lg border border-green-500 px-6 py-2 font-bold">
-                  Whole Bean
-                </p>
-              </label>
-              <label className="">
-                <input
-                  type="radio"
-                  name="type"
-                  value="Groud"
-                  className="peer sr-only"
-                />
-                <p className="peer-checked:bg-green-500 peer-checked:text-white rounded-lg border border-green-500 px-6 py-2 font-bold">
-                  Groud
-                </p>
-              </label>
-            </div>
-
-            <h2 className="mt-2 text-base text-gray-900">
-              Choose subscription:
-            </h2>
-            <div className="mt-3 flex select-none flex-wrap items-center gap-1">
-              <label className="">
-                <input
-                  type="radio"
-                  name="subscription"
-                  value="4 Months"
-                  className="peer sr-only"
-                />
-                <p className="peer-checked:bg-green-500 peer-checked:text-white rounded-lg border border-green-500 px-6 py-2 font-bold">
-                  4 Months
-                </p>
-              </label>
-              <label className="">
-                <input
-                  type="radio"
-                  name="subscription"
-                  value="8 Months"
-                  className="peer sr-only"
-                />
-                <p className="peer-checked:bg-green-500 peer-checked:text-white rounded-lg border border-green-500 px-6 py-2 font-bold">
-                  8 Months
-                </p>
-              </label>
-              <label className="">
-                <input
-                  type="radio"
-                  name="subscription"
-                  value="12 Months"
-                  className="peer sr-only"
-                />
-                <p className="peer-checked:bg-green-500 peer-checked:text-white rounded-lg border border-green-500 px-6 py-2 font-bold">
-                  12 Months
-                </p>
-              </label> 
-            </div>*/}
+            {data.product_features.map((feature) => 
+              
+                <div>
+                  <h2 className="mt-4 text-base text-gray-900">Feature:</h2>
+                  <div className="mt-3 flex select-none flex-wrap items-center gap-1">
+                    <p className="rounded-lg border border-green-500 px-6 py-2 font-bold">
+                      Name: {feature.feature.name}
+                    </p>
+                    <p className="rounded-lg border border-green-500 px-6 py-2 font-bold">
+                      Value: {feature.value}
+                    </p>
+                  </div>
+                </div>
+              
+            )}
 
             <div className="sm:order-1 mt-4">
               <div className="flex h-8  text-gray-600">
@@ -351,8 +223,6 @@ const {token,user} =useSelector(store=>store.auth)
               </nav>
             </div>
 
-            
-
             <div className="mt-3 w-full">
               {data?.comments.map((comment, key) => (
                 <div key={key} className="flex  items-center w-full ">
@@ -367,7 +237,9 @@ const {token,user} =useSelector(store=>store.auth)
                             <i className="fa-solid fa-trash"></i>
                           </a>
                         </div>
-                        <p className="text-gray-400 text-sm">{comment.createdAt}</p>
+                        <p className="text-gray-400 text-sm">
+                          {comment.createdAt}
+                        </p>
                       </div>
                     </div>
                     <p className="-mt-4 text-gray-500">{comment.content}</p>
