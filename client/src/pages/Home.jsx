@@ -15,22 +15,21 @@ function Home() {
       <Carousel
         autoplay={true}
         autoplayInterval={2500}
-        className="rounded-lg max-h-[480px] mt-4"
+        className="rounded-lg h-fit mt-4"
         dragging={true}
       >
-        <img src="/m2.png" />
-        <img src="/m3.png" />
-        <img src="/m4.png" />
+        <img src="/banner1.png" />
+
       </Carousel>
       < div className={`grid  grid-cols-2 md:grid-cols-3 lg:grid-cols-4  `} >
 
-        <Products pagination={false} maxProduct={8} sort={"desc"}/>
+        <Products pagination={false} maxProduct={12} sort={"desc"}/>
       </div >
 
 
      
 
-      <Review />
+      {/* <Review /> */}
       <LogoSlider />
     </div>
   );

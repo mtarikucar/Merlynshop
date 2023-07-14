@@ -109,11 +109,13 @@ async function getOrderById(req, res, next) {
 
 async function getOrderByUserId(req, res, next) {
   const { id } = req.params;
+  const { verify } = req.query;
+
   const userId =id
-  console.log(userId,"user");
+
   try {
     const orders = await models.order.findAll({
-      where: { userId },
+      where: { userId:userId,verify,verify },
       include: [{ model: models.product }, { model: models.user }, { model: models.location }],
     });
     if (orders.length === 0) {

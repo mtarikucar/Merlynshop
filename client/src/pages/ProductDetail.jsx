@@ -15,27 +15,20 @@ function ProductDetail() {
   const [quantity, setQuatity] = useState(1);
   const [selectedData, setSelectedData] = useState();
   const [separateArray, setSeparateArray] = useState([]);
-  
+
   const dispatch = useDispatch();
   const { token, user } = useSelector((store) => store.auth);
 
-/*   const hundleAddToCart = (product) => {
-    dispatch(addToCart({ ...product, cartQuantity: quantity }));
-    setQuatity(0);
-  }; */
   const hundleAddToCart = (product) => {
-  
     const cartProduct = {
       ...product,
       cartQuantity: quantity,
-      product_features: selectedData
+      product_features: selectedData,
     };
-  
+
     dispatch(addToCart(cartProduct));
     setQuatity(0);
-
   };
-
 
   const { id } = useParams();
 
@@ -47,52 +40,37 @@ function ProductDetail() {
     })
   );
 
-  /*   const { isLoading, error, data } = useQuery("product", () => {
+  const { isLoading, error, data } = useQuery(
+    "product",
+    () => {
       return axios
         .get(`${import.meta.env.VITE_BASE_URL}/product/${id}`)
         .then((res) => res.data);
-  
-    }
-    ); */
-  const { isLoading, error, data } = useQuery("product", () => {
-    return axios
-      .get(`${import.meta.env.VITE_BASE_URL}/product/${id}`)
-      .then((res) => res.data);
-  }, {
-    onSuccess: (data) => {
-      const groupedData = data?.product_features?.reduce((result, item) => {
-        const { name } = item.feature;
-        if (!result[name]) {
-          result[name] = [];
-        }
-        result[name].push(item);
-        return result;
-      }, {});
-
-      const separateArray = Array.from(Object.entries(groupedData)).map(([key, value]) => ({
-        [key]: value
-      }));
-
-      setSeparateArray(separateArray)
-      console.log(separateArray,"separateArray");
-
-      // State objelerini oluştur
-      /* const initialState = separateArray?.reduce((acc, feature) => {
-        const name = Object.keys(feature)[0];
-        acc[name] = '';
-        return acc;
-      }, {});
-      setSelectedData(initialState) */
-
-      // Veri seçildiğinde state'i güncelle
-    /*   const handleSelect = (name, id) => {
-        setSelectedData(prevState => ({ ...prevState, [name]: id }));
-      }; */
-      
     },
-  });
+    {
+      onSuccess: (data) => {
+        const groupedData = data?.product_features?.reduce((result, item) => {
+          const { name } = item.feature;
+          if (!result[name]) {
+            result[name] = [];
+          }
+          result[name].push(item);
+          return result;
+        }, {});
 
-console.log(selectedData);
+        const separateArray = Array.from(Object.entries(groupedData)).map(
+          ([key, value]) => ({
+            [key]: value,
+          })
+        );
+
+        setSeparateArray(separateArray);
+        console.log(separateArray, "separateArray");
+      },
+    }
+  );
+
+  console.log(selectedData);
   const [newComment, setNewComment] = useState("");
 
   const handleCommentChange = (e) => {
@@ -104,9 +82,7 @@ console.log(selectedData);
       userId: user.id,
       productId: data.id,
       content: newComment,
-    }
-
-    );
+    });
     setNewComment("");
   };
 
@@ -115,10 +91,6 @@ console.log(selectedData);
   if (error) return "An error has occurred: " + error.message;
 
   console.log(data);
-
-
-
-
 
   return (
     <section className="py-4 sm:py-6">
@@ -138,45 +110,52 @@ console.log(selectedData);
               {data.name}
             </h1>
             <p className="py-1">
-              {data.description}
+              <div dangerouslySetInnerHTML={{ __html: data.description }} />
             </p>
 
             <div className="flex flex-col py-3 gap-1">
               {separateArray?.map((feature, key) => (
                 <div key={key}>
-                  {Object.keys(feature).map((name, index) => (
-                    <div className="flex" key={index}>
-                     
-                      {feature[name].map((f, innerIndex) => (
-                        <div className="p-1" key={innerIndex}>
-                          <input
-                            id={f.value}
-                            type="radio"
-                            name={name}
-                            value={f.id}
-                            className="hidden peer"
-                            checked={selectedData[name] === f.id}
-                            onChange={() => setSelectedData(prevState => ({ ...prevState, [name]: f.id }))}
+                  {Object.keys(feature).map((name, index) => {
+                    const sortedFeatures = feature[name].sort(
+                      (a, b) => a.value - b.value
+                    );
 
-                          />
-                          <label
-                            htmlFor={f.value}
-                            className="inline-flex items-center justify-between w-full px-3 py-2 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-green-600 peer-checked:text-green-600 hover:text-gray-600 hover:bg-gray-100"
-                          >
-                            <div className="block">
-                              <div className="w-full text-lg font-semibold">{f.value}</div>
-                            </div>
-                          </label>
-                        </div>
-                      ))}
-                    </div>
-                  ))}
+                    return (
+                      <div className="flex" key={index}>
+                        {sortedFeatures.map((f, innerIndex) => (
+                          <div className="p-1" key={innerIndex}>
+                            <input
+                              id={f.value}
+                              type="radio"
+                              name={name}
+                              value={f.id}
+                              className="hidden peer"
+                              onChange={() =>
+                                setSelectedData((prevState) => ({
+                                  ...prevState,
+                                  [name]: f.id,
+                                }))
+                              }
+                            />
+                            <label
+                              htmlFor={f.value}
+                              className="inline-flex items-center justify-between w-full px-3 py-2 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-green-600 peer-checked:text-green-600 hover:text-gray-600 hover:bg-gray-100"
+                            >
+                              <div className="block">
+                                <div className="w-full text-lg font-semibold">
+                                  {f.value}
+                                </div>
+                              </div>
+                            </label>
+                          </div>
+                        ))}
+                      </div>
+                    );
+                  })}
                 </div>
               ))}
             </div>
-
-
-
 
             <div className="sm:order-1 mt-4">
               <div className="flex h-8  text-gray-600">
@@ -238,7 +217,7 @@ console.log(selectedData);
                     d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
                   />
                 </svg>
-                 Sepete Ekle
+                Sepete Ekle
               </button>
 
               <button
