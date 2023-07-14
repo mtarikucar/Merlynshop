@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import HandshakeIcon from "@mui/icons-material/Handshake";
 import { useQuery, useMutation } from "react-query";
@@ -13,14 +13,29 @@ import ImageExhibiton from "../components/ImageExhibiton";
 function ProductDetail() {
   const [openOffer, setOpenOffer] = useState(false);
   const [quantity, setQuatity] = useState(1);
-
+  const [selectedData, setSelectedData] = useState();
+  const [separateArray, setSeparateArray] = useState([]);
+  
   const dispatch = useDispatch();
   const { token, user } = useSelector((store) => store.auth);
 
-  const hundleAddToCart = (product) => {
+/*   const hundleAddToCart = (product) => {
     dispatch(addToCart({ ...product, cartQuantity: quantity }));
     setQuatity(0);
+  }; */
+  const hundleAddToCart = (product) => {
+  
+    const cartProduct = {
+      ...product,
+      cartQuantity: quantity,
+      product_features: selectedData
+    };
+  
+    dispatch(addToCart(cartProduct));
+    setQuatity(0);
+
   };
+
 
   const { id } = useParams();
 
@@ -32,12 +47,52 @@ function ProductDetail() {
     })
   );
 
+  /*   const { isLoading, error, data } = useQuery("product", () => {
+      return axios
+        .get(`${import.meta.env.VITE_BASE_URL}/product/${id}`)
+        .then((res) => res.data);
+  
+    }
+    ); */
   const { isLoading, error, data } = useQuery("product", () => {
     return axios
       .get(`${import.meta.env.VITE_BASE_URL}/product/${id}`)
       .then((res) => res.data);
+  }, {
+    onSuccess: (data) => {
+      const groupedData = data?.product_features?.reduce((result, item) => {
+        const { name } = item.feature;
+        if (!result[name]) {
+          result[name] = [];
+        }
+        result[name].push(item);
+        return result;
+      }, {});
+
+      const separateArray = Array.from(Object.entries(groupedData)).map(([key, value]) => ({
+        [key]: value
+      }));
+
+      setSeparateArray(separateArray)
+      console.log(separateArray,"separateArray");
+
+      // State objelerini oluştur
+      /* const initialState = separateArray?.reduce((acc, feature) => {
+        const name = Object.keys(feature)[0];
+        acc[name] = '';
+        return acc;
+      }, {});
+      setSelectedData(initialState) */
+
+      // Veri seçildiğinde state'i güncelle
+    /*   const handleSelect = (name, id) => {
+        setSelectedData(prevState => ({ ...prevState, [name]: id }));
+      }; */
+      
+    },
   });
 
+console.log(selectedData);
   const [newComment, setNewComment] = useState("");
 
   const handleCommentChange = (e) => {
@@ -49,7 +104,9 @@ function ProductDetail() {
       userId: user.id,
       productId: data.id,
       content: newComment,
-    });
+    }
+
+    );
     setNewComment("");
   };
 
@@ -58,6 +115,10 @@ function ProductDetail() {
   if (error) return "An error has occurred: " + error.message;
 
   console.log(data);
+
+
+
+
 
   return (
     <section className="py-4 sm:py-6">
@@ -76,22 +137,46 @@ function ProductDetail() {
             <h1 className="sm: text-2xl font-bold text-gray-900 sm:text-3xl">
               {data.name}
             </h1>
+            <p className="py-1">
+              {data.description}
+            </p>
 
-            {data.product_features.map((feature) => 
-              
-                <div>
-                  <h2 className="mt-4 text-base text-gray-900">Feature:</h2>
-                  <div className="mt-3 flex select-none flex-wrap items-center gap-1">
-                    <p className="rounded-lg border border-green-500 px-6 py-2 font-bold">
-                      Name: {feature.feature.name}
-                    </p>
-                    <p className="rounded-lg border border-green-500 px-6 py-2 font-bold">
-                      Value: {feature.value}
-                    </p>
-                  </div>
+            <div className="flex flex-col py-3 gap-1">
+              {separateArray?.map((feature, key) => (
+                <div key={key}>
+                  {Object.keys(feature).map((name, index) => (
+                    <div className="flex" key={index}>
+                     
+                      {feature[name].map((f, innerIndex) => (
+                        <div className="p-1" key={innerIndex}>
+                          <input
+                            id={f.value}
+                            type="radio"
+                            name={name}
+                            value={f.id}
+                            className="hidden peer"
+                            checked={selectedData[name] === f.id}
+                            onChange={() => setSelectedData(prevState => ({ ...prevState, [name]: f.id }))}
+
+                          />
+                          <label
+                            htmlFor={f.value}
+                            className="inline-flex items-center justify-between w-full px-3 py-2 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-green-600 peer-checked:text-green-600 hover:text-gray-600 hover:bg-gray-100"
+                          >
+                            <div className="block">
+                              <div className="w-full text-lg font-semibold">{f.value}</div>
+                            </div>
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                  ))}
                 </div>
-              
-            )}
+              ))}
+            </div>
+
+
+
 
             <div className="sm:order-1 mt-4">
               <div className="flex h-8  text-gray-600">
@@ -137,11 +222,11 @@ function ProductDetail() {
               <button
                 onClick={() => hundleAddToCart(data)}
                 type="button"
-                className="m-2 inline-flex items-center justify-center rounded-md border-2 border-transparent bg-green-500 bg-none px-12 py-3 text-center text-base font-bold text-white hover:border-green-500 hover:text-green-500 transition-all duration-200 ease-in-out focus:shadow hover:bg-white"
+                className="p-2 inline-flex items-center justify-center rounded-md border-2 border-transparent bg-green-500 bg-none  text-center text-base font-bold text-white hover:border-green-500 hover:text-green-500 transition-all duration-200 ease-in-out focus:shadow hover:bg-white"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="shrink-0 mr-3 h-5 w-5"
+                  className="shrink-0  h-5 w-5"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -153,15 +238,15 @@ function ProductDetail() {
                     d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
                   />
                 </svg>
-                sepete ekle
+                 Sepete Ekle
               </button>
 
               <button
                 onClick={() => setOpenOffer(!openOffer)}
                 type="button"
-                className="m-2 inline-flex items-center justify-center rounded-md border-2 border-transparent bg-green-500 bg-none px-12 py-3 text-center text-base font-bold text-white hover:border-green-500 hover:text-green-500 transition-all duration-200 ease-in-out focus:shadow hover:bg-white"
+                className="p-2 inline-flex items-center justify-center rounded-md border-2 border-transparent bg-green-500 bg-none  text-center text-base font-bold text-white hover:border-green-500 hover:text-green-500 transition-all duration-200 ease-in-out focus:shadow hover:bg-white"
               >
-                <HandshakeIcon className="mr-2 block h-7 w-7 align-middle " />
+                <HandshakeIcon className="  h-7 w-7 align-middle " />
                 pazarlık yap
               </button>
             </div>

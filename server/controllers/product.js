@@ -100,7 +100,7 @@ async function getProductById(req, res, next) {
           model: models.product_feature,
           include: [models.feature],
           group: ['featureId'], // features ID'lerine göre gruplama yapılıyor
-          attributes: ['featureId', "quantity", "value"], // sadece featureId'leri alınıyor
+          attributes: ['id','featureId', "quantity", "value"], // sadece featureId'leri alınıyor
         },
       ],
     });

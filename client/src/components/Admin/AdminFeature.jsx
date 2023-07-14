@@ -27,7 +27,7 @@ function AdminFeature({ openFeature, setOpenFeature }) {
 
   const createFeatureMutation = useMutation(createFeature, {
     onSuccess: () => {
-      queryClient.invalidateQueries("features");
+      queryClient.invalidateQueries("categoriesAndFeatures");
       setOpenFeature(false),
         toast.success(` Feature Added`, {
           position: "bottom-left",

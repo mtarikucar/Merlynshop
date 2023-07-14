@@ -275,18 +275,18 @@ function AdminAddProduct({ open, setOpen }) {
                               <select
                                 id="categoryId"
                                 name="categoryId"
-                                value={formik.values.categoryId}
+                                value={formik.values?.categoryId}
                                 onChange={formik.handleChange}
                                 className="w-full p-2 border border-gray-300 rounded-l focus:outline-none focus:border-indigo-500"
                               >
                                 <option value="">Select a category</option>
-                                {categoriesAndFeatures.categories.map(
+                                {categoriesAndFeatures?.categories?.map(
                                   (category) => (
                                     <option
-                                      key={category.id}
-                                      value={category.id}
+                                      key={category?.id}
+                                      value={category?.id}
                                     >
-                                      {category.name}
+                                      {category?.name}
                                     </option>
                                   )
                                 )}
@@ -354,7 +354,7 @@ function AdminAddProduct({ open, setOpen }) {
                           />
                         </div>
                         <div className="mt-4 grid grid-cols-3">
-                          {previews.map((preview, index) => (
+                          {previews?.map((preview, index) => (
                             <div key={index} className="relative">
                               <div className="absolute w-16 h-16 m-2 rounded hover:backdrop-blur-sm">
                                 <span className="hover:bg-opacity-80 rounded drop-shadow-2xl">
@@ -434,7 +434,7 @@ function AdminAddProduct({ open, setOpen }) {
                               className="w-full p-2 border border-gray-300 rounded-l focus:outline-none focus:border-indigo-500"
                             >
                               <option value="">Select a feature</option>
-                              {categoriesAndFeatures.features.map((feature) => (
+                              {categoriesAndFeatures?.features?.map((feature) => (
                                 <option key={feature.id} value={feature.id}>
                                   {feature.name}
                                 </option>
