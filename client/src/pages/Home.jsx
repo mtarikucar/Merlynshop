@@ -15,7 +15,7 @@ function Home() {
       <Carousel
         autoplay={true}
         autoplayInterval={2500}
-        className="rounded-lg max-h-[480px]"
+        className="rounded-lg max-h-[480px] mt-4"
         dragging={true}
       >
         <img src="/m2.png" />
@@ -24,11 +24,11 @@ function Home() {
       </Carousel>
       < div className={`grid  grid-cols-2 md:grid-cols-3 lg:grid-cols-4  `} >
 
-        <Products maxProduct={2} />
+        <Products pagination={false} maxProduct={8} sort={"desc"}/>
       </div >
 
 
-      {/* <HomeAbout /> */}
+     
 
       <Review />
       <LogoSlider />

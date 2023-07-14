@@ -31,6 +31,7 @@ function AdminCategory({ openCategory, setOpenCategory }) {
         });
 
     },
+  
   });
 
 
