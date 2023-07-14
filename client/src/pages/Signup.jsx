@@ -128,7 +128,7 @@ function Signup() {
 
 
                     <div className="flex mt-6 w-full items-center">
-                        <button type='submit' className="shrink-0 w-full inline-block w-36 rounded-lg bg-green-600 py-3 font-bold text-white">Kayıt Ol</button>
+                        <button type='submit' className="shrink-0 w-full inline-block sortrounded-lg bg-green-600 py-3 font-bold text-white">Kayıt Ol</button>
                        
                     </div>
                 </form>

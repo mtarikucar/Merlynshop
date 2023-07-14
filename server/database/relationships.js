@@ -11,9 +11,7 @@ function applyRelationships(sequelize) {
   order.hasOne(location);
   
   //product
-  feature.belongsToMany(product, { through: "product_feature" });
-  product.belongsToMany(feature, { through: "product_feature" });
-  
+
   product.belongsTo(category);
   category.hasMany(product);
   

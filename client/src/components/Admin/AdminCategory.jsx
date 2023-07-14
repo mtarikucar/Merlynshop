@@ -24,13 +24,14 @@ function AdminCategory({ openCategory, setOpenCategory }) {
 
   const createCategoryMutation = useMutation(createCategory, {
     onSuccess: () => {
-      queryClient.invalidateQueries("categories");
+      queryClient.invalidateQueries("categoriesAndFeatures");
       setOpenCategory(false),
         toast.success(` Category Added`, {
           position: "bottom-left",
         });
 
     },
+  
   });
 
 

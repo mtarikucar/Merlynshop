@@ -10,10 +10,17 @@ async function createProduct(req, res, next) {
     description,
     price,
     features,
-    size,
     categoryId,
     discountedPrice,
   } = req.body;
+  console.log(photos,
+    thumbnail,
+    name,
+    description,
+    price,
+    features,
+    categoryId,
+    discountedPrice,);
   try {
     await models.product
       .create({
@@ -22,7 +29,6 @@ async function createProduct(req, res, next) {
         description: description,
         price: price,
         categoryId: categoryId,
-        size: size,
         discountedPrice: discountedPrice,
       })
       .then((newProduct) => {
@@ -45,12 +51,13 @@ async function createProduct(req, res, next) {
         res.status(201).json(newProduct);
       });
   } catch (err) {
+    console.log(err);
     next(err);
   }
 }
 
 async function getAllProducts(req, res, next) {
-  const { categoryId, size, minPrice, maxPrice } = req.query;
+  const { categoryId, size, minPrice, maxPrice, page, limit, sort } = req.query;
 
   let where = {};
   if (categoryId) {
@@ -73,17 +80,23 @@ async function getAllProducts(req, res, next) {
     };
   }
 
-  try {
-    const products = await models.product.findAll({
-      where,
-      include: [{ model: models.category }, { model: models.photo }],
-    });
+  const options = {
+    where,
+    include: [{ model: models.category }, { model: models.photo }],
+    offset: (page - 1) * limit,
+    limit: limit,
+    order: [['price', sort === 'desc' ? 'DESC' : 'ASC']],
+  };
 
+  try {
+    const products = await models.product.findAll(options);
     res.status(200).json(products);
   } catch (err) {
     next(err);
   }
 }
+
+
 
 // Get a specific Product by ID
 async function getProductById(req, res, next) {
@@ -98,8 +111,8 @@ async function getProductById(req, res, next) {
         },
         {
           model: models.product_feature,
-          include: [models.feature],
-          group: ['featureId'], // features ID'lerine göre gruplama yapılıyor
+          group: ['featureId'], 
+          include: [{model: models.feature,attributes: ["name"]} ],
           attributes: ['featureId', "quantity", "value"], // sadece featureId'leri alınıyor
         },
       ],

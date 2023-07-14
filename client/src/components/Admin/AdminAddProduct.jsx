@@ -107,16 +107,16 @@ function AdminAddProduct({ open, setOpen }) {
     initialValues: {
       name: "",
       photos: [],
-      features: [], // Özellikler için başlangıç değeri olarak boş bir dizi
+      features: [], 
       thumbnail: "",
       description: "",
       price: "",
       discountedPrice: "",
       quantity: "",
       categoryId: "",
-      featureId: "", // Özellik seçimi için başlangıç değeri olarak boş bir değer
-      featureValue: "", // Özellik değeri için başlangıç değeri olarak boş bir değer
-      featureQuantity: "", // Özellik miktarı için başlangıç değeri olarak boş bir değer
+      featureId: "", 
+      featureValue: "", 
+      featureQuantity: "", 
     },
     onSubmit: async (values) => {
       postProductMutation.mutate(values);
@@ -126,7 +126,7 @@ function AdminAddProduct({ open, setOpen }) {
   const [previews, setPreviews] = useState([]);
   const [thumbnailPreview, setThumbnailPreview] = useState(null);
 
-  // Önizleme oluşturucu fonksiyon
+
   const createPreview = (file) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -140,7 +140,7 @@ function AdminAddProduct({ open, setOpen }) {
     if (file && formik.values.photos.length < 4) {
       const imgpath = await uploadToFirebase(file);
       formik.setFieldValue("photos", [...formik.values.photos, { imgpath }]);
-      createPreview(file); // Önizlemeyi oluştur
+      createPreview(file); 
     } else {
       alert("En fazla 4 fotoğraf ekleyebilirsiniz.");
     }
@@ -152,8 +152,8 @@ function AdminAddProduct({ open, setOpen }) {
       const imgpath = await uploadToFirebase(file);
       formik.setFieldValue("thumbnail", imgpath);
       setThumbnailPreview(imgpath);
-      setPreviews([reader.result]); // Küçük resmi önizlemede göster
-      createPreview(file); // Önizlemeyi oluştur
+      setPreviews([reader.result]);
+      createPreview(file); 
     }
   };
 
