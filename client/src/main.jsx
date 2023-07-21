@@ -7,7 +7,8 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { store } from './store';
 import { Provider } from 'react-redux';
-import { getTotals } from './store/cartSlice'
+import ScrollToTop from './hooks/ScrollToTop';
+
 const queryClient = new QueryClient()
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -15,6 +16,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <QueryClientProvider client={queryClient}>
     <BrowserRouter>
      <Provider store={store}> 
+     <ScrollToTop/>
         <App />
       </Provider>
       <ReactQueryDevtools initialIsOpen={false} />

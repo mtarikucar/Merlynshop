@@ -30,11 +30,10 @@ import Checkout from "./pages/Checkout";
 import { useSelector } from "react-redux";
 import CheckoutSuccess from "./pages/Checkout-success";
 import LandingPage from "./pages/LandingPage";
-import Loading from "./components/Loading";
 
 function Admin() {
   const { user } = useSelector((store) => store.auth);
-  console.log(user);
+
   return user?.role === "admin" ? (
     <div>
       <div className="min-h-screen flex flex-col w-full flex-auto flex-shrink-0 antialiased bg-white  text-black">

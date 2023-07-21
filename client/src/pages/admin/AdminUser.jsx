@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useQuery } from "react-query";
-import { deleteUsers } from "../../api";
+
 import { useSelector } from "react-redux";
 import axios from "axios";
 import Loading from "../../components/Loading";
