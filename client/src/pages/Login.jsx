@@ -6,7 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios"
 import { useQueryClient, useMutation } from "react-query";
-import { loginSuccess } from '../store/auth/authSlice';
+import { loginSuccess } from '../store/authSlice';
 
 function Login() {
 
@@ -56,7 +56,7 @@ function Login() {
 
     return (
 
-        <div className="flex h-screen w-screen py-20 items-start z-40  px-2">
+        <div className="flex h-screen w-full py-20 items-start z-40  px-2">
              
             <ToastContainer />
             <div className="relative flex w-96 flex-col space-y-5 rounded-lg border bg-white px-5 py-10 shadow-xl sm:mx-auto">

@@ -69,7 +69,7 @@ function AdminOrder() {
   console.log(orders, "orders");
   return (
 
-    <div className="h-full ml-14 mt-14 mb-10 md:ml-64">
+    <div className="h-full mt-14 mb-10 ">
       <h1 className="text-center text-4xl">orders</h1>
       <div className="grid  px-6 ">
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">

@@ -4,16 +4,16 @@ const router = express.Router();
 const couponController = require('../controllers/coupon');
 
 // Tüm kuponları listele
-router.get('/coupons', couponController.getAllCoupons);
+router.get('/', couponController.getAllCoupons);
 
 // Yeni kupon oluştur
-router.post('/coupons', couponController.createCoupon);
+router.post('/', couponController.createCoupon);
 
 // Kupon güncelle
-router.put('/coupons/:id', couponController.updateCoupon);
+router.put('/:id', couponController.updateCoupon);
 
 // Kuponu sil
-router.delete('/coupons/:id', couponController.deleteCoupon);
+router.delete('/:id', couponController.deleteCoupon);
 
 // Kullanıcıya kupon ekleme
 router.post("/coupon-user", couponController.addCouponToUser);

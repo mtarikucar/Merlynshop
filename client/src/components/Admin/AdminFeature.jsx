@@ -50,7 +50,7 @@ function AdminFeature({ openFeature, setOpenFeature }) {
     <Transition.Root show={openFeature} as={Fragment}>
       <Dialog
         as="div"
-        className="relative z-10"
+        className="relative z-50"
         initialFocus={cancelButtonRef}
         onClose={setOpenFeature}
       >

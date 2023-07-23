@@ -48,7 +48,7 @@ function AdminCategory({ openCategory, setOpenCategory }) {
     <Transition.Root show={openCategory} as={Fragment}>
       <Dialog
         as="div"
-        className="relative z-10"
+        className="relative z-50"
         initialFocus={cancelButtonRef}
         onClose={setOpenCategory}
       >

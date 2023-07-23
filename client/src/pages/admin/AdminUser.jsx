@@ -28,7 +28,7 @@ function AdminUser() {
   if (error) return "An error has occurred: " + error.message;
 
   return (
-    <div className="h-full m-4 md:ml-64">
+    <div className="h-full m-4 ">
       <div className="grid  px-6 ">
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
           <div className="flex items-center justify-between pb-4 bg-white ">

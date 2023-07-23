@@ -87,7 +87,7 @@ function AdminProduct() {
 
   if (error) return "An error has occurred: " + error.message;
   return (
-    <div className="h-full ml-14 mt-14 mb-10 md:ml-64 ">
+    <div className="h-full mt-14 mb-10  ">
       <ToastContainer />
       <AdminAddProduct open={openAddProduct} setOpen={setOpenAddProduct} />
       {selectedProduct && (
@@ -98,7 +98,7 @@ function AdminProduct() {
         />
       )}
       <div className="grid  px-6 ">
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <div className="relative shadow-md sm:rounded-lg">
           <div className="flex items-center justify-between pb-4 bg-white  px-5">
             <div className="relative">
               <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">

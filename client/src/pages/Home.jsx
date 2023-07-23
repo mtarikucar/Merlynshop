@@ -18,7 +18,7 @@ function Home() {
         className="rounded-lg h-fit mt-4"
         dragging={true}
       >
-        <img src="/banner1.png" />
+        <img src="/banner1.png" z/>
 
       </Carousel>
       < div className={`grid  grid-cols-2 md:grid-cols-3 lg:grid-cols-4  `} >
