@@ -7,6 +7,14 @@ import { useFormik } from 'formik';
 import { useQueryClient, useMutation } from "react-query";
 import * as Yup from 'yup';
 import axios from "axios"
+import GoogleLoginButton from '../components/GoogleLoginButton';
+
+import { GoogleOAuthProvider ,GoogleLogin} from '@react-oauth/google';
+
+
+//86656059051-uvelp63k1m6ob18qm0k608qu8eije3mr.apps.googleusercontent.com
+
+//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
 
 const validationSchema = Yup.object({
     name: Yup.string().required('Name is required'),
@@ -32,17 +40,17 @@ function Signup() {
 
     const mutation = useMutation(
         (userData) =>
-          axios.post(`${import.meta.env.VITE_BASE_URL}/auth/register`, userData),
+            axios.post(`${import.meta.env.VITE_BASE_URL}/auth/register`, userData),
         {
-          onSuccess: () => {
-            toast.success("Hesap başarıyla oluşturuldu!");
-            navigate('/login')
-          },
-          onError: () => {
-            toast.error("Hesap oluşturulurken bir hata oluştu.");
-          },
+            onSuccess: () => {
+                toast.success("Hesap başarıyla oluşturuldu!");
+                navigate('/login')
+            },
+            onError: () => {
+                toast.error("Hesap oluşturulurken bir hata oluştu.");
+            },
         }
-      );
+    );
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -53,7 +61,7 @@ function Signup() {
         onSubmit: (values) => {
             mutation.mutate(values);
             console.log(values);
-          },
+        },
     });
 
 
@@ -129,13 +137,29 @@ function Signup() {
 
                     <div className="flex mt-6 w-full items-center">
                         <button type='submit' className="shrink-0 w-full inline-block sortrounded-lg bg-green-600 py-3 font-bold text-white">Kayıt Ol</button>
-                       
+
                     </div>
                 </form>
                 <p className="text-center text-gray-600">
                     zaten bir hesbaın var mı?
                     <Link to={'/login'} className="whitespace-nowrap font-semibold text-gray-900 hover:underline">Giriş yap</Link>
                 </p>
+                {/*   <GoogleLoginButton/> */}
+
+                <GoogleOAuthProvider clientId='485554478880-971ivflhgbuth2r0rpkjqkam066vhs5t.apps.googleusercontent.com'>
+
+                    <GoogleLogin
+                        onSuccess={credentialResponse => {
+                            console.log(credentialResponse);
+                        }}
+                        onError={() => {
+                            console.log('Login Failed');
+                        }}
+
+                    />
+                    
+                    </GoogleOAuthProvider>
+
             </div>
         </div>
     )

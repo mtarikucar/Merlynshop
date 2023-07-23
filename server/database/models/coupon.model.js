@@ -1,7 +1,5 @@
 // server/models/coupon.js
 const { DataTypes } = require("sequelize");
-
-
 module.exports = (sequelize) => {
   sequelize.define(
     "coupon",

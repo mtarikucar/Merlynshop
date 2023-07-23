@@ -30,6 +30,7 @@ import Checkout from "./pages/Checkout";
 import { useSelector } from "react-redux";
 import CheckoutSuccess from "./pages/Checkout-success";
 import LandingPage from "./pages/LandingPage";
+import AdminCoupon from "./pages/admin/AdminCoupon";
 
 function Admin() {
   const { user } = useSelector((store) => store.auth);
@@ -44,6 +45,7 @@ function Admin() {
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="user" element={<AdminUser />} />
           <Route path="order" element={<AdminOrder />} />
+          <Route path="coupon" element={<AdminCoupon />} />
           <Route path="message" element={<AdminMessage />} />
           <Route path="order/:id" element={<AdminOrderDetail />} />
         </Routes>
