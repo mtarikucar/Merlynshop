@@ -15,7 +15,6 @@ import Navbar from "./Layout/Navbar";
 import Footer from "./Layout/Footer";
 import AdminNavbar from "./Layout/Admin/AdminNavbar";
 import AdminSidebar from "./Layout/Admin/AdminSidebar";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ShoppingCarts from "./components/ShoppingCarts";
 import AdminProduct from "./pages/admin/AdminProduct";
@@ -27,75 +26,44 @@ import Profile from "./pages/Profile";
 import AdminOrderDetail from "./pages/admin/AdminOrderDetail";
 import Checkout from "./pages/Checkout";
 
+import RequireAuth from "./features/RequireAuth";
 import { useSelector } from "react-redux";
 import CheckoutSuccess from "./pages/Checkout-success";
 import LandingPage from "./pages/LandingPage";
 
-function Admin() {
-  const { user } = useSelector((store) => store.auth);
-
-  return user?.role === "admin" ? (
-    <div>
-      <div className="min-h-screen flex flex-col w-full flex-auto flex-shrink-0 antialiased bg-white  text-black">
-        <AdminNavbar />
-        <AdminSidebar />
-        <Routes>
-          <Route path="product" element={<AdminProduct />} />
-          <Route path="dashboard" element={<AdminDashboard />} />
-          <Route path="user" element={<AdminUser />} />
-          <Route path="order" element={<AdminOrder />} />
-          <Route path="message" element={<AdminMessage />} />
-          <Route path="order/:id" element={<AdminOrderDetail />} />
-        </Routes>
-      </div>
-    </div>
-  ) : (
-    <div>
-      <div className="min-h-screen flex flex-col w-full flex-auto flex-shrink-0 justify-center items-center antialiased bg-white  text-black">
-        hele uyanığa bak önce giriş yap
-        <NavLink to="/login" className={"bg-green-500 rounded hover:boder-2 hover:p-3 p-2 ease-in-out duration-300 m-4 text-white"}> log in</NavLink>
-      </div>
-    </div>
-  );
-}
+import Layout from "./Layout/Layout";
 
 function App() {
-  let location = useLocation();
-
-  useEffect(() => { }, [location]);
-
   const [open, setOpen] = useState(false);
   return (
-    <>
-      
-      {!location.pathname.includes("admin") && (
-        <>
-          <ToastContainer />
-          <CartButton setOpen={setOpen} open={open} />
-
-          <Navbar setOpen={setOpen} open={open} />
-          {open && <ShoppingCarts open={open} setOpen={setOpen} />}
-        </>
-      )}
-      <Routes>
+    <Routes>
+      <Route element={<Layout />}>
+        {/* public routes */}
         <Route path="/" element={<Home />} />
-        <Route path="/product" element={<ProductPage />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/checkout-success" element={<CheckoutSuccess />} />
+        <Route path="login" element={<Login />} />
+        <Route path="signup" element={<Signup />} />
 
-        <Route path="/products/:id" element={<ProductDetail />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="product" element={<ProductPage />} />
+        <Route path="about" element={<About />} />
 
-        <Route path="admin/*" element={<Admin />} />
-        <Route path="admin" element={<Admin />} />
-      </Routes>
+        <Route path="products/:id" element={<ProductDetail />} />
 
-      {!location.pathname.includes("admin") && <Footer />}
-    </>
+        {/* we want to protect these routes */}
+        <Route element={<RequireAuth />}>
+          <Route path="contact" element={<Contact />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="checkout" element={<Checkout />} />
+          <Route path="checkout-success" element={<CheckoutSuccess />} />
+        </Route>
+       {/*  <Route element={<RequireAuth />}>
+          <Route path="admin/*" element={<Admin />} />
+          <Route path="admin" element={<Admin />} />
+        </Route> */}
+
+        {/* catch all */}
+        <Route path="*" element={<LandingPage />} />
+      </Route>
+    </Routes>
   );
 }
 

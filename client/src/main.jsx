@@ -5,9 +5,9 @@ import './index.css'
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
-import { store } from './store';
+import  store  from './store';
 import { Provider } from 'react-redux';
-import ScrollToTop from './hooks/ScrollToTop';
+import ScrollToTop from './features/ScrollToTop';
 
 const queryClient = new QueryClient()
 

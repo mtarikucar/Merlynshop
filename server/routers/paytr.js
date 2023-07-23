@@ -189,14 +189,7 @@ router.post("/callback", async function (req, res) {
         return res.status(404).json({ error: "Order not found" });
       }
     
-      // Decrease quantity for each product in the order
-      const products = await order.getProducts();
-      for (const product of products) {
-        if (product.order_product.quantity > 1) {
-          product.order_product.quantity -= 1;
-          await product.order_product.save();
-        }
-      }
+      
     
       // Set the payment_verify field to true
       order.payment_verify = true;

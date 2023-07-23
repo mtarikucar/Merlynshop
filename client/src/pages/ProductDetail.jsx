@@ -65,12 +65,10 @@ function ProductDetail() {
         );
 
         setSeparateArray(separateArray);
-        console.log(separateArray, "separateArray");
       },
     }
   );
 
-  console.log(selectedData);
   const [newComment, setNewComment] = useState("");
 
   const handleCommentChange = (e) => {
@@ -90,7 +88,6 @@ function ProductDetail() {
 
   if (error) return "An error has occurred: " + error.message;
 
-  console.log(data);
 
   return (
     <section className="py-4 sm:py-6">

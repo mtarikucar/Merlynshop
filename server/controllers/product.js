@@ -13,14 +13,16 @@ async function createProduct(req, res, next) {
     categoryId,
     discountedPrice,
   } = req.body;
-  console.log(photos,
+  console.log(
+    photos,
     thumbnail,
     name,
     description,
     price,
     features,
     categoryId,
-    discountedPrice,);
+    discountedPrice
+  );
   try {
     await models.product
       .create({
@@ -83,9 +85,9 @@ async function getAllProducts(req, res, next) {
   const options = {
     where,
     include: [{ model: models.category }, { model: models.photo }],
-    offset: (page - 1) * limit,
-    limit: limit,
-    order: [['price', sort === 'desc' ? 'DESC' : 'ASC']],
+    offset: page && limit ? (page - 1) * limit : 0,
+    limit: !!limit ? limit : null,
+    order: [["price", sort === "desc" ? "DESC" : "ASC"]],
   };
 
   try {
@@ -95,8 +97,6 @@ async function getAllProducts(req, res, next) {
     next(err);
   }
 }
-
-
 
 // Get a specific Product by ID
 async function getProductById(req, res, next) {
@@ -112,8 +112,8 @@ async function getProductById(req, res, next) {
         {
           model: models.product_feature,
           include: [models.feature],
-          group: ['featureId'], // features ID'lerine göre gruplama yapılıyor
-          attributes: ['id','featureId', "quantity", "value"], // sadece featureId'leri alınıyor
+          group: ["featureId"], // features ID'lerine göre gruplama yapılıyor
+          attributes: ["id", "featureId", "quantity", "value"], // sadece featureId'leri alınıyor
         },
       ],
     });
@@ -126,69 +126,73 @@ async function getProductById(req, res, next) {
   }
 }
 
+// Ürünü güncelle
 async function updateProductById(req, res, next) {
-  console.log(req.body);
-  const productId = req.params.id;
   const {
     photos,
     thumbnail,
     name,
     description,
     price,
-    quantity,
-    size,
+    features,
     categoryId,
     discountedPrice,
   } = req.body;
+
+  const { productId } = req.params;
+
   try {
-    const updatedProduct = await models.product.findOne({
-      where: { id: productId },
-    });
+    // Ürünü veritabanından bul
+    const product = await models.product.findByPk(productId);
 
-    if (!updatedProduct) {
-      return res.status(404).json({ message: "Product not found" });
+    if (!product) {
+      return res.status(404).json({ error: "Ürün bulunamadı" });
     }
 
-    await updatedProduct.update({
-      name: name || updatedProduct.name,
-      thumbnail: thumbnail || updatedProduct.thumbnail,
-      description: description || updatedProduct.description,
-      price: price || updatedProduct.price,
-      quantity: quantity || updatedProduct.quantity,
-      categoryId: categoryId || updatedProduct.categoryId,
-      size: size || updatedProduct.size,
-      discountedPrice: discountedPrice || updatedProduct.discountedPrice,
+    // Ürün bilgilerini güncelle
+    product.name = name;
+    product.thumbnail = thumbnail;
+    product.description = description;
+    product.price = price;
+    product.categoryId = categoryId;
+    product.discountedPrice = discountedPrice;
+
+    // Ürünü kaydet
+    await product.save();
+
+    // Özellikleri güncelle
+    await models.product_feature.destroy({
+      where: {
+        productId: product.id,
+      },
     });
 
-    // Update product photos
-    if (photos && photos.length > 0) {
-      const newPhotos = await Promise.all(
-        photos.map(async (photo) => {
-          return await models.photo.create({
-            imgpath: photo.imgpath,
-            productId: productId,
-          });
-        })
-      );
-
-      // Remove old photos
-      const oldPhotos = await updatedProduct.getPhotos();
-      await Promise.all(
-        oldPhotos.map(async (photo) => {
-          if (!newPhotos.find((p) => p.id === photo.id)) {
-            await photo.destroy();
-          }
-        })
-      );
-    }
-
-    const updatedProductWithPhotos = await models.product.findOne({
-      where: { id: productId },
-      include: { model: models.photo, as: "photos" },
+    features.forEach(async (element) => {
+      await models.product_feature.create({
+        featureId: element.featureId,
+        productId: product.id,
+        value: element.value,
+        quantity: element.quantity,
+      });
     });
 
-    res.status(200).json(updatedProductWithPhotos);
+    // Fotoğrafları güncelle
+    await models.photo.destroy({
+      where: {
+        productId: product.id,
+      },
+    });
+
+    photos.forEach(async (element) => {
+      await models.photo.create({
+        imgpath: element.imgpath,
+        productId: product.id,
+      });
+    });
+
+    res.status(200).json(product);
   } catch (err) {
+    console.log(err);
     next(err);
   }
 }

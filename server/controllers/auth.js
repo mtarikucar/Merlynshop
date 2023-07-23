@@ -4,7 +4,6 @@ const JWT = require("jsonwebtoken");
 const { models } = require("../database");
 
 async function register(req, res) {
-  
   try {
     const oldUser = await models.user.findOne({
       where: {
@@ -24,7 +23,7 @@ async function register(req, res) {
         return (user = models.user.create({
           name: req.body.name,
           email: req.body.email.toLowerCase(),
-          password: hashedPassword
+          password: hashedPassword,
         }));
       })
       .then((user) => {
@@ -51,6 +50,8 @@ async function register(req, res) {
 
 async function login(req, res) {
   const { email, password } = req.body;
+  const cookies = req.cookies;
+
   try {
     const user = await models.user.findOne({
       where: {
@@ -76,26 +77,55 @@ async function login(req, res) {
     }
 
     // Create token
-    const token = JWT.sign(
+    const accessToken = JWT.sign(
       {
         id: user.id.toString(),
         role: user.role,
       },
       process.env.JWT_SECRET,
-      //!todo ▼ I dont remember what's doing in here 
       {
         expiresIn: "1d",
       }
     );
 
-    return res.status(200).json({
-      status: "success",
-      message: "User is logined successfully",
-      data: {
-        token,
-        user,
-      },
+    const newRefreshToken = JWT.sign(
+      { id: user.id.toString() },
+      process.env.REFRESH_TOKEN_SECRET,
+      { expiresIn: "15s" }
+    );
+
+
+    if (cookies?.jwt) {
+      /* 
+    Scenario added here: 
+        1) User logs in but never uses RT and does not logout 
+        2) RT is stolen
+        3) If 1 & 2, reuse detection is needed to clear all RTs when the user logs in
+    */
+
+
+      res.clearCookie("jwt", {
+        httpOnly: true,
+        sameSite: "None",
+        secure: true,
+      });
+    }
+
+    // Saving refreshToken with the current user
+    await user.update({
+      refreshToken: newRefreshToken,
     });
+
+    // Creates Secure Cookie with the refresh token
+    res.cookie("jwt", newRefreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+
+    // Send authorization roles and access token to the user
+    res.json({ user:user,accessToken:accessToken });
   } catch (err) {
     // Error
     console.log(err);
@@ -106,4 +136,39 @@ async function login(req, res) {
   }
 }
 
-module.exports = { login, register };
+
+
+async function logout(req, res) {
+
+  const cookies = req.cookies;
+  
+  console.log(cookies);
+  if (!cookies?.jwt) return res.sendStatus(204); // No content
+  
+  const refreshToken = cookies.jwt;
+
+  try {
+    // Veritabanında refreshToken'i bul
+    const user = await User.findOne({ where: { refreshToken:refreshToken } });
+    console.log(user);
+    if (!user) {
+      res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
+      return res.sendStatus(204);
+    }
+
+    // refreshToken'i veritabanından kaldır
+    await user.update({
+      refreshToken: null,
+    });
+
+    res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
+    console.log(res.cookie);
+    res.sendStatus(204);
+  } catch (error) {
+    console.error('Error during logout:', error);
+    res.status(500).send('Internal Server Error');
+  }
+};
+
+
+module.exports = { login, register, logout };

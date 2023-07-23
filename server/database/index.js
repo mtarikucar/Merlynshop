@@ -34,7 +34,9 @@ const modelDefiners = [
   require("./models/photo.model"),
   require("./models/feature.model"),
   require("./models/product_feature.model"),
-  require("./models/comment.model")
+  require("./models/coupon.model"),
+  require("./models/comment.model"),
+  require("./models/coupon_user.model"),
 ];
 
 // We define all models according to their files.

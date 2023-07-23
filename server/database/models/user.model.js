@@ -38,6 +38,10 @@ module.exports = (sequelize) => {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
+      refreshToken: {
+        type: DataTypes.STRING, // ARRAY of strings (refresh tokens)
+        defaultValue: null, // Default value is an empty array
+      }
     },
     {
       tableName: "users",

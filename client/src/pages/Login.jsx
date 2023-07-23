@@ -4,38 +4,16 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useCookies } from 'react-cookie';
-import axios from "axios"
-import { useQueryClient, useMutation } from "react-query";
-import { loginSuccess } from '../store/auth/authSlice';
+import { setCredentials } from '../store/authSlice';
+import { useLoginMutation } from '../store/authApiSlice'
 
 function Login() {
 
+    const [login, { isLoading }] = useLoginMutation()
+    
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const queryClient = useQueryClient();
-    
-    const [, setCookie] = useCookies(['authToken']); // We don't need the authToken cookie itself, just the setter.
 
-    const notify = () => toast("giriş başarılı");
-
-    const mutation = useMutation(
-        (values) => axios.post(`${import.meta.env.VITE_BASE_URL}/auth/login`, values),
-        {
-          onSuccess: (data) => {
-            console.log(data.data);
-            toast.success("Başarıyla giriş yaptınız");
-            setCookie('authToken', data.data.data.token, { path: '/' }); // Set the authToken cookie with the received token.   
-            queryClient.invalidateQueries("user");
-            dispatch(loginSuccess({user: data.data.data.user,token: data.data.data.token}));
-            navigate("/")
-          },
-          onError: (err) => {
-    
-            toast.error("Bir hata oluştu, lütfen daha sonra tekrar deneyin", err);
-          },
-        }
-      );
 
       
     const formik = useFormik({
@@ -44,17 +22,30 @@ function Login() {
             password: '',
         },
         onSubmit: async (values) => {
+
             try {
-              await mutation.mutate(values);
+                const userData = await login(values).unwrap()
+                console.log(userData);
+                dispatch(setCredentials(userData ))
+    
+                navigate('/')
             } catch (err) {
-              toast.error("error at login");
+                console.log(err);
+                if (!err?.originalStatus) {
+                    // isLoading: true until timeout occurs
+                    console.log('No Server Response');
+                } else if (err.originalStatus === 400) {
+                    console.log('Missing Username or Password');
+                } else if (err.originalStatus === 401) {
+                    console.log('Unauthorized');
+                } else {
+                    console.log('Login Failed');
+                }
             }
-          },
+        },
     });
 
-    if (mutation.isLoading) {
-        return notify;
-    }
+
 
     return (
 
