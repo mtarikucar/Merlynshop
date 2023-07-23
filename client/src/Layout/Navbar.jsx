@@ -53,7 +53,7 @@ function Navbar({ open, setOpen }) {
             ) : (
               <NavLink
                 to="/login"
-                className="text-white bg-[#008037] hover:bg-white hover:text-[#008037] hover:border focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0"
+                className="text-white bg-[#008037] hover:bg-white hover:text-[#008037] hover:border focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 "
               >
                 Giriş yap
               </NavLink>
@@ -62,7 +62,7 @@ function Navbar({ open, setOpen }) {
         </div>
       </nav>
       <nav className="bg-gray-100 ">
-        <div className=" lg:sticky  xl:sticky md:sticky fixed  lg:top-0  xl:top-0 md:top-0  bottom-0 z-40 w-full h-16  flex bg-white border-t border-gray-200 ">
+        <div className=" lg:sticky  xl:sticky md:sticky  lg:top-0  xl:top-0 md:top-0  bottom-0 z-40 w-full h-16  flex bg-white border-t border-gray-200 ">
           <div className=" container mx-auto flex flex-row items-center max-w-screen-xl ">
             <ul className="flex lg:justify-start md:justify-start justify-between  xl:justify-start h-full w-full  font-medium mx-2 p-2 lg:space-x-10">
               {user?.role == "admin" ? (

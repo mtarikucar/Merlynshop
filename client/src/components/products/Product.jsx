@@ -66,7 +66,7 @@ function Product({ product }) {
             ) : (
               <>
                 <p>
-                  <span className="text-sm text-slate-900 line-through">
+                  <span className="text-3xl font-bold text-slate-900">
                     ₺{product.price}
                   </span>
                 </p>

@@ -7,9 +7,12 @@ import { useMutation } from "react-query";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
+import Cookies from "universal-cookie";
 
 function Dropdown() {
   const { user, token } = useSelector((state) => state.auth);
+
+  const cookies = new Cookies();
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -25,6 +28,7 @@ function Dropdown() {
     {
       onSuccess: () => {
         dispatch(logoutSuccess());
+        cookies.remove("token");
         navigate("/");
       },
       onError: (err) => {

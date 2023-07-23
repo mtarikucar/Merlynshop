@@ -15,7 +15,7 @@ async function createOrder(prop) {
       await models.order_product
         .create({
           orderId: newOrder.id,
-          productId: element.id,
+          productId: element.featureId,
           quantity: element.quantity,
         })
 
