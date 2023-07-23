@@ -51,6 +51,10 @@ async function register(req, res) {
 
 async function login(req, res) {
   const { email, password } = req.body;
+  
+  const cookies = req.cookies;
+
+
   try {
     const user = await models.user.findOne({
       where: {
@@ -82,11 +86,28 @@ async function login(req, res) {
         role: user.role,
       },
       process.env.JWT_SECRET,
-      //!todo ▼ I dont remember what's doing in here 
       {
         expiresIn: "1d",
       }
     );
+
+    if (cookies?.jwt) {
+      res.clearCookie("jwt", {
+        httpOnly: true,
+        sameSite: "None",
+        secure: true,
+      });
+    }
+
+    res.cookie("jwt", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+
+    delete user.password
+    delete user.refreshtoken
 
     return res.status(200).json({
       status: "success",
@@ -106,4 +127,22 @@ async function login(req, res) {
   }
 }
 
-module.exports = { login, register };
+async function logout(req, res) {
+
+  const cookies = req.cookies;
+
+  if (!cookies?.jwt) return res.sendStatus(204); // No content
+  
+  try {
+
+    res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
+    console.log(res.cookie);
+    res.sendStatus(204);
+  } catch (error) {
+    console.error('Error during logout:', error);
+    res.status(500).send('Internal Server Error');
+  }
+};
+
+
+module.exports = { login, register, logout };

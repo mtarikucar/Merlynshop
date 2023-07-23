@@ -5,7 +5,10 @@ var cors = require("cors");
 const app = express();
 var path = require('path');
 require("dotenv").config();
+const cookieParser = require('cookie-parser');
 
+
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -20,14 +23,13 @@ var allowlist = [
   "http://localhost:5173",
   "http://127.0.0.1:5173",
   "https://walrus-app-bhffu.ondigitalocean.app",
-  "https://walrus-app-bhffu.ondigitalocean.app",
   "https://merlynclub.com",
   "https://www.merlynclub.com",
 ];
 var corsOptionsDelegate = function (req, callback) {
   var corsOptions;
   if (allowlist.indexOf(req.header("Origin")) !== -1) {
-    corsOptions = { origin: true }; // reflect (enable) the requested origin in the CORS response
+    corsOptions = { origin: true,credentials: true }; // reflect (enable) the requested origin in the CORS response
   } else {
     corsOptions = { origin: false }; // disable CORS for this request
   }
@@ -69,6 +71,7 @@ const orderRouter = require("./routers/order");
 const paytrRouter = require("./routers/paytr");
 const featureRouter = require("./routers/feature");
 const commentRouter = require("./routers/comment");
+const couponRouter = require("./routers/coupon");
 
 app.use("/api/product", productRouter);
 app.use("/api/category", categoryRouter);
@@ -78,6 +81,7 @@ app.use("/api/order", orderRouter)
 app.use("/api/paytr", paytrRouter)
 app.use("/api/feature", featureRouter)
 app.use("/api/comment", commentRouter)
+app.use("/api/coupon", couponRouter)
 
 
 app.listen(process.env.PORT, () => {

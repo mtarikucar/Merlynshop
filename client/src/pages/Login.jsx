@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useCookies } from 'react-cookie';
 import axios from "axios"
 import { useQueryClient, useMutation } from "react-query";
 import { loginSuccess } from '../store/auth/authSlice';
@@ -15,18 +14,17 @@ function Login() {
     const dispatch = useDispatch()
     const queryClient = useQueryClient();
     
-    const [, setCookie] = useCookies(['authToken']); // We don't need the authToken cookie itself, just the setter.
 
     const notify = () => toast("giriş başarılı");
 
     const mutation = useMutation(
-        (values) => axios.post(`${import.meta.env.VITE_BASE_URL}/auth/login`, values),
+        (values) => axios.post(`${import.meta.env.VITE_BASE_URL}/auth/login`, values,{
+            withCredentials:true
+        }),
         {
           onSuccess: (data) => {
-            console.log(data.data);
+            console.log(data);
             toast.success("Başarıyla giriş yaptınız");
-            setCookie('authToken', data.data.data.token, { path: '/' }); // Set the authToken cookie with the received token.   
-            queryClient.invalidateQueries("user");
             dispatch(loginSuccess({user: data.data.data.user,token: data.data.data.token}));
             navigate("/")
           },

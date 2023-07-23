@@ -9,7 +9,7 @@ async function createOrder(prop) {
       status: status,
       userId: userId,
     });
-    console.log(newOrder, "newOrder");
+
     // iterate over the 'products' array and create an entry in the 'orderProduct' table for each product
     products.forEach(async (element) => {
       await models.order_product
@@ -35,6 +35,7 @@ async function createOrder(prop) {
 
   }
 }
+
 async function verifyOrder(req, res) {
   const { orderId } = req.params;
 
@@ -109,13 +110,11 @@ async function getOrderById(req, res, next) {
 
 async function getOrderByUserId(req, res, next) {
   const { id } = req.params;
-  const { verify } = req.query;
-
   const userId =id
 
   try {
     const orders = await models.order.findAll({
-      where: { userId:userId,verify,verify },
+      where: { userId:userId },
       include: [{ model: models.product }, { model: models.user }, { model: models.location }],
     });
     if (orders.length === 0) {

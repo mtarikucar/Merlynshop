@@ -189,14 +189,7 @@ router.post("/callback", async function (req, res) {
         return res.status(404).json({ error: "Order not found" });
       }
     
-      // Decrease quantity for each product in the order
-      const products = await order.getProducts();
-      for (const product of products) {
-        if (product.order_product.quantity > 1) {
-          product.order_product.quantity -= 1;
-          await product.order_product.save();
-        }
-      }
+
     
       // Set the payment_verify field to true
       order.payment_verify = true;
@@ -215,29 +208,3 @@ router.post("/callback", async function (req, res) {
 });
 
 module.exports = router;
-
-
-/* {
-     hash: 'RLBSK9rktptGzQzgbExrfNlel2iQ6IQQsI1XwPjjsNc=',
-     merchant_oid: 'IN1688819003009087',
-     status: 'success',
-     total_amount: '12300',
-     payment_type: 'card',
-     payment_amount: '12300',
-     currency: 'TL',
-     installment_count: '1',
-     merchant_id: '342659',
-     test_mode: '1'
-   }
-   success {
-     hash: 'RLBSK9rktptGzQzgbExrfNlel2iQ6IQQsI1XwPjjsNc=',
-     merchant_oid: 'IN1688819003009087',
-     status: 'success',
-     total_amount: '12300',
-     payment_type: 'card',
-     payment_amount: '12300',
-     currency: 'TL',
-     installment_count: '1',
-     merchant_id: '342659',
-     test_mode: '1'
-   } */

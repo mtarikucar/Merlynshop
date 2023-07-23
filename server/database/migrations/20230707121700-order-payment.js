@@ -9,6 +9,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.removeColumn("order", "payment_verify");
+    await queryInterface.removeColumn("order", "payment_id");
   },
 };

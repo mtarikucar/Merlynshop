@@ -1,5 +1,5 @@
 function applyRelationships(sequelize) {
-  const { photo, order, user, product, feature, category, location, comment,product_feature } =
+  const { photo, order, user, product, feature, category, location, comment,product_feature,coupon,coupon_user } =
     sequelize.models;
 
   //order
@@ -27,6 +27,11 @@ function applyRelationships(sequelize) {
   product.hasMany(product_feature)
   product_feature.belongsTo(feature)
   feature.hasMany(product_feature)  
+
+  coupon_user.belongsTo(coupon);
+  coupon.hasMany(coupon_user)
+  coupon_user.belongsTo(user)
+  user.hasMany(coupon_user) 
 }
 
 module.exports = { applyRelationships };
