@@ -33,9 +33,9 @@ function AdminCoupon() {
         deleteSliderMutation.mutate(couponId);
     };
 
-    if (isLoading) return <p>Loading sliders...</p>;
+    if (isLoading) return <p>Loading coupon...</p>;
 
-    if (isError) return <p>Error loading sliders</p>;
+    if (isError) return <p>Error loading coupon</p>;
 
     console.log(coupons);
 
@@ -43,13 +43,13 @@ function AdminCoupon() {
     return (
         <>
 
-            <div className="h-full w-full mt-14 mb-10 ml-24">
+            <div className="h-full w-full mt-4 mb-10 border-2 rounded-lg">
                 <div className="w-full   mr-24">
-                    <div className='pl-8'>
+                    <div className='pl-8 mt-4'>
 
                         <button
                             onClick={() => setOpenAddProduct(true)}
-                            className=" m-1 inline-flex items-center text-white bg-green-500 border hover:bg-white border-green-500 hover:text-gray-900 font-medium rounded-lg text-sm px-3 py-1.5 outline-none"
+                            className=" inline-flex items-center text-white bg-green-500 border hover:bg-white border-green-500 hover:text-gray-900 font-medium rounded-lg text-sm px-3 py-1.5 outline-none"
                             type="button"
                         >
                             Add coupon

@@ -9,7 +9,9 @@ module.exports = (sequelize) => {
         allowNull: false,
         unique: true,
       },
-
+      /* img: {
+        type: DataTypes.STRING,
+      }, */
       minOrderAmount: {
         type: DataTypes.FLOAT,
         defaultValue: 0,

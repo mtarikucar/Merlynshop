@@ -84,7 +84,7 @@ function AdminOrderDetail() {
 
     return (
 
-        <div className="h-full  m-2 ml-14 mt-14 mb-10 md:ml-64">
+        <div className="h-full m-2 mt-14 mb-10 ">
             <ToastContainer />
             <div className=' text-center  '>
                 <div className="w-full">

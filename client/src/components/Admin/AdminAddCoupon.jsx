@@ -22,7 +22,6 @@ function AdminAddCoupon({ open, setOpen }) {
             onSuccess: () => {
                 queryClient.invalidateQueries("coupons");
                 setOpen(false);
-                formik.initialValues.
                     toast.success(`coupon Added`, {
                         position: "bottom-left",
                     });

@@ -5,7 +5,7 @@ function AdminDashboard() {
     return (
 
         
-            <div className="h-full m-4 md:ml-64">
+            <div className="h-full m-4 ">
                 <div className="grid mb-4 pb-10 px-8 mx-4 rounded-3xl bg-gray-100 border-4 border-green-400 ">
 
                     <div className="grid grid-cols-12 gap-6">
