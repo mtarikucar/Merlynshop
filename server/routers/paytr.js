@@ -189,7 +189,7 @@ router.post("/callback", async function (req, res) {
         return res.status(404).json({ error: "Order not found" });
       }
     
-      const feature = await models.product_feature.findByPk(productId) // productID aslında burada featrueID sonra veritabanından ismini düzeltmeyi unutmayın
+      const feature = await models.product_feature.findByPk(order.productId) // productID aslında burada featrueID sonra veritabanından ismini düzeltmeyi unutmayın
 
       feature.quantity = feature.quantity - 1
       
