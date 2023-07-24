@@ -189,7 +189,11 @@ router.post("/callback", async function (req, res) {
         return res.status(404).json({ error: "Order not found" });
       }
     
+      const feature = models.product_feature.findOne({ where: { productId: order.productId } }) // productID aslında burada featrueID sonra veritabanından ismini düzeltmeyi unutmayın
 
+      feature.quantity = feature.quantity - 1
+      
+      await feature.save()
     
       // Set the payment_verify field to true
       order.payment_verify = true;
@@ -208,3 +212,29 @@ router.post("/callback", async function (req, res) {
 });
 
 module.exports = router;
+
+
+/* {
+     hash: 'RLBSK9rktptGzQzgbExrfNlel2iQ6IQQsI1XwPjjsNc=',
+     merchant_oid: 'IN1688819003009087',
+     status: 'success',
+     total_amount: '12300',
+     payment_type: 'card',
+     payment_amount: '12300',
+     currency: 'TL',
+     installment_count: '1',
+     merchant_id: '342659',
+     test_mode: '1'
+   }
+   success {
+     hash: 'RLBSK9rktptGzQzgbExrfNlel2iQ6IQQsI1XwPjjsNc=',
+     merchant_oid: 'IN1688819003009087',
+     status: 'success',
+     total_amount: '12300',
+     payment_type: 'card',
+     payment_amount: '12300',
+     currency: 'TL',
+     installment_count: '1',
+     merchant_id: '342659',
+     test_mode: '1'
+   } */

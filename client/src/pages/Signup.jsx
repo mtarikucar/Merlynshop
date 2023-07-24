@@ -4,17 +4,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import { useFormik } from 'formik';
-import { useQueryClient, useMutation } from "react-query";
+import { useMutation } from "react-query";
 import * as Yup from 'yup';
 import axios from "axios"
-import GoogleLoginButton from '../components/GoogleLoginButton';
 
 import { GoogleOAuthProvider ,GoogleLogin} from '@react-oauth/google';
 
-
-//86656059051-uvelp63k1m6ob18qm0k608qu8eije3mr.apps.googleusercontent.com
-
-//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
 
 const validationSchema = Yup.object({
     name: Yup.string().required('Name is required'),

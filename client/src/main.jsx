@@ -15,6 +15,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <QueryClientProvider client={queryClient}>
     <BrowserRouter>
       <Provider store={store}>
+        <ScrollToTop/>
         <App />
       </Provider>
       <ReactQueryDevtools initialIsOpen={false} />
