@@ -24,7 +24,7 @@ function ProductDetail() {
     const cartProduct = {
       ...product,
       cartQuantity: quantity,
-      product_feature: selectedData.size,
+      product_feature: selectedData,
     };
     dispatch(addToCart(cartProduct));
     setQuatity(1);
@@ -130,10 +130,7 @@ function ProductDetail() {
                               value={f.id}
                               className="hidden peer"
                               onChange={() =>
-                                setSelectedData((prevState) => ({
-                                  ...prevState,
-                                  [name]: f.id,
-                                }))
+                                setSelectedData(f.id)
                               }
                             />
                             <label

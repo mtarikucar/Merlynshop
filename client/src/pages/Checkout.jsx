@@ -16,8 +16,7 @@ function Checkout() {
             <PayButton cart={cart} />
           </div>
           <div className="relative col-span-full flex flex-col py-6 pl-8 pr-4 sm:py-12 lg:col-span-4 lg:py-24">
-            {/* <h2 className="absolute text-black">Order summary</h2>
-            gdfgndfgn */}
+
             <div>
               <div className="absolute inset-0 max-h-screen w-full bg-gradient-to-t from-green-800 to-green-400 opacity-95"></div>
             </div>

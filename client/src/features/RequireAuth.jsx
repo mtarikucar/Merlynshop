@@ -19,7 +19,7 @@ const RequireAuth = ({ allowedRoles }) => {
   }, [token]);
 
   return token ? (
-    allowedRoles?.includes(user.role) ? (
+    allowedRoles?.includes(user?.role) ? (
       <Outlet />
     ) : (
       <Unauthorized />

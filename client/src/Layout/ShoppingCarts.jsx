@@ -37,6 +37,7 @@ function ShoppingCarts({ open, setOpen }) {
 
 
     function findFeatureValue(data) {
+        console.log(data);
         const targetFeatureId = data.product_feature;
 
         const targetFeature = data.product_features.find(
@@ -124,7 +125,7 @@ function ShoppingCarts({ open, setOpen }) {
                                                                         {/*  <p className="mt-1 text-sm text-gray-500">{product.color}</p> */}
                                                                     </div>
                                                                     <div className='flex justify-between'>
-                                                                        <p className="font-mono ">{findFeatureValue(product).feature.name}:{findFeatureValue(product).value}</p>
+                                                                        {<p className="font-mono ">{findFeatureValue(product)?.feature?.name}:{findFeatureValue(product)?.value}</p>}
                                                                         <p className="font-mono  ml-4">{product.cartQuantity} x  {product.price * product.cartQuantity}₺</p>
                                                                     </div>
                                                                     <div className="flex flex-1 items-center justify-between text-sm">
