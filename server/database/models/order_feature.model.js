@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
   sequelize.define(
-    "order_product",
+    "order_feature",
     {
       quantity: {
         type: DataTypes.SMALLINT,
@@ -10,7 +10,7 @@ module.exports = (sequelize) => {
       }
     },
     {
-      tableName: "order_product",
+      tableName: "order_feature",
       timestamps: true,
     }
   );

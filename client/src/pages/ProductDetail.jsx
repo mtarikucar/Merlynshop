@@ -245,14 +245,14 @@ function ProductDetail() {
                 )
               }
 
-              <button
+              {/* <button
                 onClick={() => setOpenOffer(!openOffer)}
                 type="button"
                 className="p-2 inline-flex items-center justify-center rounded-md border-2 border-transparent bg-green-500 bg-none  text-center text-base font-bold text-white hover:border-green-500 hover:text-green-500 transition-all duration-200 ease-in-out focus:shadow hover:bg-white"
               >
                 <HandshakeIcon className="  h-7 w-7 align-middle " />
                 pazarlık yap
-              </button>
+              </button> */}
             </div>
 
             <ul className="mt-8 space-y-2">

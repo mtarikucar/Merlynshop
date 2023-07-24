@@ -28,7 +28,7 @@ const modelDefiners = [
   require("./models/category.model"),
   require("./models/location.model"),
   require("./models/order.model"),
-  require("./models/order_product.model"),
+  require("./models/order_feature.model"),
   require("./models/product.model"),
   require("./models/user.model"),
   require("./models/photo.model"),

@@ -1,11 +1,8 @@
 const { Router } = require('express');
 const { verifyTokenAndAdmin,verifyToken } = require('../middlewares/verifyToken');
-const { createOrder, getOrderById, getAllOrders, updateOrder,getOrderByUserId,deleteOrderById } = require('../controllers/order');
+const { getOrderById, getAllOrders, updateOrder,getOrderByUserId,deleteOrderById } = require('../controllers/order');
 const router = Router()
 
-
-// Create a new order
-router.post("/",verifyToken, createOrder);
 
 // Get all orders (only accessible by admin)
 router.get("/",verifyTokenAndAdmin, getAllOrders);

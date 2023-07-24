@@ -3,8 +3,8 @@ function applyRelationships(sequelize) {
     sequelize.models;
 
   //order
-  order.belongsToMany(product, { through: "order_product" });
-  product.belongsToMany(order, { through: "order_product" });
+  order.belongsToMany(product_feature, { through: "order_feature" });
+  product_feature.belongsToMany(order, { through: "order_feature" });
 
   user.hasMany(order);
   order.belongsTo(user);

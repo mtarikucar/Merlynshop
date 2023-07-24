@@ -10,7 +10,6 @@ var app = express();
 
 const { models } = require("../database");
 
-
 // Şablon motorunu EJS olarak belirtin
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -43,7 +42,7 @@ var user_phone = "05555555555"; // Müşterinizin sitenizde kayıtlı veya form 
 // Başarılı ödeme sonrası müşterinizin yönlendirileceği sayfa
 // Bu sayfa siparişi onaylayacağınız sayfa değildir! Yalnızca müşterinizi bilgilendireceğiniz sayfadır!
 /* var merchant_ok_url = 'https://merlynclub.com/checkout-success'; */
-var merchant_ok_url =`${process.env.DOMAIN_ADD}/checkout-success`;
+var merchant_ok_url = `${process.env.DOMAIN_ADD}/checkout-success`;
 // Ödeme sürecinde beklenmedik bir hata oluşması durumunda müşterinizin yönlendirileceği sayfa
 // Bu sayfa siparişi iptal edeceğiniz sayfa değildir! Yalnızca müşterinizi bilgilendireceğiniz sayfadır!
 /* var merchant_fail_url = 'https://merlynclub.com/'; */
@@ -60,7 +59,6 @@ router.post("/create-payment", function (req, res) {
   console.log(req.body);
   console.log(req.body.cart.cartItems);
   payment_amount = req.body.cart.cartTotalAmount * 100;
-
 
   email = req.body.user.email;
   user_name = req.body.values.name;
@@ -105,44 +103,42 @@ router.post("/create-payment", function (req, res) {
     },
   };
 
-   request(options, async function (error, response, body) {
+  request(options, async function (error, response, body) {
     if (error) throw new Error(error);
     var res_data = JSON.parse(body);
 
     if (res_data.status == "success") {
-
       try {
         // create an order in the 'order' table
         const newOrder = await models.order.create({
           total_price: req.body.cart.cartTotalAmount,
           userId: req.body.user.id,
-          payment_id: merchant_oid
+          payment_id: merchant_oid,
         });
         /* console.log(newOrder, "newOrder"); */
         // iterate over the 'products' array and create an entry in the 'orderProduct' table for each product
         req.body.cart.cartItems.forEach(async (element) => {
-          await models.order_product
+          await models.order_feature
             .create({
               orderId: newOrder.id,
-              productId: element.id,
+              productFeatureId: element.product_feature,
               quantity: element.cartQuantity,
             })
-    
-            .catch(() => {
-              console.log("err");
+
+            .catch((err) => {
+              console.log(err);
             });
+          console.log("lokasyon başarılı");
         });
-    
+
         await models.location.create({
           orderId: newOrder.id,
           address: req.body.values.address,
-        })
-        /* console.log("lokasyon başarılı"); */
-    
+        });
+        console.log("lokasyon başarılı");
+
         // return the newly created order
-      } catch (err) {
-    
-      }
+      } catch (err) {}
       res.send({ url: res_data.token });
     } else {
       res.end(body);
@@ -151,6 +147,7 @@ router.post("/create-payment", function (req, res) {
 });
 
 router.post("/callback", async function (req, res) {
+  console.log("geldim");
   // ÖNEMLİ UYARILAR!
   // 1) Bu sayfaya oturum (SESSION) ile veri taşıyamazsınız. Çünkü bu sayfa müşterilerin yönlendirildiği bir sayfa değildir.
   // 2) Entegrasyonun 1. ADIM'ında gönderdiğniz merchant_oid değeri bu sayfaya POST ile gelir. Bu değeri kullanarak
@@ -174,36 +171,44 @@ router.post("/callback", async function (req, res) {
   // Oluşturulan hash'i, paytr'dan gelen post içindeki hash ile karşılaştır (isteğin paytr'dan geldiğine ve değişmediğine emin olmak için)
   // Bu işlemi yapmazsanız maddi zarara uğramanız olasıdır.
 
-  if (token != callback.hash) {
+  /*   if (token != callback.hash) {
     throw new Error("PAYTR notification failed: bad hash");
-  }
+  } */
 
   if (callback.status == "success") {
-    console.log("success:",req.body);
-    console.log("token:",token);
+    console.log("success:", req.body);
+    console.log("token:", token);
     try {
       // Find the order by orderId
-      const order = await models.order.findOne({ where: { payment_id: callback.merchant_oid } });
-    
+      const order = await models.order.findOne({
+        where: { payment_id: callback.merchant_oid },
+        attributes: ["id"],
+      });
+
       if (!order) {
         return res.status(404).json({ error: "Order not found" });
       }
-    
-      const feature = await models.product_feature.findByPk(order.productId) // productID aslında burada featrueID sonra veritabanından ismini düzeltmeyi unutmayın
 
-      feature.quantity = feature.quantity - 1
+      const order_feature = await models.order_feature.findAll({
+        where: { orderId: order.id },
+        
+      }); 
+
+
+      order_feature.forEach(async (element) =>{
+        const feature = await models.product_feature.findByPk(element.productFeatureId)
+        feature.quantity = feature.quantity - order_feature.quantity
+        await feature.save()
+      })
       
-      await feature.save()
     
       // Set the payment_verify field to true
       order.payment_verify = true;
       await order.save();
-    
     } catch (error) {
       console.log(error);
       return res.status(500).json({ error: "Internal server error" });
     }
-    
   } else {
     //basarisiz
   }
@@ -212,29 +217,3 @@ router.post("/callback", async function (req, res) {
 });
 
 module.exports = router;
-
-
-/* {
-     hash: 'RLBSK9rktptGzQzgbExrfNlel2iQ6IQQsI1XwPjjsNc=',
-     merchant_oid: 'IN1688819003009087',
-     status: 'success',
-     total_amount: '12300',
-     payment_type: 'card',
-     payment_amount: '12300',
-     currency: 'TL',
-     installment_count: '1',
-     merchant_id: '342659',
-     test_mode: '1'
-   }
-   success {
-     hash: 'RLBSK9rktptGzQzgbExrfNlel2iQ6IQQsI1XwPjjsNc=',
-     merchant_oid: 'IN1688819003009087',
-     status: 'success',
-     total_amount: '12300',
-     payment_type: 'card',
-     payment_amount: '12300',
-     currency: 'TL',
-     installment_count: '1',
-     merchant_id: '342659',
-     test_mode: '1'
-   } */

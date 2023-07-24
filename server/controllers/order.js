@@ -1,42 +1,5 @@
 const { models } = require("../database/");
 
-async function createOrder(prop) {
-  const { status,  products, userId, location } = prop;
-
-  try {
-    // create an order in the 'order' table
-    const newOrder = await models.order.create({
-      status: status,
-      userId: userId,
-    });
-
-    // iterate over the 'products' array and create an entry in the 'orderProduct' table for each product
-    products.forEach(async (element) => {
-      await models.order_product
-        .create({
-          orderId: newOrder.id,
-          productId: element.featureId,
-          quantity: element.quantity,
-        })
-
-        .catch(() => {
-          console.log("err");
-        });
-    });
-
-    await models.location.create({
-      orderId: newOrder.id,
-      address: location,
-    })
-    console.log("lokasyon başarılı");
-
-    // return the newly created order
-  } catch (err) {
-
-  }
-}
-
-
 
 
 async function getAllOrders(req, res, next) {
@@ -128,7 +91,6 @@ async function deleteOrderById(req, res, next) {
 }
 
 module.exports = {
-  createOrder,
   getAllOrders,
   getOrderById,
   updateOrder,
