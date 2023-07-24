@@ -12,10 +12,14 @@ function AdminOrderDetail() {
     const statusRef = useRef()
     const notify = () => toast("giriş başarılı");
     const { id } = useParams()
-    const { user, token } = useSelector((state) => state.auth);
+    const {  token } = useSelector((state) => state.auth);
     const { isLoading, error, data } = useQuery('order', () => {
 
-        return fetch(`${import.meta.env.VITE_BASE_URL}/order/${id}`).then(res =>
+        return fetch(`${import.meta.env.VITE_BASE_URL}/order/${id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }).then(res =>
             res.json()
         )
     }
@@ -55,11 +59,6 @@ function AdminOrderDetail() {
         }
     );
 
-    /*     const handleSubmit = (e) => {
-            e.preventDefault();
-            console.log('geldi');
-            updateStatus.mutate(formState);
-        }; */
 
 
     useEffect(() => {
@@ -97,8 +96,7 @@ function AdminOrderDetail() {
                             <div className="flex flex-col justify-start items-start bg-gray-50 px-4 py-4 md:py-6 md:p-6 xl:p-8 w-full">
                                 <p className="text-lg md:text-xl font-semibold leading-6 xl:leading-5 text-gray-800">Customer’s Cart</p>
                                 {
-                                    data &&
-                                    data?.products.map((product) => (
+                                    data?.products?.map((product) => (
 
                                         <div key={product.id} className="mt-4 md:mt-6 flex  flex-col md:flex-row justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full ">
                                             <div className="pb-4 md:pb-8 w-full md:w-40">

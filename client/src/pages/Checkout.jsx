@@ -19,7 +19,6 @@ function Checkout() {
             {/* <h2 className="absolute text-black">Order summary</h2>
             gdfgndfgn */}
             <div>
-              <img src="https://images.unsplash.com/photo-1581318694548-0fb6e47fe59b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80" alt="" className="absolute inset-0 max-h-screen h-ful w-full object-cover" />
               <div className="absolute inset-0 max-h-screen w-full bg-gradient-to-t from-green-800 to-green-400 opacity-95"></div>
             </div>
 

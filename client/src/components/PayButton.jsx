@@ -50,11 +50,10 @@ const PayButton = ({ cart }) => {
     <>
       {url ? (
         <iframe
-          src={url}
-          width="600"
-          height="1600"
-          frameBorder="0"
+          src={url}    
           allowTransparency="true"
+          className="
+           w-full h-96 overflow-clip"
         ></iframe>
       ) : (
         <div className="mx-auto w-full max-w-lg">

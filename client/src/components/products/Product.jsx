@@ -76,8 +76,8 @@ function Product({ product }) {
             <button 
              onClick={() => hundleAddToCart(product)}
             className="flex items-center rounded-md bg-green-500 px-3 py-2.5 text-center text-sm font-medium text-white hover:bg-green-600 focus:outline-none focus:ring-4 focus:ring-blue-300">
-              <svg xmlns="http://www.w3.org/2000/svg" className="mr-2 h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+              <svg xmlns="http://www.w3.org/2000/svg" className="mr-2 h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
               sepete ekle
             </button>
@@ -85,44 +85,7 @@ function Product({ product }) {
         </div>
       </div>
 
-      {/* <div className="mx-auto m-6 w-44 md:w-56 lg:w-72 transform overflow-hidden rounded-lg bg-white  shadow-md duration-300 hover:scale-105 hover:shadow-lg flex flex-col  justify-between border-gray-100 p-3">
-        <Link to={`/products/Products/${product.id}`}>
-          <img
-            src={product.thumbnail}
-            alt=""
-            className="w-auto h-32 text-center p-3 object-cover transition duration-500 group-hover:scale-105"
-          />
-        </Link>
-
-        <h3 className=" text-lg font-medium text-gray-900">{product.name}</h3>
-        
-        <div className="flex justify-start flex-row">
-          {product.discountedPrice ? (
-            <>
-              <h1 className="text-xl font-bold">
-                {product.discountedPrice}₺
-              </h1>
-              <span className="text-base">/</span>
-              <span
-                className={`text-base font-medium text-gray-500 line-through dark:text-gray-300`}
-              >
-                {product.price}₺
-              </span>
-            </>
-          ) : (
-            <>
-              <h1 className="text-xl font-bold">{product.price}₺</h1>
-            </>
-          )}
-        </div>
-
-        <button
-          onClick={() => hundleAddToCart(product)}
-          className=" text-center  rounded p-2 text-white bg-green-500 lg:p-4  md:p-3 text-sm font-medium transition hover:scale-105"
-        >
-          sepete ekle
-        </button>
-      </div> */}
+      
     </>
   );
 }
