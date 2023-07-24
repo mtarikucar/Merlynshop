@@ -1,28 +1,25 @@
 const { Router } = require('express');
-const { verifyTokenAndAdmin } = require('../middlewares/verifyToken');
-const { createOrder, getOrderById, getAllOrders, updateOrder,getOrderByUserId,deleteOrderById, verifyOrder } = require('../controllers/order');
+const { verifyTokenAndAdmin,verifyToken } = require('../middlewares/verifyToken');
+const { createOrder, getOrderById, getAllOrders, updateOrder,getOrderByUserId,deleteOrderById } = require('../controllers/order');
 const router = Router()
 
 
 // Create a new order
-router.post("/", createOrder);
-
-// verify a new order
-router.post("/", verifyOrder);
+router.post("/",verifyToken, createOrder);
 
 // Get all orders (only accessible by admin)
-router.get("/", getAllOrders);
+router.get("/",verifyTokenAndAdmin, getAllOrders);
 
 // Get order by ID
-router.get("/:id", getOrderById);
+router.get("/:id",verifyToken, getOrderById);
 
-router.delete("/:id", deleteOrderById);
+router.delete("/:id",verifyToken, deleteOrderById);
 
 // Get orders by user ID
-router.get("/user/:id", getOrderByUserId);
+router.get("/user/:id",verifyToken, getOrderByUserId);
 
 // Update order (only accessible by admin)
-router.patch("/:id", updateOrder);
+router.patch("/:id",verifyToken, updateOrder);  // sipariş iptal etme talebi oluşturulabilmeli onaylanırsa iptal edilsin
 
 
 module.exports = router;

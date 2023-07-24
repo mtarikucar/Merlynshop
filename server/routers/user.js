@@ -1,12 +1,12 @@
 const { Router } = require('express');
-const {verifyTokenAndAdmin} = require('../middlewares/verifyToken');
+const {verifyTokenAndAdmin,verifyToken} = require('../middlewares/verifyToken');
 const { updateUser, deleteUser, getUser, deleteUserPermanent ,getAllUser} = require('../controllers/user');
 const { register } = require('../controllers/auth');
 const router = Router()
 
 
 // PUT => /api/user/:id
-router.put('/:id', updateUser);
+router.put('/:id',verifyToken, updateUser);
 
 // DELETE => /api/user/:id
 router.delete('/:id',verifyTokenAndAdmin, deleteUser);

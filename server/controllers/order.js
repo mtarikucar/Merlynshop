@@ -36,27 +36,7 @@ async function createOrder(prop) {
   }
 }
 
-async function verifyOrder(req, res) {
-  const { orderId } = req.params;
 
-  try {
-    // Find the order by orderId
-    const order = await models.order.findByPk(orderId);
-
-    if (!order) {
-      return res.status(404).json({ error: "Order not found" });
-    }
-
-    // Set the payment_verify field to true
-    order.payment_verify = true;
-    await order.save();
-
-    return res.status(200).json({ message: "Order verified successfully" });
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({ error: "Internal server error" });
-  }
-}
 
 
 async function getAllOrders(req, res, next) {
@@ -154,5 +134,4 @@ module.exports = {
   updateOrder,
   getOrderByUserId,
   deleteOrderById,
-  verifyOrder
 };
