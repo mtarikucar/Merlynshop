@@ -7,6 +7,7 @@ const initialState = {
     : [],
   cartTotalQuantity: 0,
   cartTotalAmount: 0,
+
 };
 
 const cartSlice = createSlice({
@@ -14,12 +15,11 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart(state, action) {
-      const itemIndex = state.cartItems.findIndex(
-        (item) => item.id === action.payload.id
-      );
+      const { id, cartQuantity, product_feature } = action.payload;
+      const itemIndex = state.cartItems.findIndex((item) => item.id === id && item.product_feature === product_feature);
 
       if (itemIndex >= 0) {
-        state.cartItems[itemIndex].cartQuantity += action.payload.cartQuantity;
+        state.cartItems[itemIndex].cartQuantity += cartQuantity;
 
         toast.info(`Added ${state.cartItems[itemIndex].name} to Cart`, {
           position: "bottom-left",
@@ -27,7 +27,7 @@ const cartSlice = createSlice({
       } else {
         const tempProduct = {
           ...action.payload,
-          cartQuantity: isNaN(action.payload.cartQuantity) ? 1 : action.payload.cartQuantity 
+          cartQuantity: isNaN(cartQuantity) ? 1 : cartQuantity,
         };
         state.cartItems.push(tempProduct);
         toast.success(`${action.payload.name} Added to Cart`, {
@@ -38,9 +38,8 @@ const cartSlice = createSlice({
       localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },
     increaseCart(state, action) {
-      const itemIndex = state.cartItems.findIndex(
-        (item) => item.id === action.payload.id
-      );
+      const { id, product_feature } = action.payload;
+      const itemIndex = state.cartItems.findIndex((item) => item.id === id && item.product_feature === product_feature);
 
       if (itemIndex >= 0) {
         state.cartItems[itemIndex].cartQuantity += 1;
@@ -54,7 +53,7 @@ const cartSlice = createSlice({
       } else {
         const tempProduct = {
           ...action.payload,
-          cartQuantity: 1
+          cartQuantity: 1,
         };
         state.cartItems.push(tempProduct);
         toast.success(`${action.payload.name} Added to Cart`, {
@@ -65,8 +64,9 @@ const cartSlice = createSlice({
       localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },
     removeFromCart(state, action) {
+      const { id, product_feature } = action.payload;
       const nextCartItems = state.cartItems.filter(
-        (cartItem) => cartItem.id !== action.payload.id
+        (cartItem) => cartItem.id !== id || cartItem.product_feature !== product_feature
       );
       state.cartItems = nextCartItems;
       localStorage.setItem("cartItems", JSON.stringify(state.cartItems));

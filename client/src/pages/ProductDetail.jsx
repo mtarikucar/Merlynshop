@@ -9,6 +9,7 @@ import { addToCart, decreaseCart } from "../store/cartSlice";
 
 import OfferModal from "../components/modals/OfferModal";
 import ImageExhibiton from "../components/ImageExhibiton";
+import { toast } from "react-toastify";
 
 function ProductDetail() {
   const [openOffer, setOpenOffer] = useState(false);
@@ -19,15 +20,14 @@ function ProductDetail() {
   const dispatch = useDispatch();
   const { token, user } = useSelector((store) => store.auth);
 
-  const hundleAddToCart = (product) => {
+  const handleAddToCart = (product) => {
     const cartProduct = {
       ...product,
       cartQuantity: quantity,
-      product_features: selectedData,
+      product_feature: selectedData.size,
     };
-
     dispatch(addToCart(cartProduct));
-    setQuatity(0);
+    setQuatity(1);
   };
 
   const { id } = useParams();
@@ -88,7 +88,8 @@ function ProductDetail() {
 
   if (error) return "An error has occurred: " + error.message;
 
-
+  console.log(data);
+  console.log(selectedData);
   return (
     <section className="py-4 sm:py-6">
       <OfferModal
@@ -195,27 +196,57 @@ function ProductDetail() {
                 )}
               </div>
 
-              <button
-                onClick={() => hundleAddToCart(data)}
-                type="button"
-                className="p-2 inline-flex items-center justify-center rounded-md border-2 border-transparent bg-green-500 bg-none  text-center text-base font-bold text-white hover:border-green-500 hover:text-green-500 transition-all duration-200 ease-in-out focus:shadow hover:bg-white"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="shrink-0  h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-                  />
-                </svg>
-                Sepete Ekle
-              </button>
+              {
+                !selectedData ? (
+                  <div>
+                    <button
+                      onClick={() => toast.info("Size seçiniz")}
+                      type="button"
+                      className="p-2 inline-flex items-center justify-center rounded-md border-2 border-transparent bg-green-500 bg-none  text-center text-base font-bold text-white hover:border-green-500 hover:text-green-500 transition-all duration-200 ease-in-out focus:shadow hover:bg-white"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="shrink-0  h-5 w-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                        />
+                      </svg>
+                      Sepete Ekle
+                    </button>
+                  </div>
+                ) : (
+
+
+                  <button
+                    onClick={() => handleAddToCart(data)}
+                    type="button"
+                    className="p-2 inline-flex items-center justify-center rounded-md border-2 border-transparent bg-green-500 bg-none  text-center text-base font-bold text-white hover:border-green-500 hover:text-green-500 transition-all duration-200 ease-in-out focus:shadow hover:bg-white"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="shrink-0  h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                      />
+                    </svg>
+                    Sepete Ekle
+                  </button>
+                )
+              }
 
               <button
                 onClick={() => setOpenOffer(!openOffer)}
@@ -328,8 +359,8 @@ function ProductDetail() {
             </form>
           </div>
         </div>
-      </div>
-    </section>
+      </div >
+    </section >
   );
 }
 
